@@ -34,7 +34,7 @@ CREATE TABLE TitleAkas(
 drop table if exists Episode;
 Create table Episode (
     titleID varchar(255) not null,
-    episodeTitleID INT not null,
+    episodeTitleID varchar(255) not null,
 	seasonNumber int,
 	episodeNumber int,
     PRIMARY KEY (titleID, episodeTitleID),
@@ -53,9 +53,9 @@ create table GenreAssociation(
 drop table if exists Person;
 Create table Person(
 	personID varchar(255) NOT NULL,
-	name varchar(255) NOT NULL,
-	dateOfBirth date NOT NULL,
-	dateOfDeath date NOT NULL,
+	primaryname varchar(255) NOT NULL,
+	dateOfBirth varchar(255) NOT NULL,
+	dateOfDeath varchar(255) NOT NULL,
 	primary key (personID)
 );
 
