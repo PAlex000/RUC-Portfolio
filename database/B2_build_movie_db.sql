@@ -8,13 +8,11 @@ create table Genre(
 drop table if exists TitleBasics;
 Create table TitleBasics(
 	titleID varchar(255) NOT NULL,
-	genreID SERIAL NOT NULL,
 	titleType varchar(100) NOT NULL,
 	isAdult boolean NOT NULL,
 	startYear varchar(255) NOT NULL,
 	endYear varchar(255) NOT NULL,
-	primary key (titleID),
-	FOREIGN KEY (genreID) REFERENCES Genre(genreID)
+	primary key (titleID)
 );
 
 drop table if exists TitleAkas;
