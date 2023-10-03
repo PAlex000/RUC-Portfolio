@@ -19,16 +19,92 @@ drop table if exists TitleAkas;
 CREATE TABLE TitleAkas(
 	titleID varchar(255) NOT NULL,
 	title varchar(100) not null,
-	ordering int NOT NULL,
-	region varchar(100) not null,
-	language varchar(100) not null,
-	types varchar(100) not null,
-	attributes varchar(100) not null,
 	isOriginalTitle boolean,
-	poster varchar(255) not null,
-	plot varchar(255) not null,
+	poster varchar(255),
+	plot varchar(255),
 	primary key (titleID, title),
 	foreign key (titleID) references TitleBasics(titleID)
+);
+
+drop table if exists Region;
+Create table Region (
+    regionID SERIAL int not null,
+    regionName varchar(255) not null,
+    PRIMARY KEY (regionID)
+);
+
+drop table if exists RegionAssociation;
+Create table RegionAssociation (
+    titleID varchar not null,
+	regionID int,
+    PRIMARY KEY (titleID, regionID)
+	FOREIGN KEY (titleID) REFERENCES TitleAkas(titleID),
+    FOREIGN KEY (regionID) REFERENCES Region(regionID)
+);
+
+drop table if exists Type;
+Create table Type (
+    typeID SERIAL int not null,
+    typeName varchar(255) not null,
+    PRIMARY KEY (typeID)
+);
+
+drop table if exists TypeAssociation;
+Create table TypeAssociation (
+    titleID varchar not null,
+    typeID int not null,
+    PRIMARY KEY (titleID, typeID)
+	FOREIGN KEY (titleID) REFERENCES TitleAkas(titleID),
+    FOREIGN KEY (typeID) REFERENCES Type(typeID)
+);
+
+
+drop table if exists Language;
+Create table Language (
+    langID SERIAL int not null,
+    langName varchar(255) not null,
+    PRIMARY KEY (langID)
+);
+
+drop table if exists LanguageAssociation;
+Create table LanguageAssociation (
+    titleID varchar not null,
+    langID int not null,
+    PRIMARY KEY (titleID, langID)
+	FOREIGN KEY (titleID) REFERENCES TitleAkas(titleID),
+    FOREIGN KEY (langID) REFERENCES Language(langID)
+);
+
+drop table if exists Attribute;
+Create table Attribute (
+    attID SERIAL int not null,
+    attName varchar(255) not null,
+    PRIMARY KEY (attID)
+);
+
+drop table if exists AttributeAssociation;
+Create table AttributeAssociation (
+    titleID varchar not null,
+    attID int not null,
+    PRIMARY KEY (titleID, attID)
+	FOREIGN KEY (titleID) REFERENCES TitleAkas(titleID),
+    FOREIGN KEY (attID) REFERENCES Attribute(attID)
+);
+
+drop table if exists Ordering;
+Create table Ordering (
+    orderID SERIAL int not null,
+    orderNumber int not null,
+    PRIMARY KEY (orderID)
+);
+
+drop table if exists OrderingAssociation;
+Create table OrderingAssociation (
+    titleID varchar not null,
+    orderID int not null,
+    PRIMARY KEY (titleID, orderID)
+	FOREIGN KEY (titleID) REFERENCES TitleAkas(titleID),
+    FOREIGN KEY (orderID) REFERENCES Ordering(orderID)
 );
 
 drop table if exists Episode;
