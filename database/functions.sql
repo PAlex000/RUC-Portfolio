@@ -38,6 +38,42 @@ BEGIN
         frequency DESC;
 END; $$ LANGUAGE plpgsql;
 
+--D7. Name Ratings
+--Note: This function should be triggered everytime a movie is rated. To be discussed how to set a trigger for it up.
+-- To test if working with test data:
+
+--SELECT * FROM person
+--ORDER BY name_rating ASC;
+
+CREATE OR REPLACE FUNCTION update_name_ratings(job_type VARCHAR)
+RETURNS VOID AS $$
+BEGIN
+    UPDATE Person
+    SET name_rating = subquery.weighted_avg_rating
+    FROM (
+        SELECT 
+            PA.personID,
+            SUM(avg_grade * num_votes) / SUM(num_votes) as weighted_avg_rating
+        FROM 
+            PersonAssociation PA
+        JOIN (
+            SELECT 
+                titleID, 
+                AVG(grade) as avg_grade, 
+                COUNT(userID) as num_votes
+            FROM 
+                Rating
+            GROUP BY 
+                titleID
+        ) AS TitleAvgRating ON PA.titleID = TitleAvgRating.titleID
+        WHERE 
+            PA.job = job_type
+        GROUP BY 
+            PA.personID
+    ) AS subquery
+    WHERE Person.personID = subquery.personID;
+END; $$ LANGUAGE plpgsql;
+
 --D8. Popular actors
 drop function if exists popular_actor(title VARCHAR(100))
 create or replace function popular_actor(title VARCHAR(100))
