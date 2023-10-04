@@ -57,7 +57,7 @@ Create table Person(
 	primaryname varchar(255),
 	dateOfBirth varchar(255),
 	dateOfDeath varchar(255),
-	name_rating float,
+	name_rating Float,
 	primary key (personID)
 );
 
