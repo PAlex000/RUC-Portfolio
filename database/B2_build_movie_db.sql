@@ -12,8 +12,9 @@ Create table TitleBasics(
 	isAdult boolean NOT NULL,
 	startYear varchar(255) NOT NULL,
 	endYear varchar(255) NOT NULL,
-	primary key (titleID),
-    plot varchar(255),
+	poster varchar(255),
+    plot text,
+	primary key (titleID)
 );
 
 drop table if exists TitleAkas;
@@ -26,7 +27,6 @@ CREATE TABLE TitleAkas(
     typeName varchar (255),
     LanguageName varchar(255),
 	isOriginalTitle boolean,
-	poster varchar(255),
 	primary key (titleID, ordering),
 	foreign key (titleID) references titlebasics(titleID)
 );
@@ -54,9 +54,9 @@ create table GenreAssociation(
 drop table if exists Person;
 Create table Person(
 	personID varchar(255) NOT NULL,
-	primaryname varchar(255) NOT NULL,
-	dateOfBirth varchar(255) NOT NULL,
-	dateOfDeath varchar(255) NOT NULL,
+	primaryname varchar(255),
+	dateOfBirth varchar(255),
+	dateOfDeath varchar(255),
 	primary key (personID)
 );
 
@@ -64,8 +64,9 @@ drop table if exists PersonAssociation;
 Create table PersonAssociation(
 	titleID varchar(255) NOT NULL,
 	personID varchar(255) NOT NULL,
+	ordering int not null,
 	job varchar(255) NOT NULL,
-	primary key (titleID, personID),
+	primary key (titleID, personID, ordering),
 	FOREIGN KEY (titleID) REFERENCES TitleBasics(titleID),
     FOREIGN KEY (personID) REFERENCES Person(personID)
 );
