@@ -12,6 +12,31 @@ $$
 	where titleakas.title like '%' || s || '%' or titleakas.plot like '%' || s || '%';
 $$;
 
+--D6. CoActor Frequency
+
+CREATE OR REPLACE FUNCTION find_frequent_coactors(pa_id VARCHAR(255))
+RETURNS TABLE(
+    co_actor_name VARCHAR(255),
+    frequency bigint
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        P.primaryName as co_actor_name,
+        COUNT(PA2.titleID) as frequency
+    FROM 
+        PersonAssociation PA1
+    JOIN 
+        PersonAssociation PA2 ON PA1.titleID = PA2.titleID AND PA1.personID != PA2.personID
+    JOIN 
+        Person P ON PA2.personID = P.personID
+    WHERE 
+        PA1.personID = pa_id AND PA1.job IN ('actor', 'actress') AND PA2.job IN ('actor', 'actress')
+    GROUP BY 
+        P.primaryName
+    ORDER BY 
+        frequency DESC;
+END; $$ LANGUAGE plpgsql;
 
 --D8. Popular actors
 drop function if exists popular_actor(title VARCHAR(100))
