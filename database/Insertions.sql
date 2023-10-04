@@ -27,3 +27,14 @@ SELECT parenttconst, tconst, seasonnumber, episodenumber from title_episode;
 --TitleAkas table insert
 insert into TitleAkas(titleID, ordering, titleName, region, typename, languageName, attribute, isOriginalTitle)
 select titleID, ordering, title, region, types, language, attributes, isOriginalTitle  from title_akas;
+
+
+--Drop source datas
+drop table title_ratings;
+drop table title_principals;
+drop table title_episode;
+drop table title_crew;
+drop table title_basics;
+drop table title_akas;
+drop table omdb_data;
+drop table name_basics;
