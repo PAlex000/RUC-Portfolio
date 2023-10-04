@@ -18,16 +18,16 @@ Create table TitleBasics(
 drop table if exists TitleAkas;
 CREATE TABLE TitleAkas(
 	titleID varchar(255) NOT NULL,
-	titleName varchar(255) not null,
+    ordering SERIAL not null,
+	titleName varchar(255),
     region varchar(255),
     attribute varchar(255),
     typeName varchar (255),
     LanguageName varchar(255),
-    ordering int,
 	isOriginalTitle boolean,
 	poster varchar(255),
 	plot varchar(255),
-	primary key (titleID, titleName, region),
+	primary key (titleID, ordering),
 	foreign key (titleID) references titlebasics(titleID)
 );
 
