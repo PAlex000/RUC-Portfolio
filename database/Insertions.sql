@@ -21,5 +21,5 @@ SELECT parenttconst, tconst, seasonnumber, episodenumber from title_episode;
 
 --TitleAkas table insert
 
-insert into TitleAkas(titleID, ordering)
-select titleID, ordering from title_akas;
+insert into TitleAkas(titleID, ordering, titleName, region, typename, languageName, attribute, isOriginalTitle)
+select titleID, ordering, title, region, types, language, attributes, isOriginalTitle  from title_akas;

@@ -12,7 +12,8 @@ Create table TitleBasics(
 	isAdult boolean NOT NULL,
 	startYear varchar(255) NOT NULL,
 	endYear varchar(255) NOT NULL,
-	primary key (titleID)
+	primary key (titleID),
+    plot varchar(255),
 );
 
 drop table if exists TitleAkas;
@@ -26,7 +27,6 @@ CREATE TABLE TitleAkas(
     LanguageName varchar(255),
 	isOriginalTitle boolean,
 	poster varchar(255),
-	plot varchar(255),
 	primary key (titleID, ordering),
 	foreign key (titleID) references titlebasics(titleID)
 );
