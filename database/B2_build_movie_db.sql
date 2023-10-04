@@ -18,11 +18,11 @@ Create table TitleBasics(
 drop table if exists TitleAkas;
 CREATE TABLE TitleAkas(
 	titleID varchar(255) NOT NULL,
-	title varchar(255) not null,
+	titleName varchar(255) not null,
 	isOriginalTitle boolean,
 	poster varchar(255),
 	plot varchar(255),
-	primary key (titleID, title),
+	primary key (titleID, titleName),
 	foreign key (titleID) references titlebasics(titleID)
 );
 

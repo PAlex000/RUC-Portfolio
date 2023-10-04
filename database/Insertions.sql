@@ -21,7 +21,7 @@ SELECT parenttconst, tconst, seasonnumber, episodenumber from title_episode;
 
 --TitleAkas table insert
 
-insert into TitleAkas(titleID, title)
+insert into TitleAkas(titleID, titleName)
 select distinct titleID, title from title_akas;
 
 --Region table insert
@@ -66,8 +66,12 @@ where Type.typeName = title_akas.types;
 insert into Language(langName)
 select distinct language from title_akas;
 
---LanguageAssociation insert
+--LanguageAssociation table insert
 
 insert into LanguageAssociation(titleID, langID)
 select distinct titleID, langID from title_akas natural join Language
-where Language.langName = title_akas.language; 
+where Language.langName = title_akas.language;
+
+-- Posterinsert
+
+--Plotinsert
