@@ -45,7 +45,7 @@ END; $$ LANGUAGE plpgsql;
 --SELECT * FROM person
 --ORDER BY name_rating ASC;
 
-CREATE OR REPLACE FUNCTION update_name_ratings(job_type VARCHAR)
+CREATE OR REPLACE FUNCTION update_name_ratings()
 RETURNS VOID AS $$
 BEGIN
     UPDATE Person
@@ -67,7 +67,7 @@ BEGIN
                 titleID
         ) AS TitleAvgRating ON PA.titleID = TitleAvgRating.titleID
         WHERE 
-            PA.job = job_type
+            PA.job IN ('actor', 'actress')
         GROUP BY 
             PA.personID
     ) AS subquery
