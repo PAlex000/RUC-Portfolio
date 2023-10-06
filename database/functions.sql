@@ -1,4 +1,5 @@
 --D1
+--USER FUNCTIONS
 drop procedure if exists create_user(firstName varchar(40), lastName varchar(40), email varchar(150), pwdHash varchar(255), phoneno varchar(20), isverified bool, isactive);
 create procedure create_user(
 	firstName varchar(40),
@@ -30,7 +31,7 @@ $$
 $$;
 
 --call create_user('FirsTNAm123e', 'Las123tNAme', 'tes123t@gmail.com', 'pwdH123ash');
-
+--call create_user('123', 'Las123tNAme', 'tes123t@gmail.com', 'pwdH123ash');
 drop procedure if exists delete_user(idUser int4);
 create procedure delete_user(idUser int4)
 language sql as
@@ -40,6 +41,23 @@ $$;
 
 --call delete_user(2);
 
+--BOOKMARK TRIGGERS/FUNCTION
+drop trigger if exists update_bookmarks_before_deletion_trigger on userrelation;
+CREATE TRIGGER update_bookmarks_before_deletion_trigger
+  Before DELETE
+  ON userrelation
+	for each row
+  EXECUTE PROCEDURE update_bookmarks_before_deletion();
+
+drop function if exists update_bookmarks_before_deletion();
+CREATE OR REPLACE FUNCTION update_bookmarks_before_deletion()
+RETURNS trigger AS $$
+BEGIN
+    delete from bookmarks where userid = old.userid;
+RETURN OLD;
+END; $$ LANGUAGE plpgsql;
+
+--call delete_user(3);
 drop procedure if exists bookmark_movie(idUser int4, idTitle varchar(255), stat bool);
 create procedure bookmark_movie(idUser int4, idTitle varchar(255), stat bool)
 language sql as
