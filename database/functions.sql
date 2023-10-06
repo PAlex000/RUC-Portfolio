@@ -1,6 +1,6 @@
 --D1
 --USER FUNCTIONS
-drop procedure if exists create_user(firstName varchar(40), lastName varchar(40), email varchar(150), pwdHash varchar(255), phoneno varchar(20), isverified bool, isactive);
+drop procedure if exists create_user(firstName varchar(40), lastName varchar(40), email varchar(150), pwdHash varchar(255), phoneno varchar(20), isverified bool, isactive bool);
 create procedure create_user(
 	firstName varchar(40),
 	lastName varchar(40),
@@ -30,8 +30,6 @@ $$
 		);
 $$;
 
---call create_user('FirsTNAm123e', 'Las123tNAme', 'tes123t@gmail.com', 'pwdH123ash');
---call create_user('123', 'Las123tNAme', 'tes123t@gmail.com', 'pwdH123ash');
 drop procedure if exists delete_user(idUser int4);
 create procedure delete_user(idUser int4)
 language sql as
@@ -39,16 +37,8 @@ $$
 	delete from userrelation where userid = idUser;
 $$;
 
---call delete_user(2);
-
 --BOOKMARK TRIGGERS/FUNCTION
 drop trigger if exists update_bookmarks_before_deletion_trigger on userrelation;
-CREATE TRIGGER update_bookmarks_before_deletion_trigger
-  Before DELETE
-  ON userrelation
-	for each row
-  EXECUTE PROCEDURE update_bookmarks_before_deletion();
-
 drop function if exists update_bookmarks_before_deletion();
 CREATE OR REPLACE FUNCTION update_bookmarks_before_deletion()
 RETURNS trigger AS $$
@@ -57,7 +47,13 @@ BEGIN
 RETURN OLD;
 END; $$ LANGUAGE plpgsql;
 
---call delete_user(3);
+
+CREATE TRIGGER update_bookmarks_before_deletion_trigger
+  Before DELETE
+  ON userrelation
+	for each row
+  EXECUTE PROCEDURE update_bookmarks_before_deletion();
+
 drop procedure if exists bookmark_movie(idUser int4, idTitle varchar(255), stat bool);
 create procedure bookmark_movie(idUser int4, idTitle varchar(255), stat bool)
 language sql as
@@ -73,11 +69,8 @@ $$
 	delete from bookmarks where bookmarks.userid = idUser and bookmarks.titleid = idTitle;
 $$;
 
---call bookmark_movie(2, 'tt0098936', true);
---call bookmark_movie(3, 'tt0098936', true);
---call delete_bookmark_movie(2, 'tt0098936');
-
 --RATING TRIGGERS
+drop trigger if exists update_rating_before_deletion_trigger on userrelation;
 drop function if exists update_rating_before_deletion();
 CREATE OR REPLACE FUNCTION update_rating_before_deletion()
 RETURNS trigger AS $$
@@ -86,7 +79,6 @@ BEGIN
 RETURN OLD;
 END; $$ LANGUAGE plpgsql;
 
-drop trigger if exists update_rating_before_deletion_trigger on userrelation;
 CREATE TRIGGER update_rating_before_deletion_trigger
   Before DELETE
   ON userrelation
@@ -122,9 +114,24 @@ $$
 	where titleakas.titlename like '%' || s || '%' or titlebasics.plot like '%' || s || '%';
 $$;
 
---select * from string_search(3, 'End');
+drop trigger if exists update_search_before_deletion_trigger on userrelation;
+drop function if exists update_search_before_deletion();
+CREATE OR REPLACE FUNCTION update_search_before_deletion()
+RETURNS trigger AS $$
+BEGIN
+    delete from search where userid = old.userid;
+RETURN OLD;
+END; $$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER update_search_before_deletion_trigger
+  Before DELETE
+  ON userrelation
+	for each row
+  EXECUTE PROCEDURE update_search_before_deletion();
 
 --D3
+drop trigger if exists update_movie_rating_trigger on rating;
 drop function if exists update_movie_rating_fnc();
 CREATE OR REPLACE FUNCTION update_movie_rating_fnc()
 RETURNS trigger AS $$
@@ -143,7 +150,6 @@ BEGIN
 	RETURN NEW;
 END; $$ LANGUAGE plpgsql;
 
-drop trigger if exists update_movie_rating_trigger on rating;
 CREATE TRIGGER update_movie_rating_trigger
   AFTER Insert
   ON rating
@@ -157,8 +163,6 @@ $$
 	insert into rating values (tid, pid, grade, reviewtext, CURRENT_DATE);
 	end;
 $$;
-
---call rate('tt17007386', 3, 10);
 
 --D6. CoActor Frequency
 
@@ -223,27 +227,24 @@ BEGIN
 END; $$ LANGUAGE plpgsql;
 
 --D8. Popular actors
-drop function if exists popular_actor(title VARCHAR(100))
+drop function if exists popular_actor(title VARCHAR(100));
 create or replace function popular_actor(title VARCHAR(100))
 returns table (
-actor_name varchar(100)
-)
+actor_name varchar(100))
 language sql as $$
-
 (
 SELECT primaryname FROM (
 SELECT DISTINCT primaryname, ps.ordering from person 
 natural join personAssociation ps  
- where ps.job in ('actress', 'actor') and 
- ps.titleid in (Select DISTINCT titleid from titleakas where titlename = title) 
-ORDER BY  ps.ordering ASC)
- );
-
+	where ps.job in ('actress', 'actor') and ps.titleid in
+		(Select DISTINCT titleid from titleakas where titlename = title) 
+ORDER BY ps.ordering ASC)
+);
 $$;
 
-select popular_actor('The Twilight Zone');
+--select popular_actor('The Twilight Zone');
 
-select popular_actor('Friends');
+--select popular_actor('Friends');
 
 --D9. Similar movies:
 
@@ -261,8 +262,8 @@ language sql as $$
 
 $$;
 
-select similar_movie('The Twilight Zone');
-select similar_movie('Friends');
+--select similar_movie('The Twilight Zone');
+--select similar_movie('Friends');
 
 
 --D10. Frequent person words:
@@ -279,6 +280,6 @@ ORDER BY COUNT(word) DESC
 LIMIT max_length;
 $$;
 
-Select word, counter from person_words('Fred Astaire', 10)
+--Select word, counter from person_words('Fred Astaire', 10)
 
-Select word, counter from person_words('Jennifer Aniston', 10)
+--Select word, counter from person_words('Jennifer Aniston', 10)
