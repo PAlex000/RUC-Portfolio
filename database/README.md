@@ -8,4 +8,5 @@ psql -U postgres -d movie -f omdb_data.backup
 psql -U postgres -d movie -f imdb.backup
 psql -U postgres -d movie -f wi.backup
 psql -U postgres -d movie -f Insertions.sql
+psql -U postgres -d movie -f functions.sql
 ```
