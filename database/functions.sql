@@ -31,7 +31,15 @@ $$;
 
 --call create_user('FirsTNAm123e', 'Las123tNAme', 'tes123t@gmail.com', 'pwdH123ash');
 
---DELETE USER?
+drop procedure if exists delete_user(idUser int4);
+create procedure delete_user(idUser int4)
+language sql as
+$$
+	delete from userrelation where userid = idUser;
+$$;
+
+--call delete_user(2);
+
 drop procedure if exists bookmark_movie(idUser int4, idTitle varchar(255), stat bool);
 create procedure bookmark_movie(idUser int4, idTitle varchar(255), stat bool)
 language sql as
