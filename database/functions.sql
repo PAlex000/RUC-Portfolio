@@ -1,18 +1,36 @@
---Need to do the insertion for the search history
 --D2
-drop function if exists string_search(s varchar(255));
-create or replace function string_search (s varchar(255))
+drop procedure if exists string_search_insert(idUser int4, s varchar(255));
+create procedure string_search_insert(idUser int4, s varchar(255))
+language plpgsql as
+$$
+	begin
+	if exists (select search.userid, search.searchString from search where search.userid = idUser and search.searchString = s)
+	THEN
+		delete from search where search.userid = idUser and search.searchString = s;
+		insert into search values (idUser, s, CURRENT_DATE);
+	ELSE
+		insert into search values (idUser, s, CURRENT_DATE);
+	END IF;
+	end;
+$$;
+
+drop function if exists string_search(userid int4, s varchar(255));
+create or replace function string_search (userid int4, s varchar(255))
 returns table (
 		titleid varchar(255),
 		titleName varchar(255))
 language sql as
 $$
+	call string_search_insert(userid, s);
 	select titlebasics.titleid, titlename
 	from titlebasics natural join titleakas
 	where titleakas.titlename like '%' || s || '%' or titlebasics.plot like '%' || s || '%';
 $$;
 
+--select * from string_search(3, 'End');
+
 --D3
+drop function if exists update_movie_rating_fnc();
 CREATE OR REPLACE FUNCTION update_movie_rating_fnc()
 RETURNS trigger AS $$
 BEGIN
@@ -24,10 +42,10 @@ BEGIN
 			SELECT titleid, AVG(grade) as avg_grade, COUNT(userID) as num_votes
 			FROM Rating
 			GROUP BY titleid
-			) as test
-			where titlebasics.titleid = test.titleid
+			) as subquery
+			where titlebasics.titleid = subquery.titleid
 );
-RETURN NEW;
+	RETURN NEW;
 END; $$ LANGUAGE plpgsql;
 
 drop trigger if exists update_movie_rating_trigger on rating;
@@ -36,8 +54,8 @@ CREATE TRIGGER update_movie_rating_trigger
   ON rating
   EXECUTE PROCEDURE update_movie_rating_fnc();
 
-drop function user_rate(tid varchar(255), pid int4, grade int, reviewText varchar(255));
-create or replace PROCEDURE user_rate(tid varchar(255), pid int4, grade int, reviewText varchar(255) default '')
+drop procedure if exists rate(tid varchar(255), pid int4, grade int, reviewText varchar(255));
+create or replace PROCEDURE rate(tid varchar(255), pid int4, grade int, reviewText varchar(255) default '')
 language plpgsql as
 $$
 	begin
@@ -45,8 +63,8 @@ $$
 	end;
 $$;
 
---call user_rate('tt17007386', 3, 10);
---select * from titlebasics where titleid = 'tt17007386';
+--call rate('tt17007386', 3, 10);
+
 --D6. CoActor Frequency
 
 CREATE OR REPLACE FUNCTION find_frequent_coactors(pa_id VARCHAR(255))
