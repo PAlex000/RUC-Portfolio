@@ -28,19 +28,6 @@ SELECT parenttconst, tconst, seasonnumber, episodenumber from title_episode;
 insert into TitleAkas(titleID, ordering, titleName, region, typename, languageName, attribute, isOriginalTitle)
 select titleID, ordering, title, region, types, language, attributes, isOriginalTitle  from title_akas;
 
---Test Data for userRelation
-INSERT INTO UserRelation(userid, firstName, lastName, email, pwdHash, isVerified, isActive) VALUES
-(1, 'Lasse', 'Doe', 'lasse.doe@example.com', 'hashed_password1', TRUE, TRUE),
-(2, 'Cristina', 'Doe', 'cristina.doe@example.com', 'hashed_password2', TRUE, TRUE),
-(3, 'Karsten', 'Doe', 'karsten.doe@example.com', 'hashed_password3', TRUE, TRUE),
-(4, 'Alex', 'Doe', 'alex.doe@example.com', 'hashed_password4', TRUE, TRUE),
-(5, 'Bianca', 'Doe', 'bianca.doe@example.com', 'hashed_password5', TRUE, TRUE);
-
---Test Data for Rating
-INSERT INTO RATING(titleid, userid, grade, reviewtext, ratedate) VALUES
-('tt11591580', 1, 4, 'Good movie', '2023-10-05'),
-('tt11591580', 2, 2, 'Meh movie', '2023-10-05');
-
 --Drop source datas
 drop table title_ratings;
 drop table title_principals;
