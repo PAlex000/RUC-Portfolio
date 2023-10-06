@@ -4,14 +4,49 @@ drop function if exists string_search(s varchar(255));
 create or replace function string_search (s varchar(255))
 returns table (
 		titleid varchar(255),
-		plot varchar(255))
+		titleName varchar(255))
 language sql as
 $$
-	select titleid, title
+	select titlebasics.titleid, titlename
 	from titlebasics natural join titleakas
-	where titleakas.title like '%' || s || '%' or titleakas.plot like '%' || s || '%';
+	where titleakas.titlename like '%' || s || '%' or titlebasics.plot like '%' || s || '%';
 $$;
 
+--D3
+CREATE OR REPLACE FUNCTION update_movie_rating_fnc()
+RETURNS trigger AS $$
+BEGIN
+    UPDATE titlebasics
+    SET movie_rating = (
+		select SUM(avg_grade * num_votes) / SUM(num_votes)
+		from
+			(
+			SELECT titleid, AVG(grade) as avg_grade, COUNT(userID) as num_votes
+			FROM Rating
+			GROUP BY titleid
+			) as test
+			where titlebasics.titleid = test.titleid
+);
+RETURN NEW;
+END; $$ LANGUAGE plpgsql;
+
+drop trigger if exists update_movie_rating_trigger on rating;
+CREATE TRIGGER update_movie_rating_trigger
+  AFTER Insert
+  ON rating
+  EXECUTE PROCEDURE update_movie_rating_fnc();
+
+drop function user_rate(tid varchar(255), pid int4, grade int, reviewText varchar(255));
+create or replace PROCEDURE user_rate(tid varchar(255), pid int4, grade int, reviewText varchar(255) default '')
+language plpgsql as
+$$
+	begin
+	insert into rating values (tid, pid, grade, reviewtext, CURRENT_DATE);
+	end;
+$$;
+
+--call user_rate('tt17007386', 3, 10);
+--select * from titlebasics where titleid = 'tt17007386';
 --D6. CoActor Frequency
 
 CREATE OR REPLACE FUNCTION find_frequent_coactors(pa_id VARCHAR(255))
