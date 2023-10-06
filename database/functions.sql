@@ -77,6 +77,22 @@ $$;
 --call bookmark_movie(3, 'tt0098936', true);
 --call delete_bookmark_movie(2, 'tt0098936');
 
+--RATING TRIGGERS
+drop function if exists update_rating_before_deletion();
+CREATE OR REPLACE FUNCTION update_rating_before_deletion()
+RETURNS trigger AS $$
+BEGIN
+    delete from rating where userid = old.userid;
+RETURN OLD;
+END; $$ LANGUAGE plpgsql;
+
+drop trigger if exists update_rating_before_deletion_trigger on userrelation;
+CREATE TRIGGER update_rating_before_deletion_trigger
+  Before DELETE
+  ON userrelation
+	for each row
+  EXECUTE PROCEDURE update_rating_before_deletion();
+
 --D2
 drop procedure if exists string_search_insert(idUser int4, s varchar(255));
 create procedure string_search_insert(idUser int4, s varchar(255))
