@@ -37,6 +37,6 @@ CREATE table Search (
 	userID SERIAL NOT NULL,
 	searchString VARCHAR(255),
 	searchDate date,
-	PRIMARY KEY (userID),
+	PRIMARY KEY (userID, searchString),
 	FOREIGN KEY (userID) REFERENCES UserRelation (userID)
 );
