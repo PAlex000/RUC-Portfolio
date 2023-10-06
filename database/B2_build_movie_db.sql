@@ -14,6 +14,7 @@ Create table TitleBasics(
 	endYear varchar(255) NOT NULL,
 	poster varchar(255),
     plot text,
+	movie_rating int,
 	primary key (titleID)
 );
 
