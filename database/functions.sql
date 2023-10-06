@@ -1,3 +1,56 @@
+--D1
+drop procedure if exists create_user(firstName varchar(40), lastName varchar(40), email varchar(150), pwdHash varchar(255), phoneno varchar(20), isverified bool, isactive);
+create procedure create_user(
+	firstName varchar(40),
+	lastName varchar(40),
+	email varchar(150),
+	pwdHash varchar(255),
+	phoneno varchar(20) default null,
+	isverified bool default false,
+	isactive bool default false)
+language sql as
+$$
+	insert into userrelation(
+		firstName,
+		lastName,
+		email,
+		pwdHash,
+		phoneno,
+		isverified,
+		isactive
+		)
+	values (
+		firstName,
+		lastName,
+		email, pwdHash,
+		phoneno,
+		isverified,
+		isactive
+		);
+$$;
+
+--call create_user('FirsTNAm123e', 'Las123tNAme', 'tes123t@gmail.com', 'pwdH123ash');
+
+--DELETE USER?
+drop procedure if exists bookmark_movie(idUser int4, idTitle varchar(255), stat bool);
+create procedure bookmark_movie(idUser int4, idTitle varchar(255), stat bool)
+language sql as
+$$
+	insert into bookmarks(userid, titleid, status)
+	values(idUser, idTitle, stat);
+$$;
+
+drop procedure if exists delete_bookmark_movie(idUser int4, idTitle varchar(255));
+create procedure delete_bookmark_movie(idUser int4, idTitle varchar(255))
+language sql as
+$$
+	delete from bookmarks where bookmarks.userid = idUser and bookmarks.titleid = idTitle;
+$$;
+
+--call bookmark_movie(2, 'tt0098936', true);
+--call bookmark_movie(3, 'tt0098936', true);
+--call delete_bookmark_movie(2, 'tt0098936');
+
 --D2
 drop procedure if exists string_search_insert(idUser int4, s varchar(255));
 create procedure string_search_insert(idUser int4, s varchar(255))
