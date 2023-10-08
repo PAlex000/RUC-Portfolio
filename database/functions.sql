@@ -168,17 +168,16 @@ $$;
 DROP FUNCTION IF EXISTS structured_search_actors(actor_name text);
 CREATE FUNCTION structured_search_actors(actor_name text)
 RETURNS TABLE (
-nconst char(10),
-primaryname character varying(256)
-)
-LANGUAGE plpgsql AS $$
+personid varchar(255),
+primaryname varchar(255)
+) AS $$
 BEGIN
 RETURN QUERY
-SELECT distinct nb.nconst, nb.primaryname 
-FROM name_basics nb
-WHERE nb.primaryname LIKE '%' || actor_name || '%';
-END;
-$$;
+SELECT distinct p.personid, p.primaryname
+FROM person p
+WHERE p.primaryname LIKE '%' || actor_name || '%';
+END $$
+LANGUAGE plpgsql;
 
 --D6. CoActor Frequency
 
