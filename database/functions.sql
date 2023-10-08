@@ -255,7 +255,7 @@ natural join personAssociation ps
 	where ps.job in ('actress', 'actor') and ps.titleid in
 		(Select DISTINCT titleid from titleakas where titlename = title) 
 ORDER BY ps.ordering ASC)
-);
+AS foo);
 $$;
 
 --select popular_actor('The Twilight Zone');
