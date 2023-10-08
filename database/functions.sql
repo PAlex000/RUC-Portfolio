@@ -254,16 +254,11 @@ natural join personAssociation ps
 	where ps.job in ('actress', 'actor') and ps.titleid in
 		(Select DISTINCT titleid from titleakas where titlename = title) 
 ORDER BY ps.ordering ASC)
-AS foo);
+AS actor_name);
 $$;
 
---select popular_actor('The Twilight Zone');
-
---select popular_actor('Friends');
-
---D9. Similar movies:
-
-create or replace function similar_movie( movie VARCHAR(20))
+--D9. Similar movie
+create or replace function similar_movie( movie VARCHAR(100))
 returns table (
 movie_name varchar(100)
 )
@@ -277,11 +272,9 @@ language sql as $$
 
 $$;
 
---select similar_movie('The Twilight Zone');
---select similar_movie('Friends');
 
 
---D10. Frequent person words:
+--D10. Frequent person words
 create or replace function person_words(person VARCHAR(100), max_length int)
 returns table (
 word varchar(100),
@@ -295,6 +288,3 @@ ORDER BY COUNT(word) DESC
 LIMIT max_length;
 $$;
 
---Select word, counter from person_words('Fred Astaire', 10)
-
---Select word, counter from person_words('Jennifer Aniston', 10)

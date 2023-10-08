@@ -71,3 +71,20 @@ SELECT * FROM structured_search_actors('Alice Cooper');
 SELECT * FROM find_frequent_coactors('nm0001456');
 SELECT * FROM find_frequent_coactors('nm0001424');
 SELECT * FROM find_frequent_coactors('nm0001343');
+
+--D8
+select popular_actor('The Twilight Zone');
+select popular_actor('Friends');
+select popular_actor('Inception');
+
+
+--D9
+select similar_movie('The Twilight Zone');
+select similar_movie('Friends');
+select similar_movie('Inception');
+
+--D10
+Select word, counter from person_words('Fred Astaire', 10)
+Select word, counter from person_words('Jennifer Aniston', 20)
+SELECT word, counter FROM person_words('Leonardo DiCaprio', 5);
+
