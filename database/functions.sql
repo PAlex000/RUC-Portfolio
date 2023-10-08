@@ -165,7 +165,6 @@ $$
 $$;
 
 --D5 
-
 DROP FUNCTION IF EXISTS structured_search_actors(actor_name text);
 CREATE FUNCTION structured_search_actors(actor_name text)
 RETURNS TABLE (
@@ -180,9 +179,6 @@ FROM name_basics nb
 WHERE nb.primaryname LIKE '%' || actor_name || '%';
 END;
 $$;
-
-SELECT * FROM structured_search_actors('Jerry Seinfeld');
-
 
 --D6. CoActor Frequency
 

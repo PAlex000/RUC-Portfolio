@@ -60,3 +60,8 @@ select * from rating where userid = 2;
 select * from search where userid = 2;
 select * from bookmarks where userid = 2;
 select * from userrelation where userid = 2;
+
+--D5
+SELECT * FROM structured_search_actors('Jerry Seinfeld');
+SELECT * FROM structured_search_actors('Judy Garland');
+SELECT * FROM structured_search_actors('Alice Cooper');
