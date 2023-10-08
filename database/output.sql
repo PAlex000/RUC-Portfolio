@@ -65,3 +65,9 @@ select * from userrelation where userid = 2;
 SELECT * FROM structured_search_actors('Jerry Seinfeld');
 SELECT * FROM structured_search_actors('Judy Garland');
 SELECT * FROM structured_search_actors('Alice Cooper');
+
+--D6
+
+SELECT * FROM find_frequent_coactors('nm0001456');
+SELECT * FROM find_frequent_coactors('nm0001424');
+SELECT * FROM find_frequent_coactors('nm0001343');
