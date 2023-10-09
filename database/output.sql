@@ -116,3 +116,7 @@ SELECT * FROM get_best_match_titles('Donald');
 SELECT * from get_word_rank('Baby');
 SELECT * from get_word_rank('Cow');
 SELECT * from get_word_rank('Party');
+
+--Tests for indexing 
+--Select count(*) from person where primaryname LIKE '%Michael%';
+--Select count(*) from person;
