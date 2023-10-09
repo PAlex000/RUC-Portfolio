@@ -166,11 +166,10 @@ $$;
 --D4
 drop function if exists structured_string_search(userid int4, title_name varchar(255), plot_text text, job varchar(255), person_name varchar(255));
 create function structured_string_search(userid int4, title_name varchar(255), plot_text text, job varchar(255), person_name varchar(255))
-returns table
+returns table(
 titleid varchar(255),
 titleName varchar(255)
-) AS $$
-language sql AS
+) language sql AS
 $$
 		call string_search_insert(userid, title_name);
 		select distinct titleakas.titleid, titleakas.titlename from titleakas natural join titlebasics, personassociation, person
