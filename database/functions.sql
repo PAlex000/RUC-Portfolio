@@ -206,14 +206,11 @@ BEGIN
 END; $$ LANGUAGE plpgsql;
 
 --D7. Name Ratings
---Note: This function should be triggered everytime a movie is rated. To be discussed how to set a trigger for it up.
--- To test if working with test data:
 
---SELECT * FROM person
---ORDER BY name_rating ASC;
-
-CREATE OR REPLACE FUNCTION update_name_ratings()
-RETURNS VOID AS $$
+drop trigger if exists update_name_ratings_trigger on titlebasics;
+drop function if exists update_name_ratings();
+CREATE FUNCTION update_name_ratings()
+RETURNS TRIGGER AS $$
 BEGIN
     UPDATE Person
     SET name_rating = subquery.weighted_avg_rating
@@ -239,7 +236,13 @@ BEGIN
             PA.personID
     ) AS subquery
     WHERE Person.personID = subquery.personID;
+Return new;
 END; $$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_name_ratings_trigger
+  After UPDATE
+  ON titlebasics
+  EXECUTE PROCEDURE update_name_ratings();
 
 --D8. Popular actors
 drop function if exists popular_actor(title VARCHAR(100));
