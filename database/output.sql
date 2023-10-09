@@ -84,7 +84,7 @@ select similar_movie('Friends');
 select similar_movie('Inception');
 
 --D10
-Select word, counter from person_words('Fred Astaire', 10)
-Select word, counter from person_words('Jennifer Aniston', 20)
+Select word, counter from person_words('Fred Astaire', 10);
+Select word, counter from person_words('Jennifer Aniston', 20);
 SELECT word, counter FROM person_words('Leonardo DiCaprio', 5);
 
