@@ -67,7 +67,7 @@ select * from userrelation where userid = 2;
 
 --D4
 
-select * from structured_string_search('Twilight', 'Update', 'actor', 'David Epstein');
+select * from structured_string_search(1, 'Twilight', 'Update', 'actor', 'David Epstein');
 
 --D5
 

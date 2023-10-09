@@ -164,11 +164,12 @@ $$
 	end;
 $$;
 --D4
-drop function if exists structured_string_search(title_name varchar(255), plot_text text, job varchar(255), person_name varchar(255));
-create function structured_string_search(title_name varchar(255), plot_text text, job varchar(255), person_name varchar(255))
+drop function if exists structured_string_search(userid int4, title_name varchar(255), plot_text text, job varchar(255), person_name varchar(255));
+create function structured_string_search(userid int4, title_name varchar(255), plot_text text, job varchar(255), person_name varchar(255))
 returns varchar(255)
 language sql AS
 $$
+		call string_search_insert(userid, title_name);
 		select titleakas.titlename from titleakas natural join titlebasics, personassociation, person
 		where titlebasics.titleid = personassociation.titleid and personassociation.personid = person.personid
 		and LOWER(titleakas.titlename) like '%' || LOWER(title_name) || '%'
