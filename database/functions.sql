@@ -291,3 +291,45 @@ ORDER BY COUNT(word) DESC
 LIMIT max_length;
 $$;
 
+--D11
+
+DROP FUNCTION IF EXISTS get_exact_match(keyword text[]);
+
+CREATE OR REPLACE FUNCTION get_exact_match(keywords text[])
+RETURNS TABLE (tconst text, title text) AS $$
+BEGIN
+    RETURN QUERY
+        SELECT DISTINCT wi.tconst::text, titleakas.titlename::text
+        FROM wi
+        JOIN titleakas ON wi.tconst = titleakas.titleID
+        WHERE wi.word = ANY(keywords);
+END;
+$$ LANGUAGE plpgsql;
+
+--D12
+DROP FUNCTION IF EXISTS get_best_match_titles(query_text text);
+
+CREATE OR REPLACE FUNCTION get_best_match_titles(query_text text)
+RETURNS TABLE (title text, rank bigint) AS $$
+BEGIN
+    query_text := LOWER(query_text);
+
+    -- Create a temporary table to store the ranking based on how many occurences of a word
+    CREATE TEMP TABLE temp_title_rank AS
+        SELECT wi.tconst::text, count(wi.word) AS rank
+        FROM (SELECT DISTINCT tconst FROM wi) wi_titles
+        JOIN wi ON wi_titles.tconst = wi.tconst AND 
+				wi.word ILIKE ('%' || query_text || '%')
+        GROUP BY wi.tconst;
+    
+    -- Return the results and order on descending rank
+    RETURN QUERY
+        SELECT tconst AS title, 
+		temp_title_rank.rank
+        FROM  temp_title_rank
+        ORDER BY temp_title_rank.rank DESC;
+    
+    -- Drop the temporary table
+    DROP TABLE temp_title_rank;
+END;
+$$ LANGUAGE plpgsql;

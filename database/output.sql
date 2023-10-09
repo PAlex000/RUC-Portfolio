@@ -101,3 +101,12 @@ Select word, counter from person_words('Fred Astaire', 10);
 Select word, counter from person_words('Jennifer Aniston', 20);
 SELECT word, counter FROM person_words('Leonardo DiCaprio', 5);
 
+--D11
+SELECT * FROM get_exact_match(ARRAY['twilight', 'vampire', 'book']);
+SELECT * FROM get_exact_match(ARRAY['Harry', 'Potter', 'azkaban']);
+SELECT * FROM get_exact_match(ARRAY['fresh', 'cut', 'grass']);
+
+--D12
+SELECT * FROM get_best_match_titles('Cake');
+SELECT * FROM get_best_match_titles('Azkaban');
+SELECT * FROM get_best_match_titles('Donald');
