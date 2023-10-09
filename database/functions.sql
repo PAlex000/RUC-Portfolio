@@ -163,6 +163,19 @@ $$
 	insert into rating values (tid, pid, grade, reviewtext, CURRENT_DATE);
 	end;
 $$;
+--D4
+drop function if exists structured_string_search(title_name varchar(255), plot_text text, job varchar(255), person_name varchar(255));
+create function structured_string_search(title_name varchar(255), plot_text text, job varchar(255), person_name varchar(255))
+returns varchar(255)
+language sql AS
+$$
+		select titleakas.titlename from titleakas natural join titlebasics, personassociation, person
+		where titlebasics.titleid = personassociation.titleid and personassociation.personid = person.personid
+		and LOWER(titleakas.titlename) like '%' || LOWER(title_name) || '%'
+		and LOWER(titlebasics.plot) like '%' || LOWER(plot_text) || '%'
+		and LOWER(personassociation.job)  like '%' || LOWER(job) || '%'
+		and LOWER(person.primaryname) like '%' || LOWER(person_name) || '%';
+$$;
 
 --D5 
 DROP FUNCTION IF EXISTS structured_search_actors(actor_name text);

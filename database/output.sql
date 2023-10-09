@@ -65,6 +65,10 @@ select * from search where userid = 2;
 select * from bookmarks where userid = 2;
 select * from userrelation where userid = 2;
 
+--D4
+
+select * from structured_string_search('Twilight', 'Update', 'actor', 'David Epstein');
+
 --D5
 
 SELECT * FROM structured_search_actors('Jerry Seinfeld');
