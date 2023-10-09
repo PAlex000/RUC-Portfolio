@@ -333,3 +333,32 @@ BEGIN
     DROP TABLE temp_title_rank;
 END;
 $$ LANGUAGE plpgsql;
+
+--D13
+
+DROP FUNCTION IF EXISTS get_word_rank(query_text text);
+
+CREATE OR REPLACE FUNCTION get_word_rank(query_text text)
+RETURNS TABLE (word_rank text, weight BIGINT) AS $$
+BEGIN
+    query_text := LOWER(query_text);
+
+    -- Create a temporary table to store the ranking based on how many occurences of a word
+    CREATE TEMP TABLE word_rank AS
+        SELECT wi.word, count(wi.word) AS rank
+        FROM (SELECT DISTINCT tconst FROM wi) wi_titles
+        JOIN wi ON wi_titles.tconst = wi.tconst AND 
+				wi.word ILIKE ('%' || query_text || '%')
+        GROUP BY wi.word;
+    
+    -- Return the results and order on descending rank
+    RETURN QUERY
+        SELECT word AS word_rank, 
+				word_rank.rank
+        FROM  word_rank
+        ORDER BY word_rank.rank DESC;
+    
+    -- Drop the temporary table
+    DROP TABLE word_rank;
+END;
+$$ LANGUAGE plpgsql;

@@ -110,3 +110,9 @@ SELECT * FROM get_exact_match(ARRAY['fresh', 'cut', 'grass']);
 SELECT * FROM get_best_match_titles('Cake');
 SELECT * FROM get_best_match_titles('Azkaban');
 SELECT * FROM get_best_match_titles('Donald');
+
+--D13
+
+SELECT * from get_word_rank('Baby');
+SELECT * from get_word_rank('Cow');
+SELECT * from get_word_rank('Party');
