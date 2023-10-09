@@ -24,6 +24,7 @@ select distinct * from string_search(1, 'Hämärän rajamailla');
 select distinct * from string_search(2, 'Cause life gets complicated, baby.');
 
 --D1
+
 select * from userrelation;
 call create_user('6th', 'Chosen', 'chose.doe@example.com', 'hashed_pwd', '012', true, true);
 select * from userrelation;
@@ -37,12 +38,14 @@ call delete_bookmark_movie(5, 'tt7555000');
 select * from bookmarks;
 
 --D2
+
 select * from search;
 select distinct * from string_search(5,'Cause life gets complicated, baby.');
 select * from search;
 select * from titlebasics where plot like '%Cause life gets complicated, baby.%';
 
 --D3
+
 select * from titlebasics where movie_rating is not null;
 select * from rating;
 call rate('tt7147062', 5, 10, 'Great Movie');
@@ -51,6 +54,7 @@ select * from titlebasics where movie_rating is not null;
 select * from rating;
 
 --Triggers for D1/D2/D3
+
 select * from rating where userid = 2;
 select * from search where userid = 2;
 select * from bookmarks where userid = 2;
@@ -62,6 +66,7 @@ select * from bookmarks where userid = 2;
 select * from userrelation where userid = 2;
 
 --D5
+
 SELECT * FROM structured_search_actors('Jerry Seinfeld');
 SELECT * FROM structured_search_actors('Judy Garland');
 SELECT * FROM structured_search_actors('Alice Cooper');
@@ -72,15 +77,23 @@ SELECT * FROM find_frequent_coactors('nm0001456');
 SELECT * FROM find_frequent_coactors('nm0001424');
 SELECT * FROM find_frequent_coactors('nm0001343');
 
+--D7
+
+select * from personassociation where titleid = 'tt1605768';
+select * from person where name_rating is not null;
+call rate('tt1605768', 1, 5);
+call rate('tt1605768', 3, 10);
+select * from person where name_rating is not null;
+
 --D8
 select popular_actor('The Twilight Zone');
 select popular_actor('Friends');
 select popular_actor('Inception');
 
-
 --D9
 select similar_movie('The Twilight Zone');
-select similar_movie('Friends');
+--We should find another test, because if we run this in the cmd, it's going to complain due to some title has different encodings.
+--select similar_movie('Friends');
 select similar_movie('Inception');
 
 --D10
