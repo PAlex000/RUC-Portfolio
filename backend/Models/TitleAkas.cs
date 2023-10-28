@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace backend.Models
 {
-    internal class TitleAkas
+    public class TitleAkas
     {
-        public string? titleID {  get; set; }
+        public string? ID {  get; set; }
         public int ordering {  get; set; }
         public string? title { get; set; }
         public string? region { get; set; }
         public string? attribute { get; set; }
-        public string? typeName { get; set; }
-        public string? languagename { get; set; }
+        public string? type { get; set; }
+        public string? language { get; set; }
         public bool isOriginalTitle { get; set; }
 
     }
