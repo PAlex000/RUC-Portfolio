@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace backend.Models
 {
-    internal class TitleBasics
+    public class TitleBasics
     {
-        public string titleID { get; set; }
+        public string ID { get; set; }
         public string type { get; set; }
         public bool isAdult { get; set; }
         public string startYear { get; set; }
