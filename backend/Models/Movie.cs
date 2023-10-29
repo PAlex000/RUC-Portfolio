@@ -10,6 +10,8 @@ namespace backend.Models
     {
         public int TitleID { get; set; }
         public string? TitleName { get; set; }
+
+        public Rating? Rating { get; set; }
         public double AverageRating { get; set; }
     }
 }
