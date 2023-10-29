@@ -16,6 +16,7 @@ namespace backend.Models
         public string poster {  get; set; }
         public string description { get; set; }
         public int rating { get; set; }
+        public List<TitleAkas> Akas { get; set; }
 
     }
 }

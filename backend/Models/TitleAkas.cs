@@ -16,6 +16,7 @@ namespace backend.Models
         public string? type { get; set; }
         public string? language { get; set; }
         public bool isOriginalTitle { get; set; }
+        public TitleBasics Basics { get; set; }
 
     }
 }
