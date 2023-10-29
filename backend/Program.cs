@@ -33,10 +33,16 @@ namespace backend
                         case 1:
                             //getRatings();
                             Console.WriteLine("You chose 1");
+                            for (int i = 0; i < movies.Count; i++)
+                            {
+                                Console.WriteLine(movies[i].AverageRating);
+                            }
+
                             break;
                         case 2:
                             //RatingService.RateMovie(choice);
-                            Console.WriteLine("You chose", choice);
+                            Console.WriteLine("You chose 2");
+                            
                             break;
                         case 3:
                             Environment.Exit(0);
