@@ -30,7 +30,6 @@ public class MovieContext : DbContext
             .Property(x => x.status).HasColumnName("status");
 
 
-
         modelBuilder.Entity<TitleAkas>().ToTable("titleakas");
         modelBuilder.Entity<TitleAkas>().Property(x => x.ID).HasColumnName("titleid");
         modelBuilder.Entity<TitleAkas>().Property(x => x.ordering).HasColumnName("ordering");
@@ -49,10 +48,6 @@ public class MovieContext : DbContext
         modelBuilder.Entity<TitleBasics>().Property(x => x.poster).HasColumnName("poster");
         modelBuilder.Entity<TitleBasics>().Property(x => x.description).HasColumnName("plot");
         modelBuilder.Entity<TitleBasics>().Property(x => x.rating).HasColumnName("movie_rating");
-
-
-
-
 
     }
 }
