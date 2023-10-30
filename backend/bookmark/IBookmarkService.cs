@@ -10,5 +10,6 @@ namespace bookmark
     public interface IBookmarkService
     {
         IList<Bookmark> GetBookmarks();
+        public Bookmark? GetBookmarkById(int bookmarkId);
     }
 }
