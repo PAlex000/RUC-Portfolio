@@ -27,7 +27,7 @@ namespace search
             {
                 userID = userId,
                 searchString = searchString,
-                searchDate = DateTime.Now
+                searchDate = DateTime.UtcNow
             };
             db.Add(search);
             db.SaveChanges();
@@ -37,6 +37,7 @@ namespace search
         {
             return DeleteSearch(searchHistory.searchString, searchHistory.userID);
         }
+        //TODO: For some reason it deletes everything.
         public bool DeleteSearch(string searchString, int _userID)
         {
             var searchResult = db.SearchHistory.FirstOrDefault(x => x.searchString == searchString && x.userID == _userID);

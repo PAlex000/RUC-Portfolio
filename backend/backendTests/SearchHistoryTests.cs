@@ -31,8 +31,8 @@ namespace backendTests
         public void DeleteSearch_ValidId_RemoveSearch()
         {
             var service = new SearchService();
-            service.CreateSearch(1, "SearchStringTest");
-            var result = service.DeleteSearch("SearchStringTest", 1);
+            service.CreateSearch(1, "SearchStringTest12");
+            var result = service.DeleteSearch("SearchStringTest12", 1);
             Assert.True(result);
         }
         [Fact]
