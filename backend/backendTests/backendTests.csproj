@@ -23,6 +23,7 @@
   </ItemGroup>
     <ItemGroup>
 		<ProjectReference Include="..\bookmark\bookmark.csproj" />
+		<ProjectReference Include="..\search\search.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -23,5 +23,7 @@ public class SearchContext : DbContext
             .Property(x => x.searchString).HasColumnName("searchstring");
         modelBuilder.Entity<Search>()
             .Property(x => x.searchDate).HasColumnName("searchdate");
+        modelBuilder.Entity<Search>()
+            .HasKey(x => new { x.userID });
     }
 }
