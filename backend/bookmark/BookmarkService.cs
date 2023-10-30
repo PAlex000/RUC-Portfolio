@@ -12,7 +12,12 @@ namespace bookmark
         private readonly MovieContext db = new MovieContext();
         public IList<Bookmark> GetBookmarks()
         {
-            return new List<Bookmark>();
+            return db.Bookmarks.ToList();
         }
+        public Bookmark? GetBookmarkById(int bookmarkId)
+        {
+            return db.Bookmarks.FirstOrDefault(x => x.ID == bookmarkId);
+        }
+
     }
 }
