@@ -9,7 +9,7 @@ namespace bookmark
 {
     public class BookmarkService : IBookmarkService
     {
-        private readonly MovieContext db = new MovieContext();
+        private readonly BookmarkContext db = new BookmarkContext();
         public IList<Bookmark> GetBookmarks()
         {
             return db.Bookmarks.ToList();
