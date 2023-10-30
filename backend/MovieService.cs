@@ -30,6 +30,30 @@ namespace backend
             return similarMovies;
         }
 
+        public void CreateMovie(TitleBasics newMovie, TitleAkas newTitleAkas)
+        {
+            var db = new MovieContext();
+            newTitleAkas.Basics = newMovie;
+            newMovie.Akas = new List<TitleAkas> { newTitleAkas };
+
+            db.TitleBasics.Add(newMovie);
+            db.SaveChanges();
+        }
+
+        public void DeleteMovie(string movieId)
+        {
+            var db = new MovieContext();
+            var movieToDelete = db.TitleBasics.Include(tb => tb.Akas)
+                                .FirstOrDefault(m => m.ID == movieId);
+
+            if (movieToDelete != null)
+            {
+                db.TitleAkas.RemoveRange(movieToDelete.Akas);
+                db.TitleBasics.Remove(movieToDelete);
+                db.SaveChanges();
+            }
+        }
+
     }
 }
 
