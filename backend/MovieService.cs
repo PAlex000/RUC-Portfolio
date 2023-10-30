@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backend
 {
-    public class MovieService
+    public class MovieService : IMovieService
     {
         public List<TitleBasics> SearchMovies(int userId, string searchString)
         {
@@ -30,7 +30,7 @@ namespace backend
             return similarMovies;
         }
 
-        public void CreateMovie(TitleBasics newMovie, TitleAkas newTitleAkas)
+        public bool CreateMovie(TitleBasics newMovie, TitleAkas newTitleAkas)
         {
             var db = new MovieContext();
             newTitleAkas.Basics = newMovie;
@@ -38,9 +38,10 @@ namespace backend
 
             db.TitleBasics.Add(newMovie);
             db.SaveChanges();
+            return true;
         }
 
-        public void DeleteMovie(string movieId)
+        public bool DeleteMovie(string movieId)
         {
             var db = new MovieContext();
             var movieToDelete = db.TitleBasics.Include(tb => tb.Akas)
@@ -52,8 +53,34 @@ namespace backend
                 db.TitleBasics.Remove(movieToDelete);
                 db.SaveChanges();
             }
+
+            return movieToDelete != null;
         }
 
+        public void UpdateMovie(string movieId, TitleBasics updatedMovie, TitleAkas updatedTitleAkas)
+        {
+            var db = new MovieContext();
+            var existingMovie = db.TitleBasics.Include(tb => tb.Akas)
+                                .FirstOrDefault(m => m.ID == movieId);
+            if (existingMovie != null)
+            {
+                existingMovie.type = updatedMovie.type;
+                existingMovie.isAdult = updatedMovie.isAdult;
+                existingMovie.startYear = updatedMovie.startYear;
+                existingMovie.endYear = updatedMovie.endYear;
+                existingMovie.poster = updatedMovie.poster;
+                existingMovie.description = updatedMovie.description;
+                existingMovie.rating = updatedMovie.rating;
+
+                if (existingMovie.Akas.Any())
+                {
+                    var existingAkas = existingMovie.Akas.First();
+                    existingAkas.title = updatedTitleAkas.title;
+                }
+
+                db.SaveChanges();
+            }
+        }
     }
 }
 
