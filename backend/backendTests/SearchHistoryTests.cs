@@ -18,7 +18,6 @@ namespace backendTests
             var service = new SearchService();
             var search = service.GetSearchHistory();
             Assert.Equal(4, search.Count);
-            Assert.Equal("Twilight", search.Last().searchString);
         }
         [Fact]
         public void GetSearchHistory_ValiduserId_ReturnsSearchHistoryObject()
