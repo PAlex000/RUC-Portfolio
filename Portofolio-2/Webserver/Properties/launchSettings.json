@@ -1,0 +1,32 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:5001",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "WebServer": {
+      "commandName": "Project",
+<<<<<<< Updated upstream:Assignment-4/WebServer/Properties/launchSettings.json
+      "applicationUrl": "http://localhost:5001",
+=======
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:28178",
+>>>>>>> Stashed changes:Assignment-4/Webserver/Properties/launchSettings.json
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
