@@ -19,14 +19,14 @@ namespace backendTests
             var service = new BookmarkService();
             var bookmarks = service.GetBookmarks();
             Assert.Equal(3, bookmarks.Count);
-            Assert.Equal("tt7554052", bookmarks.First().titleID);
+            Assert.Equal("tt7535994", bookmarks.First().titleID);
         }
         [Fact]
         public void GetBookmark_ValidId_ReturnsBookmarkObject()
         {
             var service = new BookmarkService();
             var bookmark = service.GetBookmarkById(1);
-            Assert.Equal("tt10577876", bookmark?.titleID);
+            Assert.Equal("tt7535994", bookmark?.titleID);
         }
         [Fact]
         public void DeleteBookmark_ValidId_RemoveBookmark()
