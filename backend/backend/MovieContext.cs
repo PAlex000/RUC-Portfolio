@@ -6,7 +6,7 @@ public class MovieContext : DbContext
 {
     public DbSet<Bookmark> Bookmarks { get; set; }
     public DbSet<Search> SearchHistory { get; set; }
-    public DbSet<User> User { get; set; }
+    public DbSet<User> Users { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.EnableSensitiveDataLogging();

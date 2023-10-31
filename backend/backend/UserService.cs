@@ -17,7 +17,7 @@ namespace backend
         {
             return db.Users.FirstOrDefault(x => x.email == _email);
         }
-        public User CreateUser(string _firstName, string _lastName, string _email, string _pwdHash, string? _phoneNo)
+        public User CreateUser(string _firstName, string _lastName, string _email, string _pwdHash, string _phoneNo = null)
         {
             int id = db.Users.Max(x => x.userID) + 1;
             User user = new User
