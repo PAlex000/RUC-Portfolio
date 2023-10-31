@@ -1,0 +1,12 @@
+/Users/cristina-genovevabodnari/Desktop/RUC-Assignments/Assignment-4/DataLayer/bin/Debug/net7.0/DataLayer.deps.json
+/Users/cristina-genovevabodnari/Desktop/RUC-Assignments/Assignment-4/DataLayer/bin/Debug/net7.0/DataLayer.dll
+/Users/cristina-genovevabodnari/Desktop/RUC-Assignments/Assignment-4/DataLayer/bin/Debug/net7.0/DataLayer.pdb
+/Users/cristina-genovevabodnari/Desktop/RUC-Assignments/Assignment-4/DataLayer/obj/Debug/net7.0/DataLayer.csproj.AssemblyReference.cache
+/Users/cristina-genovevabodnari/Desktop/RUC-Assignments/Assignment-4/DataLayer/obj/Debug/net7.0/DataLayer.GeneratedMSBuildEditorConfig.editorconfig
+/Users/cristina-genovevabodnari/Desktop/RUC-Assignments/Assignment-4/DataLayer/obj/Debug/net7.0/DataLayer.AssemblyInfoInputs.cache
+/Users/cristina-genovevabodnari/Desktop/RUC-Assignments/Assignment-4/DataLayer/obj/Debug/net7.0/DataLayer.AssemblyInfo.cs
+/Users/cristina-genovevabodnari/Desktop/RUC-Assignments/Assignment-4/DataLayer/obj/Debug/net7.0/DataLayer.csproj.CoreCompileInputs.cache
+/Users/cristina-genovevabodnari/Desktop/RUC-Assignments/Assignment-4/DataLayer/obj/Debug/net7.0/DataLayer.dll
+/Users/cristina-genovevabodnari/Desktop/RUC-Assignments/Assignment-4/DataLayer/obj/Debug/net7.0/refint/DataLayer.dll
+/Users/cristina-genovevabodnari/Desktop/RUC-Assignments/Assignment-4/DataLayer/obj/Debug/net7.0/DataLayer.pdb
+/Users/cristina-genovevabodnari/Desktop/RUC-Assignments/Assignment-4/DataLayer/obj/Debug/net7.0/ref/DataLayer.dll
