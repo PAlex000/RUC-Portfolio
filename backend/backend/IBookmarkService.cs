@@ -1,6 +1,6 @@
-﻿using bookmark.Models;
+﻿using backend.Models;
 
-namespace bookmark
+namespace backend
 {
     public interface IBookmarkService
     {

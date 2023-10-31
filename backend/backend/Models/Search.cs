@@ -1,4 +1,4 @@
-﻿namespace search.Models
+﻿namespace backend.Models
 {
     public class Search
     {

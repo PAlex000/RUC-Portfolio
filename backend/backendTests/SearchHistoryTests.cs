@@ -1,5 +1,5 @@
-﻿using search;
-using search.Models;
+﻿using backend;
+using backend.Models;
 namespace backendTests
 {
     public class SearchHistoryTests
