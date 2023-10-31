@@ -1,10 +1,10 @@
-﻿using search.Models;
+﻿using backend.Models;
 
-namespace search
+namespace backend
 {
     public class SearchService : ISearchService
     {
-        private readonly SearchContext db = new SearchContext();
+        private readonly MovieContext db = new MovieContext();
         public IList<Search> GetSearchHistory()
         {
             return db.SearchHistory.ToList();

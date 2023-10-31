@@ -1,6 +1,6 @@
-﻿using search.Models;
+﻿using backend.Models;
 
-namespace search
+namespace backend
 {
     public interface ISearchService
     {

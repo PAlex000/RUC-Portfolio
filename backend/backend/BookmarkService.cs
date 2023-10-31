@@ -1,15 +1,11 @@
-﻿using bookmark.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using backend.Models;
 
-namespace bookmark
+
+namespace backend
 {
     public class BookmarkService : IBookmarkService
     {
-        private readonly BookmarkContext db = new BookmarkContext();
+        private readonly MovieContext db = new MovieContext();
         public IList<Bookmark> GetBookmarks()
         {
             return db.Bookmarks.ToList();

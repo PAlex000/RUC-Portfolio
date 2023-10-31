@@ -1,4 +1,4 @@
-﻿namespace bookmark.Models
+﻿namespace backend.Models
 {
     public class Bookmark
     {

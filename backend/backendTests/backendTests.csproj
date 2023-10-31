@@ -21,9 +21,8 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-    <ItemGroup>
-		<ProjectReference Include="..\bookmark\bookmark.csproj" />
-		<ProjectReference Include="..\search\search.csproj" />
+	<ItemGroup>
+		<ProjectReference Include="..\backend\backend.csproj" />
 	</ItemGroup>
 
 </Project>
