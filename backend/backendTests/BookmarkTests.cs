@@ -22,7 +22,7 @@ namespace backendTests
             Assert.Equal("tt7554052", bookmarks.First().titleID);
         }
         [Fact]
-        public void GetBookmark_ValidId_ReturnsCategoryObject()
+        public void GetBookmark_ValidId_ReturnsBookmarkObject()
         {
             var service = new BookmarkService();
             var bookmark = service.GetBookmarkById(1);
