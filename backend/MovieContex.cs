@@ -7,6 +7,13 @@ namespace backend;
 
 public class MovieContext : DbContext
 {
+    private string v;
+
+    public MovieContext(string v)
+    {
+        this.v = v;
+    }
+
     public DbSet<Bookmark> Bookmarks { get; set; }
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Rating> Ratings { get; set; }
@@ -16,7 +23,7 @@ public class MovieContext : DbContext
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder
             .LogTo(Console.Out.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
-        optionsBuilder.UseNpgsql($"host=localhost;db=movie;uid=postgres;pwd=.");
+        optionsBuilder.UseNpgsql($"host=localhost;db=movie;uid=postgres;pwd=Ronja");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,14 +37,12 @@ public class MovieContext : DbContext
             .Property(x => x.titleID).HasColumnName("titleid");
         modelBuilder.Entity<Bookmark>()
             .Property(x => x.status).HasColumnName("status");
-        modelBuilder.Entity<Rating>().ToTable("rating");
+        modelBuilder.Entity<Rating>().ToTable("title_ratings");
         modelBuilder.Entity<Rating>()
-            .Property(x => x.TitleID).HasColumnName("titleid");
+            .Property(x => x.TitleID).HasColumnName("tconst");
         modelBuilder.Entity<Rating>()
-            .Property(x => x.UserID).HasColumnName("userid");
+            .Property(x => x.AverageRating).HasColumnName("averagerating");
         modelBuilder.Entity<Rating>()
-            .Property(x => x.Grade).HasColumnName("grade");
-        modelBuilder.Entity<Rating>()
-            .Property(x => x.ReviewText).HasColumnName("reviewtext");
+        .HasKey(r => new { r.TitleID, r.UserID });
     }
 }

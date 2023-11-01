@@ -12,28 +12,27 @@ namespace backend
             _context = context;
         }
 
-        public void CreateRating(int titleID, int userID, int grade, string reviewText)
+        public void CreateRating(String titleID, int averageRating, int numVotes)
         {
             var rating = new Rating
             {
                 TitleID = titleID,
-                UserID = userID,
-                Grade = grade,
-                ReviewText = reviewText
+                AverageRating = averageRating,
+                NumVotes = numVotes,
             };
 
             _context.Ratings.Add(rating);
             _context.SaveChanges();
         }
 
-        public List<Rating> ReadRatingsForMovie(int titleID)
+        public List<Rating> ReadRatingsForMovie(String titleID)
         {
             return _context.Ratings.Where(r => r.TitleID == titleID).ToList();
         }
 
-        public void UpdateRating(int ratingId, int newRatingValue, string newReview)
+        public void UpdateRating(String titleID, int grade)
         {
-            var rating = _context.Ratings.Find(ratingId);
+            var rating = _context.Ratings.Find(titleID);
             if (rating != null)
             {
                 rating.Grade = newRatingValue;
@@ -43,7 +42,7 @@ namespace backend
             }
         }
 
-        public void DeleteRating(int ratingId)
+        public void DeleteRating(String ratingId)
         {
             var rating = _context.Ratings.Find(ratingId);
             if (rating != null)
@@ -54,7 +53,7 @@ namespace backend
             }
         }
 
-        private void UpdateAverageRating(int titleID)
+        private void UpdateAverageRating(String titleID)
         {
             var ratings = _context.Ratings.Where(r => r.TitleID == titleID).ToList();
             var movie = _context.Movies.Find(titleID);
