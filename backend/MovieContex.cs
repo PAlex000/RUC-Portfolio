@@ -44,7 +44,7 @@ public class MovieContext : DbContext
         modelBuilder.Entity<TitleBasics>().Property(x => x.type).HasColumnName("titletype");
         modelBuilder.Entity<TitleBasics>().Property(x => x.isAdult).HasColumnName("isadult");
         modelBuilder.Entity<TitleBasics>().Property(x => x.startYear).HasColumnName("startyear");
-        modelBuilder.Entity<TitleBasics>().Property(x => x.endYear).HasColumnName("endYear");
+        modelBuilder.Entity<TitleBasics>().Property(x => x.endYear).HasColumnName("endyear");
         modelBuilder.Entity<TitleBasics>().Property(x => x.poster).HasColumnName("poster");
         modelBuilder.Entity<TitleBasics>().Property(x => x.description).HasColumnName("plot");
         modelBuilder.Entity<TitleBasics>().Property(x => x.rating).HasColumnName("movie_rating");
