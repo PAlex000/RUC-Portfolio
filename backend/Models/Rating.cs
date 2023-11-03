@@ -17,8 +17,6 @@ namespace backend.Models
 
         [Required]
         public int Grade {  get; set; }
-
-        [Required]
         public String ReviewText { get; set; }
 
      
