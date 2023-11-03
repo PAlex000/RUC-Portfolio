@@ -30,7 +30,7 @@ namespace RatingServiceTest
                     {
                         switch (choice)
                         {
-                            case 1:
+                            case 1: //Create Rating
                                 Console.Write("Enter Title ID: ");
                                 string titleId = Console.ReadLine();
 
@@ -58,11 +58,36 @@ namespace RatingServiceTest
 
                                 Console.WriteLine(titleId);
                                 break;
+                            
+                            case 2: //Read ratings of 1 title
+                                Console.Write("Enter Title ID: ");
+                                string titleIdToRead = Console.ReadLine();
+                                var ratingsOfTitle = ratingService.ReadRatingsForMovie(titleIdToRead);
+                                foreach (var rating in ratingsOfTitle) Console.WriteLine(rating.ReviewText);
+                                break;
+                            
+                            case 3: //Update Rating
+                                Console.Write("Enter Title ID: ");
+                                string titleIdForUp = Console.ReadLine();
 
-                            case 4:
-                                Console.Write("Enter title and user ID to delete rating: ");
+                                Console.Write("Enter User ID: ");
+                                int userIdForUp = int.Parse(Console.ReadLine());
+
+                                Console.Write("Enter new Rating Value: ");
+                                int gradeForUp = int.Parse(Console.ReadLine());
+
+                                Console.Write("Enter new Review: ");
+                                string reviewForUp = Console.ReadLine();
+
+                                String rateDateForUp = DateTime.UtcNow.ToString();
+
+                                ratingService.UpdateRating(titleIdForUp, userIdForUp, gradeForUp, reviewForUp, rateDateForUp);
+                                break;
+
+                            case 4: //Delete Rating
+                                Console.Write("Enter title to delete rating: ");
                                 String titleIdToDel = Console.ReadLine();
-                                Console.Write("Enter title and user ID to delete rating: ");
+                                Console.Write("Enter user ID to delete rating: ");
                                 int userIdToDel = int.Parse(Console.ReadLine());
                                 ratingService.DeleteRating(titleIdToDel, userIdToDel);
                                 Console.WriteLine("Rating deleted successfully.");

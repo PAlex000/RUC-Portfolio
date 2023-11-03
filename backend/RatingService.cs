@@ -67,7 +67,7 @@ class RatingService
             rating.ReviewText = newReview;
             rating.RateDate = rateDate; // Update the RateDate
             _context.SaveChanges();
-            UpdateAverageRating(titleID);
+            Console.WriteLine("Rating updated successfully.");
         }
     }
 
@@ -78,24 +78,6 @@ class RatingService
         {
             _context.RatingsHistory.Remove(rating);
             _context.SaveChanges();
-            UpdateAverageRating(titleID);
         }
-    }
-
-    private void UpdateAverageRating(String titleID)
-    {
-        var ratings = _context.RatingsHistory.Where(r => r.TitleID == titleID).ToList();
-        var movie = _context.Movies.Find(titleID);
-
-        if (ratings.Count > 0)
-        {
-            movie.AverageRating = (double)ratings.Average(r => r.Grade);
-        }
-        else
-        {
-            movie.AverageRating = 0;
-        }
-
-        _context.SaveChanges();
     }
 }
