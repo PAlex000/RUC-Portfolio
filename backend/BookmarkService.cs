@@ -9,7 +9,7 @@ namespace backend
 {
     public class BookmarkService : IBookmarkService
     {
-        private readonly MovieContext db = new MovieContext("hey");
+        private readonly MovieContext db = new MovieContext();
         public IList<Bookmark> GetBookmarks()
         {
             return new List<Bookmark>();

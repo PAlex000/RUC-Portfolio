@@ -9,8 +9,19 @@ namespace backend.Models
 {
    public class Rating
     {
-        public string TitleID { get; set; }
-        public int AverageRating { get; set; }
-        public int NumVotes {  get; set; }
+        [Required]
+        public String TitleID { get; set; }
+
+        [Required]
+        public int UserID { get; set; }
+
+        [Required]
+        public int Grade {  get; set; }
+
+        [Required]
+        public String ReviewText { get; set; }
+
+     
+        public String RateDate { get; set; }
     }
 }
