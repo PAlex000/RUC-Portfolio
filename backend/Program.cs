@@ -7,9 +7,10 @@ namespace RatingServiceTest
     {
         static void Main(string[] args)
         {
+            
             // Create a MovieRatingContext (or MovieContext) instance here
             // Replace 'yourConnectionString' with your PostgreSQL connection string
-            using (var context = GetContext())
+            using (var context = new MovieContext())
             {
                 var ratingService = new RatingService(context);
 
@@ -37,49 +38,27 @@ namespace RatingServiceTest
                                 int userId = int.Parse(Console.ReadLine());
 
                                 Console.Write("Enter Rating Value: ");
-                                int ratingValue = int.Parse(Console.ReadLine());
+                                int grade = int.Parse(Console.ReadLine());
 
                                 Console.Write("Enter Review: ");
                                 string review = Console.ReadLine();
 
-                                DateTime createdTime = DateTime.UtcNow;
+                                String rateDate = DateTime.UtcNow.ToString();
 
-                                ratingService.CreateRating(titleId, userId, ratingValue, review, createdTime);
+                                ratingService.CreateRating(titleId, userId, grade, review, rateDate);
+                                var ratinghistory = ratingService.GetRatingHistory(userId);
 
-                                DateTime rateDate = DateTime.UtcNow;
+                                var result = from s in ratinghistory where s.UserID == userId select s;
 
-                                ratingService.CreateRating(titleId, userId, ratingValue, review, rateDate);
-                                Console.WriteLine("Rating created successfully.");
+                                foreach (var ratinghistoryitem in result) Console.WriteLine(ratinghistoryitem.ReviewText);
                                 break;
 
-                            case 2:
-                                Console.Write("Enter Movie/TV Show ID: ");
-                                String titleIdForList = Console.ReadLine();
-                                var ratings = ratingService.ReadRatingsForMovie(titleIdForList);
-                                foreach (var rating in ratings)
-                                {
-                                    Console.WriteLine($"Rating ID: {rating.TitleID}, User ID: {rating.UserID}, Rating Value: {rating.Grade}, Review: {rating.ReviewText}");
-                                }
-                                break;
-
-                            case 3:
-                                Console.Write("Enter Rating ID to update: ");
-                                String ratingIdToUpdate = Console.ReadLine();
-                                Console.Write("Enter New Rating Value: ");
-                                int newRatingValue = int.Parse(Console.ReadLine());
-                                Console.Write("Enter New Review: ");
-                                string newReview = Console.ReadLine();
-
-                                ratingService.UpdateRating(ratingIdToUpdate, newRatingValue, newReview);
-                                Console.WriteLine("Rating updated successfully.");
-                                break;
-
-                            case 4:
+                            /*case 4:
                                 Console.Write("Enter Rating ID to delete: ");
                                 String ratingIdToDelete = Console.ReadLine();
                                 ratingService.DeleteRating(ratingIdToDelete);
                                 Console.WriteLine("Rating deleted successfully.");
-                                break;
+                                break;*/
 
                             case 5:
                                 Environment.Exit(0);
@@ -97,7 +76,5 @@ namespace RatingServiceTest
                 }
             }
         }
-
-        private static MovieContext GetContext() => new MovieContext("host=localhost;db=movie;uid=postgres;pwd=Ronja");
     }
 }

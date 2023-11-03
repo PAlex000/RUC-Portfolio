@@ -1,73 +1,92 @@
-﻿using backend.Models;
+﻿using backend;
+using backend.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
-namespace backend
+class RatingService
 {
-    class RatingService
+    private readonly MovieContext _context = new MovieContext();
+
+    public RatingService(MovieContext context)
     {
-        private readonly MovieContext _context;
+        _context = context;
+    }
 
-        public RatingService(MovieContext context)
+    public IList<Rating> GetRatingHistory(int _userID)
+    {
+        var ratings = _context.RatingsHistory.ToList();
+
+        foreach (var rating in ratings)
         {
-            _context = context;
+            rating.RateDate = DateTime.UtcNow.ToShortDateString();
         }
 
-        public void CreateRating(String titleID, int averageRating, int numVotes)
-        {
-            var rating = new Rating
-            {
-                TitleID = titleID,
-                AverageRating = averageRating,
-                NumVotes = numVotes,
-            };
+        return ratings;
+    }
 
-            _context.Ratings.Add(rating);
+    public Rating CreateRating(String titleID, int userID, int grade, String reviewText, String rateDate)
+    {
+        var rating = new Rating
+        {
+            TitleID = titleID,
+            UserID = userID,
+            Grade = grade,
+            ReviewText = reviewText,
+            RateDate = rateDate
+        };
+
+        _context.Add(rating);
+        _context.SaveChanges();
+        Console.WriteLine("Rating created successfully.");
+        return rating;
+    }
+
+    public List<Rating> ReadRatingsForMovie(String titleID)
+    {
+        return _context.RatingsHistory.Where(r => r.TitleID == titleID).ToList();
+    }
+
+    public void UpdateRating(String titleID, int userID, int newRatingValue, string newReview, String rateDate)
+    {
+        var rating = _context.RatingsHistory.FirstOrDefault(r => r.TitleID == titleID && r.UserID == userID);
+        if (rating != null)
+        {
+            rating.Grade = newRatingValue;
+            rating.ReviewText = newReview;
+            rating.RateDate = rateDate; // Update the RateDate
             _context.SaveChanges();
+            UpdateAverageRating(titleID);
         }
+    }
 
-        public List<Rating> ReadRatingsForMovie(String titleID)
+    public void DeleteRating(String titleID, int userID)
+    {
+        var rating = _context.RatingsHistory.FirstOrDefault(r => r.TitleID == titleID && r.UserID == userID);
+        if (rating != null)
         {
-            return _context.Ratings.Where(r => r.TitleID == titleID).ToList();
-        }
-
-        public void UpdateRating(String titleID, int grade)
-        {
-            var rating = _context.Ratings.Find(titleID);
-            if (rating != null)
-            {
-                rating.Grade = newRatingValue;
-                rating.ReviewText = newReview;
-                _context.SaveChanges();
-                UpdateAverageRating(rating.TitleID);
-            }
-        }
-
-        public void DeleteRating(String ratingId)
-        {
-            var rating = _context.Ratings.Find(ratingId);
-            if (rating != null)
-            {
-                _context.Ratings.Remove(rating);
-                _context.SaveChanges();
-                UpdateAverageRating(rating.TitleID);
-            }
-        }
-
-        private void UpdateAverageRating(String titleID)
-        {
-            var ratings = _context.Ratings.Where(r => r.TitleID == titleID).ToList();
-            var movie = _context.Movies.Find(titleID);
-
-            if (ratings.Count > 0)
-            {
-                movie.AverageRating = ratings.Average(r => r.Grade);
-            }
-            else
-            {
-                movie.AverageRating = 0;
-            }
-
+            _context.RatingsHistory.Remove(rating);
             _context.SaveChanges();
+            UpdateAverageRating(titleID);
         }
+    }
+
+    private void UpdateAverageRating(String titleID)
+    {
+        var ratings = _context.RatingsHistory.Where(r => r.TitleID == titleID).ToList();
+        var movie = _context.Movies.Find(titleID);
+
+        if (ratings.Count > 0)
+        {
+            movie.AverageRating = (double)ratings.Average(r => r.Grade);
+        }
+        else
+        {
+            movie.AverageRating = 0;
+        }
+
+        _context.SaveChanges();
     }
 }
