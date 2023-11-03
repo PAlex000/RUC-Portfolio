@@ -76,11 +76,11 @@ class RatingService
     private void UpdateAverageRating(String titleID)
     {
         var ratings = _context.RatingsHistory.Where(r => r.TitleID == titleID).ToList();
-        var movie = _context.Movies.Find(titleID);
+        var movie = _context.RatingsHistory.Find(titleID);
 
         if (ratings.Count > 0)
         {
-            movie.AverageRating = (double)ratings.Average(r => r.Grade);
+            movie.Grade = (double)ratings.Average(r => r.Grade);
         }
         else
         {

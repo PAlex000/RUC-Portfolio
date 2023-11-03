@@ -50,15 +50,23 @@ namespace RatingServiceTest
 
                                 var result = from s in ratinghistory where s.UserID == userId select s;
 
-                                foreach (var ratinghistoryitem in result) Console.WriteLine(ratinghistoryitem.ReviewText);
+                                foreach (var ratinghistoryitem in result)
+                                {
+
+                                    Console.WriteLine(ratinghistoryitem.TitleID, " Date: ", ratinghistoryitem.RateDate);
+                                }
+
+                                Console.WriteLine(titleId);
                                 break;
 
-                            /*case 4:
-                                Console.Write("Enter Rating ID to delete: ");
-                                String ratingIdToDelete = Console.ReadLine();
-                                ratingService.DeleteRating(ratingIdToDelete);
+                            case 4:
+                                Console.Write("Enter title and user ID to delete rating: ");
+                                String titleIdToDel = Console.ReadLine();
+                                Console.Write("Enter title and user ID to delete rating: ");
+                                int userIdToDel = int.Parse(Console.ReadLine());
+                                ratingService.DeleteRating(titleIdToDel, userIdToDel);
                                 Console.WriteLine("Rating deleted successfully.");
-                                break;*/
+                                break;
 
                             case 5:
                                 Environment.Exit(0);
