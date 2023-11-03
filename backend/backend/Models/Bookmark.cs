@@ -7,4 +7,8 @@
         public int userID { get; set; }
         public bool status { get; set; }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 612f8f6 (Updated Genre)

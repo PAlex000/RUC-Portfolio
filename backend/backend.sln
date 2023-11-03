@@ -5,7 +5,11 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "backendTests", "backendTests\backendTests.csproj", "{5D365C64-7C71-4AC1-9173-29EB9F732BC5}"
 EndProject
+<<<<<<< HEAD
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "backend", "backend\backend.csproj", "{E14F4C8D-F01B-4147-AE11-B70BE7BCCA2D}"
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backend", "backend\backend.csproj", "{E14F4C8D-F01B-4147-AE11-B70BE7BCCA2D}"
+>>>>>>> 612f8f6 (Updated Genre)
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
