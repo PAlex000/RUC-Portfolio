@@ -46,7 +46,7 @@ namespace RatingServiceTest
                                 String rateDate = DateTime.UtcNow.ToString();
 
                                 ratingService.CreateRating(titleId, userId, grade, review, rateDate);
-                                var ratinghistory = ratingService.GetRatingHistory(userId);
+                                var ratinghistory = ratingService.GetRatingHistory();
 
                                 var result = from s in ratinghistory where s.UserID == userId select s;
 

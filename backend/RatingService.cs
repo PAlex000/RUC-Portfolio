@@ -15,16 +15,25 @@ class RatingService
         _context = context;
     }
 
-    public IList<Rating> GetRatingHistory(int _userID)
+    public IList<Rating> GetRatingHistory()
     {
         var ratings = _context.RatingsHistory.ToList();
-
-        foreach (var rating in ratings)
-        {
-            rating.RateDate = DateTime.UtcNow.ToShortDateString();
-        }
-
         return ratings;
+    }
+
+    public IList<Rating> GetRatingistoryByUserId(int _userID)
+    {
+        return _context.RatingsHistory
+            .Where(x => x.UserID == _userID)
+            .Select(x => new Rating
+            {
+                TitleID = x.TitleID,
+                UserID = _userID,
+                ReviewText = x.ReviewText,
+                Grade = x.Grade,
+                RateDate = x.RateDate
+            })
+            .ToList();
     }
 
     public Rating CreateRating(String titleID, int userID, int grade, String reviewText, String rateDate)
@@ -76,11 +85,11 @@ class RatingService
     private void UpdateAverageRating(String titleID)
     {
         var ratings = _context.RatingsHistory.Where(r => r.TitleID == titleID).ToList();
-        var movie = _context.RatingsHistory.Find(titleID);
+        var movie = _context.Movies.Find(titleID);
 
         if (ratings.Count > 0)
         {
-            movie.Grade = (double)ratings.Average(r => r.Grade);
+            movie.AverageRating = (double)ratings.Average(r => r.Grade);
         }
         else
         {
