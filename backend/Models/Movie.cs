@@ -12,7 +12,6 @@ namespace backend.Models
         [Key]
         public String TitleID { get; set; }
         public string? TitleName { get; set; }
-
         public Rating? Rating { get; set; }
         public double AverageRating { get; set; }
     }
