@@ -41,9 +41,6 @@ public class MovieContext : DbContext
         modelBuilder.Entity<TitleAkas>().Property(x => x.language).HasColumnName("languagename");
         modelBuilder.Entity<TitleAkas>().HasOne(ta => ta.Basics).WithMany(tb => tb.Akas).HasForeignKey(ta => ta.ID);
 
-
-
-
         modelBuilder.Entity<TitleBasics>().ToTable("titlebasics");
         modelBuilder.Entity<TitleBasics>().Property(x => x.ID).HasColumnName("titleid");
         modelBuilder.Entity<TitleBasics>().Property(x => x.type).HasColumnName("titletype");
@@ -53,6 +50,5 @@ public class MovieContext : DbContext
         modelBuilder.Entity<TitleBasics>().Property(x => x.poster).HasColumnName("poster");
         modelBuilder.Entity<TitleBasics>().Property(x => x.description).HasColumnName("plot");
         modelBuilder.Entity<TitleBasics>().Property(x => x.rating).HasColumnName("movie_rating");
-
     }
 }
