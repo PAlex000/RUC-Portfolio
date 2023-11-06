@@ -1,5 +1,0 @@
-/Users/cristina-genovevabodnari/Downloads/RUC-Portfolio-Alex/backend/backend/obj/Debug/net7.0/backend.csproj.AssemblyReference.cache
-/Users/cristina-genovevabodnari/Downloads/RUC-Portfolio-Alex/backend/backend/obj/Debug/net7.0/backend.GeneratedMSBuildEditorConfig.editorconfig
-/Users/cristina-genovevabodnari/Downloads/RUC-Portfolio-Alex/backend/backend/obj/Debug/net7.0/backend.AssemblyInfoInputs.cache
-/Users/cristina-genovevabodnari/Downloads/RUC-Portfolio-Alex/backend/backend/obj/Debug/net7.0/backend.AssemblyInfo.cs
-/Users/cristina-genovevabodnari/Downloads/RUC-Portfolio-Alex/backend/backend/obj/Debug/net7.0/backend.csproj.CoreCompileInputs.cache
