@@ -1,4 +1,6 @@
-﻿namespace backend.Models
+﻿using System;
+
+namespace backend.Models
 {
     public class Search
     {
