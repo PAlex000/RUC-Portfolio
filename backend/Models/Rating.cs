@@ -11,15 +11,11 @@ namespace backend.Models
     {
         [Required]
         public String TitleID { get; set; }
-
         [Required]
         public int UserID { get; set; }
-
         [Required]
         public int Grade {  get; set; }
         public String ReviewText { get; set; }
-
-     
         public String RateDate { get; set; }
     }
 }
