@@ -4,7 +4,6 @@ namespace backend
 {
 	public interface IGenreService
 	{
-
             IList<Genres> GetGenre();
             Genres? GetGenre(int id);
             Genres? CreateGenre(string name);

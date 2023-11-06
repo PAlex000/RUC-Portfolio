@@ -4,10 +4,11 @@ namespace backend
 {
     public interface IRatingService
     {
-        public List<Rating> ReadRatingsForMovie(int titleID);
-        public void CreateRating(int titleID, int userID, int grade, string reviewText);
-        public void UpdateRating(int ratingId, int newRatingValue, string newReview);
-        public void DeleteRating(int ratingId);
-        public void UpdateAverageRating(int titleID);
+        public IList<Rating> GetRatingHistory();
+        public IList<Rating> GetRatingistoryByUserId(int _userID);
+        public Rating CreateRating(String titleID, int userID, int grade, String reviewText, String rateDate);
+        public List<Rating> ReadRatingsForMovie(String titleID);
+        public void UpdateRating(String titleID, int userID, int newRatingValue, string newReview, String rateDate);
+        public void DeleteRating(String titleID, int userID);
     }
 }

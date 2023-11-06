@@ -7,9 +7,9 @@ namespace backend
 {
     public class MovieService : IMovieService
     {
+        private readonly MovieContext db = new MovieContext();
         public List<TitleBasics> SearchMovies(int userId, string searchString)
         {
-            var db = new MovieContext();
             var search = db.TitleBasics.Include(tb => tb.Akas)
                 .Where(tb => tb.description.Contains(searchString) || tb.Akas.Any(aka => aka.title.Contains(searchString))).ToList();
             return search;
@@ -17,7 +17,6 @@ namespace backend
 
         public List<TitleBasics> GetSimilarMovies(string movieId)
         {
-            var db = new MovieContext();
             var targetMovie = db.TitleBasics.FirstOrDefault(x => x.ID == movieId);
             if (targetMovie == null) return new List<TitleBasics>();
 
@@ -34,7 +33,6 @@ namespace backend
 
         public bool CreateMovie(TitleBasics newMovie, TitleAkas newTitleAkas)
         {
-            var db = new MovieContext();
             newTitleAkas.Basics = newMovie;
             newMovie.Akas = new List<TitleAkas> { newTitleAkas };
 
@@ -45,7 +43,6 @@ namespace backend
 
         public bool DeleteMovie(string movieId)
         {
-            var db = new MovieContext();
             var movieToDelete = db.TitleBasics.Include(tb => tb.Akas)
                                 .FirstOrDefault(m => m.ID == movieId);
 
@@ -61,7 +58,6 @@ namespace backend
 
         public void UpdateMovie(string movieId, TitleBasics updatedMovie, TitleAkas updatedTitleAkas)
         {
-            var db = new MovieContext();
             var existingMovie = db.TitleBasics.Include(tb => tb.Akas)
                                 .FirstOrDefault(m => m.ID == movieId);
             if (existingMovie != null)

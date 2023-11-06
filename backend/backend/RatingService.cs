@@ -6,24 +6,19 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-class RatingService
+class RatingService : IRatingService
 {
-    private readonly MovieContext _context = new MovieContext();
-
-    public RatingService(MovieContext context)
-    {
-        _context = context;
-    }
+    private readonly MovieContext db = new MovieContext();
 
     public IList<Rating> GetRatingHistory()
     {
-        var ratings = _context.RatingsHistory.ToList();
+        var ratings = db.RatingsHistory.ToList();
         return ratings;
     }
 
     public IList<Rating> GetRatingistoryByUserId(int _userID)
     {
-        return _context.RatingsHistory
+        return db.RatingsHistory
             .Where(x => x.UserID == _userID)
             .Select(x => new Rating
             {
@@ -47,37 +42,37 @@ class RatingService
             RateDate = rateDate
         };
 
-        _context.Add(rating);
-        _context.SaveChanges();
+        db.Add(rating);
+        db.SaveChanges();
         Console.WriteLine("Rating created successfully.");
         return rating;
     }
 
     public List<Rating> ReadRatingsForMovie(String titleID)
     {
-        return _context.RatingsHistory.Where(r => r.TitleID == titleID).ToList();
+        return db.RatingsHistory.Where(r => r.TitleID == titleID).ToList();
     }
 
     public void UpdateRating(String titleID, int userID, int newRatingValue, string newReview, String rateDate)
     {
-        var rating = _context.RatingsHistory.FirstOrDefault(r => r.TitleID == titleID && r.UserID == userID);
+        var rating = db.RatingsHistory.FirstOrDefault(r => r.TitleID == titleID && r.UserID == userID);
         if (rating != null)
         {
             rating.Grade = newRatingValue;
             rating.ReviewText = newReview;
             rating.RateDate = rateDate; // Update the RateDate
-            _context.SaveChanges();
+            db.SaveChanges();
             Console.WriteLine("Rating updated successfully.");
         }
     }
 
     public void DeleteRating(String titleID, int userID)
     {
-        var rating = _context.RatingsHistory.FirstOrDefault(r => r.TitleID == titleID && r.UserID == userID);
+        var rating = db.RatingsHistory.FirstOrDefault(r => r.TitleID == titleID && r.UserID == userID);
         if (rating != null)
         {
-            _context.RatingsHistory.Remove(rating);
-            _context.SaveChanges();
+            db.RatingsHistory.Remove(rating);
+            db.SaveChanges();
         }
     }
 }

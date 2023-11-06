@@ -4,7 +4,6 @@ namespace backend
 {
     public class GenreService : IGenreService
 	{
-
     private readonly MovieContext db = new MovieContext();
 
     public IList<Genres> GetGenre()
