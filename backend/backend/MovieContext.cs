@@ -18,6 +18,7 @@ public class MovieContext : DbContext
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Rating> RatingsHistory { get; set; }
     public DbSet<Genres> Genres { get; set; }
+    public DbSet<Person> Persons { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -106,5 +107,16 @@ public class MovieContext : DbContext
             .Property(x => x.Id).HasColumnName("genreid");
         modelBuilder.Entity<Genres>()
             .Property(x => x.Name).HasColumnName("genrename");
+        modelBuilder.Entity<Person>().ToTable("person");
+        modelBuilder.Entity<Person>()
+            .Property(x => x.Id).HasColumnName("personid");
+        modelBuilder.Entity<Person>()
+            .Property(x => x.PrimaryName).HasColumnName("primaryname");
+        modelBuilder.Entity<Person>()
+            .Property(x => x.DateOfBirth).HasColumnName("dateofbirth");
+        modelBuilder.Entity<Person>()
+            .Property(x => x.DateOfDeath).HasColumnName("dateofdeath");
+        modelBuilder.Entity<Person>()
+            .Property(x => x.NameRating).HasColumnName("namerating");
     }
 }
