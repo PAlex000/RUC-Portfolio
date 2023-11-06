@@ -5,7 +5,6 @@ namespace backend;
 
 public class MovieContext : DbContext
 {
-    public DbSet<Bookmark> Bookmarks { get; set; }
     public DbSet<TitleAkas> TitleAkas { get; set; }
     public DbSet<TitleBasics> TitleBasics { get; set; }
 
@@ -19,16 +18,6 @@ public class MovieContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Bookmark>().ToTable("bookmarks");
-        modelBuilder.Entity<Bookmark>()
-            .Property(x => x.ID).HasColumnName("bookmarkid");
-        modelBuilder.Entity<Bookmark>()
-            .Property(x => x.userID).HasColumnName("userid");
-        modelBuilder.Entity<Bookmark>()
-            .Property(x => x.titleID).HasColumnName("titleid");
-        modelBuilder.Entity<Bookmark>()
-            .Property(x => x.status).HasColumnName("status");
-
 
         modelBuilder.Entity<TitleAkas>().ToTable("titleakas");
         modelBuilder.Entity<TitleAkas>().Property(x => x.ID).HasColumnName("titleid");
