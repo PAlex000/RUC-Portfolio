@@ -1,6 +1,10 @@
 ﻿using backend.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
+using System.Collections.Generic;
+using System.Reflection.Emit;
 
 namespace backend;
 
@@ -11,6 +15,8 @@ public class MovieContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<TitleAkas> TitleAkas { get; set; }
     public DbSet<TitleBasics> TitleBasics { get; set; }
+    public DbSet<Movie> Movies { get; set; }
+    public DbSet<Rating> RatingsHistory { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -81,5 +87,18 @@ public class MovieContext : DbContext
         modelBuilder.Entity<TitleBasics>().Property(x => x.poster).HasColumnName("poster");
         modelBuilder.Entity<TitleBasics>().Property(x => x.description).HasColumnName("plot");
         modelBuilder.Entity<TitleBasics>().Property(x => x.rating).HasColumnName("movie_rating");
+        modelBuilder.Entity<Rating>().ToTable("rating");
+        modelBuilder.Entity<Rating>()
+            .Property(x => x.TitleID).HasColumnName("titleid");
+        modelBuilder.Entity<Rating>()
+            .Property(x => x.UserID).HasColumnName("userid");
+        modelBuilder.Entity<Rating>()
+            .Property(x => x.Grade).HasColumnName("grade");
+        modelBuilder.Entity<Rating>()
+            .Property(x => x.ReviewText).HasColumnName("reviewtext");
+        modelBuilder.Entity<Rating>()
+            .Property(x => x.RateDate).HasColumnName("ratedate");
+        modelBuilder.Entity<Rating>()
+        .HasKey(m => new { m.TitleID, m.UserID });
     }
 }
