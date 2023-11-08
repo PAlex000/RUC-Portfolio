@@ -20,7 +20,7 @@ public class BookmarksController : ControllerBase
     }
 
 
-    //Get genre by id
+    //Get bookamrk by id
     [HttpGet("{id}", Name = nameof(GetBookmark))]
     public IActionResult GetBookmark(int id)
     {
@@ -33,7 +33,7 @@ public class BookmarksController : ControllerBase
         return Ok(CreateBookmarkModel(bookmark));
     }
 
-    //Create genre
+    //Create bookmark
     [HttpPost]
     public IActionResult CreateBookmark(CreateBookmarkModel model)
     {
@@ -51,7 +51,7 @@ public class BookmarksController : ControllerBase
     }
 
 
-    //Delete genre
+    //Delete bookamrk
     [HttpDelete("{id}")]
     public IActionResult DeleteBookmark(int id)
     {
