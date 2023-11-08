@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebServer.Controllers;
 
-[Route("api/movies")]
+[Route("api/rating")]
 [ApiController]
 public class RatingController : ControllerBase
 {

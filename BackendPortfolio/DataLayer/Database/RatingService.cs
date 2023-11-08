@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-class RatingService : IRatingService
+public class RatingService : IRatingService
 {
     private readonly MovieContext db = new MovieContext();
 

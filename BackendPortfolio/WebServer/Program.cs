@@ -7,6 +7,10 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<IPersonService, PersonService>();
 builder.Services.AddSingleton<IGenreService, GenreService>();
 builder.Services.AddSingleton<IBookmarkService, BookmarkService>();
+builder.Services.AddSingleton<IRatingService, RatingService>();
+builder.Services.AddSingleton<IMovieService, MovieService>();
+
+
 
 
 var app = builder.Build();
