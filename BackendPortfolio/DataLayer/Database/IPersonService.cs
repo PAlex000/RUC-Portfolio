@@ -3,8 +3,8 @@ using DataLayer.Models;
 
 namespace DataLayer.Database;
 
-    public interface IPersonService
-{ 
+public interface IPersonService
+{
 
     public (IList<Person> persons, int count) GetPersons(int page, int pageSize);
 
@@ -12,12 +12,12 @@ namespace DataLayer.Database;
 
     public Person? GetPersonByName(string primaryName);
 
-    /* public Person CreatePerson(string PrimaryName, DateTime DateOfBirth, DateTime DateOfDeath, float NameRating );
+    public bool CreatePerson(Person newPerson);
 
-    public bool DeletePerson(int personId);
+    public bool DeletePerson(string personId);
 
-    public List<TitleBasics> GetPersonByKeyword(string personName, string titleName, string plotDescription); */
+    public bool UpdatePerson(string personId, Person updatePerson);
 
+    // public List<TitleBasics> GetPersonByKeyword(string personName, string titleName, string plotDescription); 
 
 }
-

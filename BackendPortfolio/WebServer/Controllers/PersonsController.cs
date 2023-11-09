@@ -43,21 +43,21 @@ public class PersonsController : ControllerBase
         };
     }
 
-    [HttpGet(Name = nameof(GetPersons))] 
+    [HttpGet(Name = nameof(GetPersons))]
     public IActionResult GetPersons(int page = 0, int pageSize = 10)
     {
         (var persons, var total) = _personService.GetPersons(page, pageSize);
         var actor = persons.Select(CreatePersonModel);
         var result = Paging(actor, total, page, pageSize, nameof(GetPersons));
-        return Ok(result); 
+        return Ok(result);
     }
 
 
-    [HttpGet("{id}", Name = nameof(GetPersonById))]
+    [HttpGet("{personId}", Name = nameof(GetPersonById))]
 
-    public IActionResult GetPersonById(string id)
+    public IActionResult GetPersonById(string personId)
     {
-        var person = _personService.GetPersonById(id);
+        var person = _personService.GetPersonById(personId);
         if (person == null)
         {
             return NotFound();
@@ -71,7 +71,7 @@ public class PersonsController : ControllerBase
     public IActionResult GetPersonByName(string primaryName)
     {
         var personName = _personService.GetPersonByName(primaryName);
-        if(personName == null)
+        if (personName == null)
         {
             return NotFound();
         }
@@ -79,45 +79,64 @@ public class PersonsController : ControllerBase
         return Ok(CreatePersonModel(personName));
     }
 
-    /* [HttpPost]
-
-    public IActionResult CreatePerson (CreatePersonModel model)
+    [HttpPost]
+    public IActionResult CreatePerson([FromForm] CreatePersonModel model)
     {
         var person = new Person
         {
+            Id = model.Id,
             PrimaryName = model.PrimaryName,
             DateOfBirth = model.DateOfBirth,
-            DateOfDeath = model.DateOfDeath,
-            NameRating = model.NameRating
+            DateOfDeath = model.DateOfDeath
         };
 
-        Person newPerson = _personService.CreatePerson(person.PrimaryName, person.DateOfBirth, person.DateOfDeath, person.NameRating);
-        return Created(GetUrl(nameof(GetPerson), new { newPerson.Id }), newPerson);
+        var result = _personService.CreatePerson(person);
+        if (result)
+        {
+            return Created(GetUrl(nameof(GetPersons), new { personId = person.Id }), person);
+        }
+
+        return BadRequest("Could not create the actor");
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult DeletePerson(int id)
-    {
-        bool result = _personService.DeletePerson(id);
-        return result ? Ok() : NotFound();
+    [HttpPut("{personId}")]
 
-    } */
+    public IActionResult UpdatePerson(string personId, [FromForm] UpdatePersonModel model)
+    {
+        var updatePerson = new Person
+        {
+            Id = model.Id,
+            PrimaryName = model.PrimaryName,
+            DateOfBirth = model.DateOfBirth,
+            DateOfDeath = model.DateOfDeath
+        };
+
+        _personService.UpdatePerson(personId, updatePerson);
+        return NoContent();
+    }
+
+
+
+    [HttpDelete("{personId}")]
+    public IActionResult DeletePerson(string personId)
+    {
+        var result = _personService.DeletePerson(personId);
+        return result ? Ok() : NotFound("The actor could not be found");
+    }
 
     private PersonModel CreatePersonModel(Person person)
     {
         return new PersonModel
         {
-            Url = GetUrl(nameof(GetPersons), new { person.Id }),
+            Url = GetUrl(nameof(GetPersons), new { personId = person.Id }),
             PrimaryName = person.PrimaryName,
             DateOfBirth = person.DateOfBirth,
             DateOfDeath = person.DateOfDeath
         };
-    } 
+    }
 
     private string? GetUrl(string name, object values)
     {
         return _linkGenerator.GetUriByName(HttpContext, name, values);
-    } 
+    }
 }
-
-
