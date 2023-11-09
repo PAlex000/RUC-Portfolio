@@ -24,6 +24,7 @@ public class UserController : ControllerBase
         _linkGenerator = linkGenerator;
     }
     // Get user history
+    /*
     [HttpGet]
     public ActionResult<IList<User>> GetUserHistory()
     {
@@ -33,7 +34,7 @@ public class UserController : ControllerBase
             return NotFound("No user history found.");
         }
         return Ok(userHistory);
-    }
+    }*/
     [HttpPost("register")]
     public IActionResult Register([FromBody] CreateUserModel userRequest)
     {
