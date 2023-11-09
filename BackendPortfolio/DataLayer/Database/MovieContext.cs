@@ -19,13 +19,14 @@ public class MovieContext : DbContext
     public DbSet<Rating> RatingsHistory { get; set; }
     public DbSet<Genres> Genres { get; set; }
     public DbSet<Person> Persons { get; set; }
+    public DbSet<PersonAssoc> PersonAssoc { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder
             .LogTo(Console.Out.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
-        optionsBuilder.UseNpgsql($"host=localhost;db=movie;uid=postgres;pwd=Cristina12@");
+        optionsBuilder.UseNpgsql($"host=localhost;db=movie;uid=postgres;pwd=Ronja");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -96,6 +97,11 @@ public class MovieContext : DbContext
         modelBuilder.Entity<TitleBasics>().Property(x => x.description).HasColumnName("plot");
         modelBuilder.Entity<TitleBasics>().Property(x => x.rating).HasColumnName("movie_rating");
 
+        modelBuilder.Entity<TitleBasics>()
+        .HasMany(tb => tb.PersonAssociations)
+        .WithOne(pa => pa.TitleBasics)
+        .HasForeignKey(pa => pa.titleid);
+
         // rating
         modelBuilder.Entity<Rating>().ToTable("rating");
         modelBuilder.Entity<Rating>()
@@ -128,5 +134,15 @@ public class MovieContext : DbContext
             .Property(x => x.DateOfBirth).HasColumnName("dateofbirth");
         modelBuilder.Entity<Person>()
             .Property(x => x.DateOfDeath).HasColumnName("dateofdeath");
+
+
+        //personAssoc
+        modelBuilder.Entity<PersonAssoc>()
+            .HasKey(pa => new { pa.titleid, pa.personid });
+
+        modelBuilder.Entity<PersonAssoc>()
+            .HasOne(pa => pa.TitleBasics)
+            .WithMany(tb => tb.PersonAssociations)
+            .HasForeignKey(pa => pa.titleid);
     }
 }

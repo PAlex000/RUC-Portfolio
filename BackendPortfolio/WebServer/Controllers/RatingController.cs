@@ -4,15 +4,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebServer.Controllers;
 
-[Route("api/rating")]
+[Route("api/ratings")]
 [ApiController]
 public class RatingController : ControllerBase
 {
     private readonly IRatingService _ratingService;
+    private readonly LinkGenerator _linkGenerator;
 
-    public RatingController(IRatingService ratingService)
+    public RatingController(IRatingService ratingService, LinkGenerator linkGenerator)
     {
         _ratingService = ratingService;
+        _linkGenerator = linkGenerator;
     }
 
     [HttpGet]
