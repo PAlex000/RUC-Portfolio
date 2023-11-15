@@ -42,7 +42,7 @@ public class SearchController : ControllerBase
 
     // Create a search
     [HttpPost]
-    public ActionResult<Search> CreateSearch([FromBody] SearchCreationModel model)
+    public ActionResult<Search> CreateSearch(SearchCreationModel model)
     {
         var newSearch = _searchService.CreateSearch(model.UserID, model.SearchString);
         if (newSearch == null)
@@ -54,7 +54,7 @@ public class SearchController : ControllerBase
 
     // Delete a search
     [HttpDelete]
-    public IActionResult DeleteSearch([FromBody] SearchDeleteModel model)
+    public IActionResult DeleteSearch(SearchDeleteModel model)
     {
         bool result = _searchService.DeleteSearch(model.SearchString, model.UserID);
         if (result)

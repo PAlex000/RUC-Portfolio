@@ -10,6 +10,6 @@ public class Person
     public string? PrimaryName { get; set; }
     public string? DateOfBirth { get; set; }
     public string? DateOfDeath { get; set; }
-    public virtual ICollection<PersonAssociation> PersonAssociation { get; set; }
+    //public virtual ICollection<PersonAssociation> PersonAssociation { get; set; }
 
 }

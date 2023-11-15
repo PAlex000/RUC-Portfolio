@@ -44,7 +44,7 @@ public class PersonService : IPersonService
         return searchPKeyword.ToList();
 
     } */
-
+    /*
     public bool CreatePerson(Person newPerson)
     {
         var db = new MovieContext();
@@ -96,5 +96,5 @@ public class PersonService : IPersonService
         db.Persons.Remove(personDelete);
         db.SaveChanges();
         return true;
-    }
+    }*/
 }

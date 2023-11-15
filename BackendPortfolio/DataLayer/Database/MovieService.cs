@@ -8,7 +8,7 @@ namespace DataLayer.Database;
 public class MovieService : IMovieService
 {
     private readonly MovieContext db = new MovieContext();
-    public List<TitleBasics> SearchMovies(int userId, string searchString)
+    public List<TitleBasics> SearchMovies(string searchString)
     {
         var search = db.TitleBasics.Include(tb => tb.Akas)
             .Where(tb => tb.description.Contains(searchString) || tb.Akas.Any(aka => aka.title.Contains(searchString))).ToList();

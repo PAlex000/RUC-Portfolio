@@ -15,7 +15,7 @@ namespace DataLayer.Models
         public int UserID { get; set; }
         [Required]
         public int Grade {  get; set; }
-        public String ReviewText { get; set; }
-        public String RateDate { get; set; }
+        public String? ReviewText { get; set; }
+        public String? RateDate { get; set; }
     }
 }

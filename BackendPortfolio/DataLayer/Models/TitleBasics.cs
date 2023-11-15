@@ -13,10 +13,9 @@ namespace DataLayer.Models
         public bool isAdult { get; set; }
         public string startYear { get; set; }
         public string endYear { get; set; }
-        public string poster { get; set; }
-        public string description { get; set; }
+        public string? poster { get; set; }
+        public string? description { get; set; }
         public int? rating { get; set; }
         public List<TitleAkas> Akas { get; set; }
-        public virtual ICollection<PersonAssoc> PersonAssociations { get; set; }
     }
 }

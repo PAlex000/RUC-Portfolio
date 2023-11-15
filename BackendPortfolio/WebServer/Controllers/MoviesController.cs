@@ -18,10 +18,10 @@ public class MoviesController : ControllerBase
     }
 
     // Search movies
-    [HttpGet("search")]
-    public ActionResult<List<TitleBasics>> SearchMovies(int userId, string searchString)
+    [HttpGet("search/{searchString}")]
+    public ActionResult<List<TitleBasics>> SearchMovies(string searchString)
     {
-        var movies = _movieService.SearchMovies(userId, searchString);
+        var movies = _movieService.SearchMovies(searchString);
         if (movies == null || !movies.Any())
         {
             return NotFound("No movies found.");

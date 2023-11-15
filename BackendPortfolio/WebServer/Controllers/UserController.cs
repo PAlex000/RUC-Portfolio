@@ -10,7 +10,7 @@ using DataLayer.Models;
 using WebServer.Models;
 using Microsoft.AspNetCore.Authorization;
 
-[Route("api/User")]
+[Route("api/user")]
 [ApiController]
 public class UserController : ControllerBase
 {
