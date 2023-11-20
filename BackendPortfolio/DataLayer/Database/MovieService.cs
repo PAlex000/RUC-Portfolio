@@ -22,7 +22,7 @@ public class MovieService : IMovieService
 
         var similarMovies = db.TitleBasics
             .Where(x => x.ID != movieId)
-            .Where(x => x.type == targetMovie.type)
+            //.Where(x => x.type == targetMovie.type)
             .Where(x => x.isAdult == targetMovie.isAdult)
             .Where(x => x.startYear == targetMovie.startYear)
             .Take(8)
@@ -31,8 +31,19 @@ public class MovieService : IMovieService
         return similarMovies;
     }
 
+    public bool DoesMovieExist(string movieId)
+    {
+        return db.TitleBasics.Any(m => m.ID == movieId);
+    }
+
     public bool CreateMovie(TitleBasics newMovie, TitleAkas newTitleAkas)
     {
+        var existingMovie = db.TitleBasics.Find(newMovie.ID);
+        if (existingMovie != null)
+        {
+            return false;
+        }
+
         newTitleAkas.Basics = newMovie;
         newMovie.Akas = new List<TitleAkas> { newTitleAkas };
 

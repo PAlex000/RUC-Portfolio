@@ -42,9 +42,21 @@ public class MoviesController : ControllerBase
     }
 
     // Create movie
+
     [HttpPost]
     public IActionResult CreateMovie([FromBody] MovieCreationModel model)
     {
+        if (model == null || string.IsNullOrEmpty(model.ID))
+        {
+            return BadRequest("Invalid movie data.");
+        }
+
+        // does movie with the same id exist? 
+        if (_movieService.DoesMovieExist(model.ID))
+        {
+            return BadRequest($"A movie with ID {model.ID} already exists.");
+        }
+
         var newMovie = new TitleBasics
         {
             ID = model.ID,
@@ -67,12 +79,23 @@ public class MoviesController : ControllerBase
             }).ToList()
         };
 
-        var result = _movieService.CreateMovie(newMovie, newMovie.Akas.FirstOrDefault());
-        if (result)
+        try
         {
-            return CreatedAtAction(nameof(GetSimilarMovies), new { movieId = newMovie.ID }, newMovie);
+            var result = _movieService.CreateMovie(newMovie, newMovie.Akas.FirstOrDefault());
+            if (result)
+            {
+                return CreatedAtAction(nameof(GetSimilarMovies), new { movieId = newMovie.ID }, newMovie);
+            }
+            else
+            {
+                return BadRequest("Could not create the movie.");
+            }
         }
-        return BadRequest("Could not create the movie.");
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return StatusCode(500);
+        }
     }
 
     // Delete movie
@@ -82,7 +105,7 @@ public class MoviesController : ControllerBase
         var result = _movieService.DeleteMovie(movieId);
         if (result)
         {
-            return Ok();
+            return Ok("Movie Deleted");
         }
         return NotFound("Movie not found.");
     }
