@@ -55,16 +55,28 @@ public class MovieService : IMovieService
     public bool DeleteMovie(string movieId)
     {
         var movieToDelete = db.TitleBasics.Include(tb => tb.Akas)
-                            .FirstOrDefault(m => m.ID == movieId);
+                                .FirstOrDefault(m => m.ID == movieId);
 
         if (movieToDelete != null)
         {
+            // Remove associated records in 'personassociation'
+            var associatedPersons = db.PersonAssociation
+                                      .Where(pa => pa.TitleID == movieId)
+                                      .ToList();
+            if (associatedPersons.Any())
+            {
+                db.PersonAssociation.RemoveRange(associatedPersons);
+            }
+
+            // Remove Akas and the movie
             db.TitleAkas.RemoveRange(movieToDelete.Akas);
             db.TitleBasics.Remove(movieToDelete);
+
             db.SaveChanges();
+            return true;
         }
 
-        return movieToDelete != null;
+        return false;
     }
 
     public void UpdateMovie(string movieId, TitleBasics updatedMovie, List<TitleAkas> updatedAkasList)

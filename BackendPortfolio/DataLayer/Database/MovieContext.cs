@@ -13,6 +13,7 @@ public class MovieContext : DbContext
     public DbSet<Rating> RatingsHistory { get; set; }
     public DbSet<Genres> Genres { get; set; }
     public DbSet<Person> Persons { get; set; }
+    public DbSet<PersonAssociation> PersonAssociation { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -122,5 +123,12 @@ public class MovieContext : DbContext
             .Property(x => x.DateOfBirth).HasColumnName("dateofbirth");
         modelBuilder.Entity<Person>()
             .Property(x => x.DateOfDeath).HasColumnName("dateofdeath");
+
+        // personassociation
+        modelBuilder.Entity<PersonAssociation>().ToTable("personassociation");
+        modelBuilder.Entity<PersonAssociation>().Property(x => x.TitleID).HasColumnName("titleid");
+        modelBuilder.Entity<PersonAssociation>().Property(x => x.PersonID).HasColumnName("personid");
+        modelBuilder.Entity<PersonAssociation>().Property(x => x.Ordering).HasColumnName("ordering");
+        modelBuilder.Entity<PersonAssociation>().HasKey(pa => new { pa.TitleID, pa.PersonID, pa.Ordering });
     }
 }
