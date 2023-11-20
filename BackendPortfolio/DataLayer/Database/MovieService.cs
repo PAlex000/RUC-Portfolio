@@ -59,7 +59,6 @@ public class MovieService : IMovieService
 
         if (movieToDelete != null)
         {
-            // Remove associated records in 'personassociation'
             var associatedPersons = db.PersonAssociation
                                       .Where(pa => pa.TitleID == movieId)
                                       .ToList();
@@ -68,7 +67,6 @@ public class MovieService : IMovieService
                 db.PersonAssociation.RemoveRange(associatedPersons);
             }
 
-            // Remove Akas and the movie
             db.TitleAkas.RemoveRange(movieToDelete.Akas);
             db.TitleBasics.Remove(movieToDelete);
 
