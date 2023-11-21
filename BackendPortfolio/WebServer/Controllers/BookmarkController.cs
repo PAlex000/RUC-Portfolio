@@ -18,19 +18,21 @@ public class BookmarksController : ControllerBase
         _dataService = dataService;
         _linkGenerator = linkGenerator;
     }
-
+    [HttpGet]
+    public IActionResult GetBookmark()
+    {
+        IEnumerable<BookmarkModel> result = _dataService
+            .GetBookmarks()
+            .Select(CreateBookmarkModel);
+        return result == null ? NotFound() : Ok(result);
+    }
 
     //Get bookamrk by id
-    [HttpGet("{id}", Name = nameof(GetBookmark))]
+    [HttpGet("{id}")]
     public IActionResult GetBookmark(int id)
     {
         var bookmark = _dataService.GetBookmarkById(id);
-        if (bookmark == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(CreateBookmarkModel(bookmark));
+        return bookmark == null ? NotFound() : Ok(CreateBookmarkModel(bookmark));
     }
 
     //Create bookmark
@@ -40,14 +42,13 @@ public class BookmarksController : ControllerBase
         var bookmark = new Bookmark
         {
             titleID = model.titleID,
-            userID = model.userID
+            userID = model.userID,
+            status = model.status
         };
 
-         _dataService.CreateBookmark(
-            bookmark);
+         _dataService.CreateBookmark(bookmark);
         return Ok(bookmark);
     }
-
 
     //Delete bookamrk
     [HttpDelete("{id}")]
@@ -56,8 +57,6 @@ public class BookmarksController : ControllerBase
         bool result = _dataService.DeleteBookmark(id);
         return result ? Ok() : NotFound();
     }
-
-
 
     private BookmarkModel CreateBookmarkModel(Bookmark bookmark)
     {
@@ -72,7 +71,6 @@ public class BookmarksController : ControllerBase
 
         };
     }
-
 
     private string? GetUrl(string name, object values)
     {

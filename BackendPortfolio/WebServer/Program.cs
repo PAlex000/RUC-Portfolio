@@ -35,6 +35,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 
 builder.Services.AddSingleton<IPersonService, PersonService>();
+builder.Services.AddSingleton<IBookmarkService, BookmarkService>();
 builder.Services.AddSingleton<IGenreService, GenreService>();
 builder.Services.AddSingleton<IMovieService, MovieService>();
 builder.Services.AddSingleton<ISearchService, SearchService>();
