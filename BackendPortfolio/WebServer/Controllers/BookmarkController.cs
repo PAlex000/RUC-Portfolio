@@ -24,15 +24,17 @@ public class BookmarksController : ControllerBase
         IEnumerable<BookmarkModel> result = _dataService
             .GetBookmarks()
             .Select(CreateBookmarkModel);
-        return result == null ? NotFound() : Ok(result);
+        return !result.Any() ? NotFound() : Ok(result);
     }
 
-    //Get bookamrk by id
-    [HttpGet("{id}")]
-    public IActionResult GetBookmark(int id)
+    //Get bookmark by userid
+    [HttpGet("{userId}")]
+    public IActionResult GetBookmark(int userId)
     {
-        var bookmark = _dataService.GetBookmarkById(id);
-        return bookmark == null ? NotFound() : Ok(CreateBookmarkModel(bookmark));
+        IEnumerable<BookmarkModel> result = _dataService
+            .GetBookmarksByUserId(userId)
+            .Select(CreateBookmarkModel);
+        return !result.Any() ? NotFound() : Ok(result);
     }
 
     //Create bookmark
@@ -67,8 +69,6 @@ public class BookmarksController : ControllerBase
             titleID = bookmark.titleID,
             userID = bookmark.userID,
             status = bookmark.status,
-
-
         };
     }
 
