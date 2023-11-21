@@ -19,6 +19,27 @@ namespace BackendTests
             Assert.Null(movie.Akas);
         }
         [Fact]
+        public void GetMovie_WithoutArgument_ReturnsAllMovies()
+        {
+            var service = new MovieService();
+            var movies = service.GetMovie();
+            Assert.Equal(109380, movies.Count);
+        }
+        [Fact]
+        public void GetMovieById_ValidMovieId_ReturnsMovie()
+        {
+            var service = new MovieService();
+            var movie = service.GetMovieById("tt1027669");
+            Assert.NotNull(movie);
+        }
+        [Fact]
+        public void GetMovieById_InValidMovieId_ReturnsNull()
+        {
+            var service = new MovieService();
+            var movie = service.GetMovieById("Definitely not a good id");
+            Assert.Null(movie);
+        }
+        [Fact]
         public void SearchMovies_ValidSearchString_ReturnsMovies()
         {
             var service = new MovieService();

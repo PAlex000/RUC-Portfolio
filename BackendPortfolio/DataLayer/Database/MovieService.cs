@@ -8,6 +8,14 @@ namespace DataLayer.Database;
 public class MovieService : IMovieService
 {
     private readonly MovieContext db = new MovieContext();
+    public List<TitleBasics> GetMovie()
+    {
+        return db.TitleBasics.ToList();
+    }
+    public TitleBasics GetMovieById(string movieId)
+    {
+        return db.TitleBasics.FirstOrDefault(x => x.ID == movieId);
+    }
     public List<TitleBasics> SearchMovies(string searchString)
     {
         var search = db.TitleBasics.Include(tb => tb.Akas)
