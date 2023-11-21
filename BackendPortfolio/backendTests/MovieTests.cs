@@ -118,6 +118,48 @@ namespace BackendTests
             var result = service.DeleteMovie("Definitely not a good Id");
             Assert.False(result);
         }
-        //TODO: Update Movie tests
+        [Fact]
+        public void UpdateMovie_ValidData()
+        {
+            var service = new MovieService();
+            var result = service.GetMovieById("tt5343524");
+            Assert.Equal("tt5343524", result.ID);
+            Assert.Equal("short", result.type);
+            Assert.False(result.isAdult);
+            Assert.Equal("2016", result.startYear);
+            Assert.Equal("", result.endYear);
+            Assert.Equal("N/A", result.poster);
+            Assert.Equal("A future hit man has the unfortunate experience of performing his first kill.", result.description);
+            TitleBasics updatedMovie = new TitleBasics
+            {
+                ID = "tt5343524",
+                type = "long",
+                isAdult = true,
+                startYear = "2016",
+                endYear = "2023",
+                poster = "PosterLink",
+                description = "UpdatedDesc"
+            };
+            TitleAkas titleAkas = new TitleAkas
+            {
+                ID = "ttTestID",
+                ordering = 1,
+                title = "TestTitle",
+                region = "EN",
+                attribute = "Nope",
+                type = "TestType",
+                language = "EN",
+                isOriginalTitle = true
+            };
+            service.UpdateMovie("tt5343524", updatedMovie, new List<TitleAkas> { titleAkas });
+            var newMovie = service.GetMovieById("tt5343524");
+            Assert.Equal("tt5343524", newMovie.ID);
+            Assert.Equal("long", newMovie.type);
+            Assert.True(newMovie.isAdult);
+            Assert.Equal("2016", newMovie.startYear);
+            Assert.Equal("2023", newMovie.endYear);
+            Assert.Equal("PosterLink", newMovie.poster);
+            Assert.Equal("UpdatedDesc", newMovie.description);
+        }
     }
 }

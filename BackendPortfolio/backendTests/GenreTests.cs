@@ -15,8 +15,8 @@ namespace BackendTests
         public void GetAllGenres_NoArgument_ReturnsAllGenres()
         {
             var service = new GenreService();
-            var genres = service.GetGenre();
-            Assert.Equal(1535, genres.Count);
+            var genres = service.GetGenre(10, 10);
+            Assert.Equal(1535, genres.count);
         }
         [Fact]
         public void CreateGenre_NoArgument_CreatesGenre()
