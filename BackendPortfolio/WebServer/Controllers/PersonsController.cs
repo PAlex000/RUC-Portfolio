@@ -8,39 +8,15 @@ namespace WebServer.Controllers;
 [Route("api/person")]
 [ApiController]
 
-public class PersonsController : ControllerBase
+public class PersonsController : BaseController
 {
     private readonly IPersonService _personService;
     private readonly LinkGenerator _linkGenerator;
 
     public PersonsController(IPersonService personService, LinkGenerator linkGenerator)
+        : base(linkGenerator)
     {
         _personService = personService;
-        _linkGenerator = linkGenerator;
-    }
-
-    protected object Paging<T>(IEnumerable<T> actor, int total, int page, int pageSize, string endpointName)
-    {
-
-        var numPages = (int)Math.Ceiling(total / (double)pageSize);
-        var next = page < numPages - 1
-            ? GetUrl(endpointName, new { page = page + 1, pageSize })
-        : null;
-        var prev = page > 0
-            ? GetUrl(endpointName, new { page = page - 1, pageSize })
-        : null;
-
-        var cur = GetUrl(endpointName, new { page, pageSize });
-
-        return new
-        {
-            Total = total,
-            NumberOfPages = numPages,
-            Next = next,
-            Prev = prev,
-            Current = cur,
-            Actor = actor
-        };
     }
 
     [HttpGet(Name = nameof(GetPersons))]
@@ -114,8 +90,4 @@ public class PersonsController : ControllerBase
         };
     }
 
-    private string? GetUrl(string name, object values)
-    {
-        return _linkGenerator.GetUriByName(HttpContext, name, values);
-    }
 }

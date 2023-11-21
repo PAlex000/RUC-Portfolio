@@ -6,19 +6,32 @@ namespace DataLayer.Database
 	{
     private readonly MovieContext db = new MovieContext();
 
-    public IList<Genres> GetGenre()
+
+    public (IList<Genres> genre, int count) GetGenre(int page, int pageSize)
     {
-            return db.Genres.ToList();
+        var genre =
+            db.Genres
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToList();
+        return (genre, db.Genres.Count());
     }
 
 
-    public Genres? GetGenre(int genresId)
+
+        public Genres? GetGenreById(int genresId)
     {
         return db.Genres.FirstOrDefault(x => x.Id == genresId);
     }
 
+    public Genres? GetGenreByName(string name)
+    {
+            return db.Genres.FirstOrDefault(x => x.Name == name);
 
-    public Genres? CreateGenre(string name)
+        }
+
+
+        public Genres? CreateGenre(string name)
     {
         var id = db.Genres.Max(x => x.Id) + 1;
         var genre = new Genres
@@ -51,7 +64,7 @@ namespace DataLayer.Database
     public bool UpdateGenre(int id, string name)
     {
 
-        var genre = GetGenre(id);
+        var genre = GetGenreById(id);
         if (genre != null)
         {
             genre.Name = name;

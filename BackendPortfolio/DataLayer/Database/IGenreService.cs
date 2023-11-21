@@ -4,8 +4,9 @@ namespace DataLayer.Database;
 
 	public interface IGenreService
 	{
-        IList<Genres> GetGenre();
-        Genres? GetGenre(int id);
+        (IList<Genres> genre, int count) GetGenre(int page, int pageSize);
+        Genres? GetGenreById(int id);
+        Genres? GetGenreByName(string name);
         Genres? CreateGenre(string name);
         bool DeleteGenre(Genres genre);
         bool DeleteGenre(int id);

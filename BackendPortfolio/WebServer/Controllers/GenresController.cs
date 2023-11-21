@@ -8,23 +8,45 @@ namespace WebServer.Controllers;
 
 [Route("api/genre")]
 [ApiController]
-public class GenresController : ControllerBase
+public class GenresController : BaseController
 {
     private readonly IGenreService _dataService;
-    private readonly LinkGenerator _linkGenerator;
 
     public GenresController(IGenreService dataService, LinkGenerator linkGenerator)
+        : base(linkGenerator)
     {
         _dataService = dataService;
-        _linkGenerator = linkGenerator;
+    }
+
+    //Get genre list
+    [HttpGet(Name = nameof(GetGenre))]
+    public IActionResult GetGenre(int page = 0, int pageSize = 10)
+    {
+        (var genre, var total) = _dataService.GetGenre(page, pageSize);
+        var genr = genre.Select(CreateGenreModel);
+        var result = Paging(genr, total, page, pageSize, nameof(GetGenre));
+        return Ok(result);
     }
 
 
     //Get genre by id
-    [HttpGet("{id}", Name = nameof(GetGenre))]
-    public IActionResult GetGenre(int id)
+    [HttpGet("{id}", Name = nameof(GetGenreById))]
+    public IActionResult GetGenreById(int id)
     {
-        var genre = _dataService.GetGenre(id);
+        var genre = _dataService.GetGenreById(id);
+        if (genre == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(CreateGenreModel(genre));
+    }
+
+    //Get genre by name
+    [HttpGet("name/{Name}", Name = nameof(GetGenreByName))]
+    public IActionResult GetGenreByName(string name)
+    {
+        var genre = _dataService.GetGenreByName(name);
         if (genre == null)
         {
             return NotFound();
@@ -42,7 +64,7 @@ public class GenresController : ControllerBase
             Name = model.Name,
         };
         Genres newGenre = _dataService.CreateGenre(genre.Name);
-        return Created(GetUrl(nameof(GetGenre), new { newGenre.Id }), newGenre);
+        return Created(GetUrl(nameof(GetGenreByName), new { newGenre.Id }), newGenre);
     }
 
     //Update genre
@@ -68,15 +90,9 @@ public class GenresController : ControllerBase
         return new GenreModel
         {
             //Url = $"http://localhost:5001/api//{category.Id}",
-            Url = GetUrl(nameof(GetGenre), new { genre.Id }),
+            Url = GetUrl(nameof(GetGenreById), new { genre.Id }),
             Name = genre.Name,
         };
-    }
-
-
-    private string? GetUrl(string name, object values)
-    {
-        return _linkGenerator.GetUriByName(HttpContext, name, values);
     }
 
 }
