@@ -15,7 +15,17 @@ namespace DataLayer.Database
         {
             return db.Bookmarks.FirstOrDefault(x => x.ID == bookmarkId);
         }
-        public Bookmark? CreateBookmark(Bookmark bookmark)
+        public IList<Bookmark> GetBookmarksByUserId(int userId)
+        {
+            return db.Bookmarks.Where(x => x.userID == userId).Select(x => new Bookmark
+            {
+                ID = x.ID,
+                titleID = x.titleID,
+                userID = x.userID,
+                status = x.status
+            }).ToList();
+        }
+    public Bookmark? CreateBookmark(Bookmark bookmark)
         {
             var id = db.Bookmarks.Max(x => x.ID) + 1;
             var newbookmark = new Bookmark

@@ -25,15 +25,7 @@ namespace BackendTests
             var service = new SearchService();
             var search = service.GetSearchHistoryByUserId(1);
             Assert.Equal(3, search.Count);
-        }/*
-        [Fact]
-        public void DeleteSearch_ValidId_RemoveSearch()
-        {
-            var service = new SearchService();
-            service.CreateSearch(1, "SearchStringTest12");
-            var result = service.DeleteSearch("SearchStringTest12", 1);
-            Assert.True(result);
-        }*/
+        }
         [Fact]
         public void DeleteSearch_InvaliduserId_ValidSearchString_ReturnsFalse()
         {

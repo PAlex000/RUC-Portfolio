@@ -2,6 +2,7 @@ using DataLayer.Database;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using WebServer.Models;
 
 namespace WebServer.Controllers;
 
@@ -20,29 +21,25 @@ public class SearchController : ControllerBase
     [HttpGet]
     public ActionResult<IList<Search>> GetSearchHistory()
     {
-        var searchHistory = _searchService.GetSearchHistory();
-        if (searchHistory == null || searchHistory.Count == 0)
-        {
-            return NotFound("No search history found.");
-        }
-        return Ok(searchHistory);
+        IEnumerable<SearchModel> searchHistory = _searchService
+            .GetSearchHistory()
+            .Select(CreateSearchModel);
+        return !searchHistory.Any() ? NotFound() : Ok(searchHistory);
     }
 
     // Get search by user ID
     [HttpGet("user/{userId}")]
     public ActionResult<IList<Search>> GetSearchHistoryByUserId(int userId)
     {
-        var searchHistory = _searchService.GetSearchHistoryByUserId(userId);
-        if (searchHistory == null || searchHistory.Count == 0)
-        {
-            return NotFound($"No search history found for user with ID: {userId}.");
-        }
-        return Ok(searchHistory);
+        var searchHistory = _searchService
+            .GetSearchHistoryByUserId(userId)
+            .Select(CreateSearchModel);
+        return !searchHistory.Any() ? NotFound() : Ok(searchHistory);
     }
 
     // Create a search
     [HttpPost]
-    public ActionResult<Search> CreateSearch(SearchCreationModel model)
+    public ActionResult<Search> CreateSearch(CreateSearchModel model)
     {
         var newSearch = _searchService.CreateSearch(model.UserID, model.SearchString);
         if (newSearch == null)
@@ -54,25 +51,20 @@ public class SearchController : ControllerBase
 
     // Delete a search
     [HttpDelete]
-    public IActionResult DeleteSearch(SearchDeleteModel model)
+    public IActionResult DeleteSearch(CreateSearchModel model)
     {
         bool result = _searchService.DeleteSearch(model.SearchString, model.UserID);
-        if (result)
-        {
-            return Ok();
-        }
-        return NotFound("Search entry not found or could not be deleted.");
+        return result ? Ok() : NotFound();
     }
-}
-
-public class SearchCreationModel
-{
-    public int UserID { get; set; }
-    public string SearchString { get; set; }
-}
-
-public class SearchDeleteModel
-{
-    public int UserID { get; set; }
-    public string SearchString { get; set; }
+    private SearchModel CreateSearchModel(Search search)
+    {
+        return new SearchModel
+        {
+            Url = $"http://localhost:5001/api/search/user/{search.userID}",
+            //Url = GetUrl(nameof(GetBookmark), new { bookmark.ID }),
+            UserID = search.userID,
+            SearchString = search.searchString,
+            SearchDate = search.searchDate
+        };
+    }
 }

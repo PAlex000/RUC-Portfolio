@@ -40,7 +40,6 @@ public class SearchService : ISearchService
     {
         return DeleteSearch(searchHistory.searchString, searchHistory.userID);
     }
-    //TODO: For some reason it deletes everything.
     public bool DeleteSearch(string _searchString, int _userID)
     {
         var searchResult = db.SearchHistory.FirstOrDefault(x => x.searchString == _searchString && x.userID == _userID);
