@@ -70,20 +70,42 @@ $$
 $$;
 
 --RATING TRIGGERS
-drop trigger if exists update_rating_before_deletion_trigger on userrelation;
-drop function if exists update_rating_before_deletion();
-CREATE OR REPLACE FUNCTION update_rating_before_deletion()
-RETURNS trigger AS $$
-BEGIN
-    delete from rating where userid = old.userid;
-RETURN OLD;
-END; $$ LANGUAGE plpgsql;
+-- Drop trigger and function if they exist
+DROP TRIGGER IF EXISTS update_rating_before_deletion_trigger ON userrelation;
+DROP TRIGGER IF EXISTS update_rate_date_trigger ON rating;
+DROP FUNCTION IF EXISTS update_rating_before_deletion();
+DROP FUNCTION IF EXISTS set_rate_date();
 
+-- Create trigger function to update ratings before deletion
+CREATE OR REPLACE FUNCTION update_rating_before_deletion()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Delete ratings associated with the user being deleted
+    DELETE FROM rating WHERE userid = OLD.userid;
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create trigger to call the update_rating_before_deletion function before a deletion in userrelation
 CREATE TRIGGER update_rating_before_deletion_trigger
-  Before DELETE
-  ON userrelation
-	for each row
-  EXECUTE PROCEDURE update_rating_before_deletion();
+BEFORE DELETE
+ON userrelation
+FOR EACH ROW
+EXECUTE FUNCTION update_rating_before_deletion();
+
+--trigger to set the rate date
+CREATE OR REPLACE FUNCTION set_rate_date()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.rateDate := CURRENT_DATE;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_rate_date_trigger
+BEFORE INSERT ON Rating
+FOR EACH ROW
+EXECUTE FUNCTION set_rate_date();
 
 --D2
 drop procedure if exists string_search_insert(idUser int4, s varchar(255));

@@ -59,9 +59,30 @@ public class UserService : IUserService
         }
         return false;
     }
-    public bool DeleteUser(User user)
+
+    public bool UpdateUserProperties(int userId, string firstName = null, string lastName = null, string email = null, string phoneNo = null)
     {
-        return DeleteUser(user.userID);
+        User user = db.Users.FirstOrDefault(x => x.userID == userId);
+
+        if (user != null)
+        {
+            if (firstName != null)
+                user.firstName = firstName;
+
+            if (lastName != null)
+                user.lastName = lastName;
+
+            if (email != null)
+                user.email = email;
+
+            if (phoneNo != null)
+                user.phoneNo = phoneNo;
+
+            db.SaveChanges();
+            return true;
+        }
+
+        return false;
     }
     public bool DeleteUser(int _userid)
     {

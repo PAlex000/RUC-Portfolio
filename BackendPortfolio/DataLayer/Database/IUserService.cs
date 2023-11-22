@@ -11,7 +11,8 @@ namespace DataLayer.Database
         public User CreateUser(string _firstName, string _lastName, string _email, string _pwdHash, string _phoneNo = null);
         public bool UpdateUserEmail(int _userid, string _email);
         public bool UpdateUserPassword(int _userid, string _pwdHash);
-        public bool DeleteUser(User user);
+
+        public bool UpdateUserProperties(int userId, string firstName = null, string lastName = null, string email = null, string phoneNo = null);
         public bool DeleteUser(int _userid);
     }
 }

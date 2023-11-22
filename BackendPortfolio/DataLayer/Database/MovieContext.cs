@@ -20,7 +20,7 @@ public class MovieContext : DbContext
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder
             .LogTo(Console.Out.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
-        optionsBuilder.UseNpgsql($"host=localhost;db=movie;uid=postgres;pwd=Cristina12@");
+        optionsBuilder.UseNpgsql($"host=localhost;db=movie;uid=postgres;pwd=Ronja");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -27,7 +27,7 @@ Create table Rating (
     userID SERIAL not null,
     grade INT not null,
     reviewText TEXT not null,
-    rateDate varchar(255) not null,
+    rateDate date not null,
     PRIMARY KEY (titleID, userID),
     FOREIGN KEY (titleID) REFERENCES TitleBasics(titleID),
 	FOREIGN KEY (userID) REFERENCES UserRelation(userID)
