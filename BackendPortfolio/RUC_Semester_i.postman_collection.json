@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "9ba36fc6-fc53-4efd-bd38-8b132e39b647",
+		"_postman_id": "c02bfb63-6a11-4f5f-b853-c126de3cb58f",
 		"name": "RUC_Semester_i",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "10819553"
+		"_exporter_id": "27143987"
 	},
 	"item": [
 		{
@@ -54,7 +54,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5001/api/movies/search/Monty%20Python",
+					"raw": "http://localhost:5001/api/movie/search/Monty%20Python",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -62,7 +62,7 @@
 					"port": "5001",
 					"path": [
 						"api",
-						"movies",
+						"movie",
 						"search",
 						"Monty%20Python"
 					]
@@ -76,7 +76,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5001/api/movies/tt0052520/similar",
+					"raw": "http://localhost:5001/api/movie/tt0052520/similar",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -84,7 +84,7 @@
 					"port": "5001",
 					"path": [
 						"api",
-						"movies",
+						"movie",
 						"tt0052520",
 						"similar"
 					]
@@ -93,7 +93,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Persons",
+			"name": "Get People",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -113,7 +113,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Persons by Id",
+			"name": "Get Person by Id",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -134,7 +134,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Persons by Name",
+			"name": "Get Person by Name",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -156,7 +156,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Rating History",
+			"name": "Get RatingHistory",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -181,7 +181,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5001/api/rating/1",
+					"raw": "http://localhost:5001/api/rating/user/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -190,6 +190,7 @@
 					"path": [
 						"api",
 						"rating",
+						"user",
 						"1"
 					]
 				}
@@ -197,7 +198,29 @@
 			"response": []
 		},
 		{
-			"name": "Get Search History",
+			"name": "Get Rating By TitleId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5001/api/rating/title/tt7555000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"rating",
+						"title",
+						"tt7555000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get SearchHistory",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -217,12 +240,12 @@
 			"response": []
 		},
 		{
-			"name": "Get Search by UserId",
+			"name": "Get SearchHistory by UserId",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5001/api/search/1",
+					"raw": "http://localhost:5001/api/search/user/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -231,6 +254,7 @@
 					"path": [
 						"api",
 						"search",
+						"user",
 						"1"
 					]
 				}
@@ -244,15 +268,20 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"Name\" : \"musical\"\n}"
+					"raw": "{\n    \"name\" : \"musical\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "http://localhost:28178/api/genre",
+					"raw": "http://localhost:5001/api/genre",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "28178",
+					"port": "5001",
 					"path": [
 						"api",
 						"genre"
@@ -275,7 +304,12 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"titleID\" : \"tt0697782\",\n    \"userID\" : 1\n}"
+					"raw": "{\n    \"titleID\" : \"tt0697782\",\n    \"userID\" : 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://localhost:5001/api/bookmark",
@@ -306,7 +340,12 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    'Name' : 'test'\n}"
+					"raw": "{\n    \"name\" : \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://localhost:5001/api/genre/15",
@@ -338,7 +377,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n            \"type\" : \"test\",\n            \"isAdult\": true,\n            \"startYear\" : \"test\",\n            \"endYear\"  : \"test\",\n            \"poster\" : \"test\",\n            \"description\" :\"test\",\n            \"rating\" : 5,\n            \"Akas\" :\n            {\n               \n                \"ordering\" : 1,\n                \"title\" : \"test\",\n                \"region\" : \"test\",\n                \"attribute\" : \"test\",\n                \"type\" : \"test\",\n                \"language\" : \"test\",\n                \"isOriginalTitle\" : true\n            }\n}",
+					"raw": "{\n    \"type\" : \"TestType\",\n    \"isAdult\" : true,\n    \"startYear\" : \"2020\",\n    \"endYear\" : \"2023\",\n    \"poster\" : \"PosterLink\",\n    \"description\" : \"Harry Potter\",\n    \"rating\" : 0,\n    \"akas\": [{\n        \"ordering\" : 1,\n        \"title\" : \"TestTitle\",\n        \"region\" : \"EN\",\n        \"attribute\" : \"Nope\",\n        \"type\" : \"TestType\",\n        \"language\" : \"EN\",\n        \"isOriginalTitle\" : true\n    }]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -346,7 +385,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5001/api/movie/tt0426443",
+					"raw": "http://localhost:5001/api/movie/tt15278094",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -355,7 +394,7 @@
 					"path": [
 						"api",
 						"movie",
-						"tt0426443"
+						"tt15278094"
 					]
 				}
 			},
@@ -367,12 +406,12 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:28178/api/genre/1",
+					"raw": "http://localhost:5001/api/genre/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "28178",
+					"port": "5001",
 					"path": [
 						"api",
 						"genre",
@@ -409,7 +448,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5001/api/movie/tt0052520",
+					"raw": "http://localhost:5001/api/movie/tt1605768",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -418,7 +457,7 @@
 					"path": [
 						"api",
 						"movie",
-						"tt0052520"
+						"tt1605768"
 					]
 				}
 			},
@@ -451,7 +490,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5001/api/rating/tt0052520/1",
+					"raw": "http://localhost:5001/api/rating/tt7147062/5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -460,8 +499,8 @@
 					"path": [
 						"api",
 						"rating",
-						"tt0052520",
-						"1"
+						"tt7147062",
+						"5"
 					]
 				}
 			},
@@ -472,8 +511,17 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\" : 1,\r\n    \"searchString\" : \"Hämärän rajamailla\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:5001/api/search/1",
+					"raw": "http://localhost:5001/api/search",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -481,8 +529,7 @@
 					"port": "5001",
 					"path": [
 						"api",
-						"search",
-						"1"
+						"search"
 					]
 				}
 			},

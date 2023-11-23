@@ -28,7 +28,7 @@ public class RatingController : ControllerBase
         return Ok(ratings);
     }
 
-    [HttpGet("getRating/{titleId}")]
+    [HttpGet("title/{titleId}")]
     public IActionResult GetRatingsByTitleID(string titleId)
     {
         var ratings = _ratingService.ReadRatingsForMovie(titleId);
@@ -38,7 +38,7 @@ public class RatingController : ControllerBase
         return Ok(ratings);
     }
 
-    [HttpGet("getRating/user/{userId}")]
+    [HttpGet("user/{userId}")]
     public IActionResult GetRatingsByUserId(int userId)
     {
         var ratings = _ratingService.GetRatingHistoryByUserId(userId);
