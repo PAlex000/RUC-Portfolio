@@ -6,7 +6,7 @@ using WebServer.Models;
 
 namespace WebServer.Controllers;
 
-[Route("api/movies")]
+[Route("api/movie")]
 [ApiController]
 public class MoviesController : ControllerBase
 {
@@ -46,45 +46,45 @@ public class MoviesController : ControllerBase
     [HttpPost]
     public IActionResult CreateMovie([FromBody] MovieCreationModel model)
     {
-        if (model == null || string.IsNullOrEmpty(model.ID))
+        if (model == null || string.IsNullOrEmpty(model.Id))
         {
             return BadRequest("Invalid movie data.");
         }
 
         // does movie with the same id exist? 
-        if (_movieService.DoesMovieExist(model.ID))
+        if (_movieService.DoesMovieExist(model.Id))
         {
-            return BadRequest($"A movie with ID {model.ID} already exists.");
+            return BadRequest($"A movie with ID {model.Id} already exists.");
         }
 
         var newMovie = new TitleBasics
         {
-            ID = model.ID,
-            type = model.Type,
-            isAdult = model.IsAdult,
-            startYear = model.StartYear,
-            endYear = model.EndYear,
-            poster = model.Poster,
-            description = model.Description,
-            rating = model.Rating,
-            Akas = model.Akas.Select(aka => new TitleAkas
+            Id = model.Id,
+            type = model.type,
+            isAdult = model.isAdult,
+            startYear = model.startYear,
+            endYear = model.endYear,
+            poster = model.poster,
+            description = model.description,
+            rating = model.rating,
+            akas = model.akas.Select(aka => new TitleAkas
             {
-                ordering = aka.Ordering,
-                title = aka.Title,
-                region = aka.Region,
-                attribute = aka.Attribute,
-                type = aka.Type,
-                language = aka.Language,
-                isOriginalTitle = aka.IsOriginalTitle
+                ordering = aka.ordering,
+                title = aka.title,
+                region = aka.region,
+                attribute = aka.attribute,
+                type = aka.type,
+                language = aka.language,
+                isOriginalTitle = aka.isOriginalTitle
             }).ToList()
         };
 
         try
         {
-            var result = _movieService.CreateMovie(newMovie, newMovie.Akas.FirstOrDefault());
+            var result = _movieService.CreateMovie(newMovie, newMovie.akas.FirstOrDefault());
             if (result)
             {
-                return CreatedAtAction(nameof(GetSimilarMovies), new { movieId = newMovie.ID }, newMovie);
+                return CreatedAtAction(nameof(GetSimilarMovies), new { movieId = newMovie.Id }, newMovie);
             }
             else
             {
@@ -112,80 +112,32 @@ public class MoviesController : ControllerBase
 
     // Update movie
     [HttpPut("{movieId}")]
-    public IActionResult UpdateMovie(string movieId, [FromBody] MovieUpdateModel model)
+    public IActionResult UpdateMovie(string movieId, MovieUpdateModel model)
     {
         var updatedMovie = new TitleBasics
         {
-            ID = movieId,
-            type = model.Type,
-            isAdult = model.IsAdult,
-            startYear = model.StartYear,
-            endYear = model.EndYear,
-            poster = model.Poster,
-            description = model.Description,
-            rating = model.Rating,
-            Akas = model.Akas.Select(aka => new TitleAkas
+            Id = movieId,
+            type = model.type,
+            isAdult = model.isAdult,
+            startYear = model.startYear,
+            endYear = model.endYear,
+            poster = model.poster,
+            description = model.description,
+            rating = model.rating,
+            akas = model.akas.Select(aka => new TitleAkas
             {
-                ID = aka.ID,
-                ordering = aka.Ordering,
-                title = aka.Title,
-                region = aka.Region,
-                attribute = aka.Attribute,
-                type = aka.Type,
-                language = aka.Language,
-                isOriginalTitle = aka.IsOriginalTitle
+                Id = aka.Id,
+                ordering = aka.ordering,
+                title = aka.title,
+                region = aka.region,
+                attribute = aka.attribute,
+                type = aka.type,
+                language = aka.language,
+                isOriginalTitle = aka.isOriginalTitle
             }).ToList()
         };
 
-        _movieService.UpdateMovie(movieId, updatedMovie, updatedMovie.Akas);
+        _movieService.UpdateMovie(movieId, updatedMovie, updatedMovie.akas);
         return NoContent();
     }
-}
-
-public class MovieCreationModel
-{
-    public string ID { get; set; }
-    public string Type { get; set; }
-    public bool IsAdult { get; set; }
-    public string StartYear { get; set; }
-    public string EndYear { get; set; }
-    public string Poster { get; set; }
-    public string Description { get; set; }
-    public int? Rating { get; set; }
-    public List<AkasCreationModel> Akas { get; set; }
-}
-
-public class AkasCreationModel
-{
-    public int Ordering { get; set; }
-    public string Title { get; set; }
-    public string Region { get; set; }
-    public string Attribute { get; set; }
-    public string Type { get; set; }
-    public string Language { get; set; }
-    public bool IsOriginalTitle { get; set; }
-}
-
-public class MovieUpdateModel
-{
-    public string Type { get; set; }
-    public bool IsAdult { get; set; }
-    public string StartYear { get; set; }
-    public string EndYear { get; set; }
-    public string Poster { get; set; }
-    public string Description { get; set; }
-    public int? Rating { get; set; }
-    public List<AkasUpdateModel> Akas { get; set; }
-}
-
-public class AkasUpdateModel
-{
-    public string? ID { get; set; }
-    public int Ordering { get; set; }
-    public string Title { get; set; }
-    public string Region { get; set; }
-    public string Attribute { get; set; }
-    public string Type { get; set; }
-    public string Language { get; set; }
-    public bool IsOriginalTitle { get; set; }
 }

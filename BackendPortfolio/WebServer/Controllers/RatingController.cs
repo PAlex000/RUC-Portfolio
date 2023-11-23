@@ -5,7 +5,7 @@ using backend.Webserver.Models;
 
 namespace WebServer.Controllers;
 
-[Route("api/ratings")]
+[Route("api/rating")]
 [ApiController]
 public class RatingController : ControllerBase
 {
@@ -23,81 +23,70 @@ public class RatingController : ControllerBase
     {
         var ratings = _ratingService.GetRatingHistory();
         if (ratings == null)
-        {
             return NotFound("No ratings found.");
-        }
+
         return Ok(ratings);
     }
 
-    [HttpGet("ByTitleId/{titleId}")]
+    [HttpGet("getRating/{titleId}")]
     public IActionResult GetRatingsByTitleID(string titleId)
     {
         var ratings = _ratingService.ReadRatingsForMovie(titleId);
-        if (ratings ==null)
-        {
+        if (ratings == null)
             return NotFound($"No ratings found on title ID: {titleId}");
-        }
+
         return Ok(ratings);
     }
 
-    [HttpGet("ByUserId/{userId}")]
+    [HttpGet("getRating/user/{userId}")]
     public IActionResult GetRatingsByUserId(int userId)
     {
-        var ratings = _ratingService.GetRatingistoryByUserId(userId);
+        var ratings = _ratingService.GetRatingHistoryByUserId(userId);
         if (ratings == null)
-        {
             return NotFound($"No ratings found on user ID: {userId}");
-        }
+
         return Ok(ratings);
     }
 
     [HttpPost]
-    public IActionResult CreateRating([FromBody] CreateRatingModel rating)
+    public IActionResult CreateRating(CreateRatingModel rating)
     {
         // Check if the rating with the same UserID and TitleID already exists
-        var existingRating = _ratingService.GetRatingByUserIdAndTitleId(rating.UserID, rating.TitleID);
+        var existingRating = _ratingService.GetRatingByUserIdAndTitleId(rating.userId, rating.titleId);
         if (existingRating != null)
-        {
             return BadRequest("Rating already exists");
-        }
 
         // Create a new rating
-        var newRating = _ratingService.CreateRating(rating.TitleID, rating.UserID, rating.Grade, rating.ReviewText);
-        return CreatedAtAction(nameof(GetRatingHistory), new { id = newRating.TitleID }, newRating);
+        var newRating = _ratingService.CreateRating(rating.titleId, rating.userId, rating.grade, rating.reviewText);
+        return CreatedAtAction(nameof(GetRatingHistory), new { id = newRating.titleId }, newRating);
     }
 
     [HttpPut("{titleId}/{userId}")]
     public IActionResult UpdateRating(string titleId, int userId, Rating rating)
     {
         var existingRating = _ratingService.ReadRatingsForMovie(titleId)
-                                          .FirstOrDefault(r => r.UserID == userId);
+                                          .FirstOrDefault(r => r.userId == userId);
 
         if (existingRating == null)
-        {
             return NotFound($"Rating not found for TitleID: {titleId} and UserID: {userId}");
-        }
 
         // Update the existing rating with the new values
-        existingRating.Grade = rating.Grade;
-        existingRating.ReviewText = rating.ReviewText;
+        existingRating.grade = rating.grade;
+        existingRating.reviewText = rating.reviewText;
 
-        _ratingService.UpdateRating(titleId, userId, rating.Grade, rating.ReviewText);
+        _ratingService.UpdateRating(titleId, userId, rating.grade, rating.reviewText);
 
         return Ok(existingRating); // Return the updated rating
     }
-
-
 
     [HttpDelete("{titleId}/{userId}")]
     public IActionResult DeleteRating(string titleId, int userId)
     {
         var existingRating = _ratingService.ReadRatingsForMovie(titleId)
-                                          .FirstOrDefault(r => r.UserID == userId);
+                                          .FirstOrDefault(r => r.userId == userId);
 
         if (existingRating == null)
-        {
             return NotFound($"Rating not found for TitleID: {titleId} and UserID: {userId}");
-        }
 
         _ratingService.DeleteRating(titleId, userId);
 

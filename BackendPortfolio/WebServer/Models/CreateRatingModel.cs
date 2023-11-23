@@ -9,16 +9,9 @@ namespace backend.Webserver.Models
 {
     public class CreateRatingModel
     {
-        [Required(ErrorMessage = "The TitleID field is required.")]
-        public string TitleID { get; set; }
-
-        [Required(ErrorMessage = "The UserID field is required.")]
-        public int UserID { get; set; }
-
-        [Required(ErrorMessage = "The Grade field is required.")]
-        public int Grade { get; set; }
-
-        //Add additional validation attributes for ReviewText if needed
-        public string? ReviewText { get; set; }
+        public string titleId { get; set; }
+        public int userId { get; set; }
+        public int grade { get; set; }
+        public string? reviewText { get; set; }
     }
 }

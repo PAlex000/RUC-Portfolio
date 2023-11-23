@@ -26,7 +26,7 @@ Create table Rating (
     titleID varchar(255) not null,
     userID SERIAL not null,
     grade int not null,
-    reviewText text not null,
+    reviewText text,
     rateDate date not null,
     PRIMARY KEY (titleID, userID),
     FOREIGN KEY (titleID) REFERENCES TitleBasics(titleID),
@@ -35,7 +35,7 @@ Create table Rating (
 
 CREATE table Search (
 	userID SERIAL NOT NULL,
-	searchString VARCHAR(255),
+	searchString VARCHAR(255) NOT NULL,
 	searchDate date,
 	PRIMARY KEY (userID, searchString),
 	FOREIGN KEY (userID) REFERENCES UserRelation (userID)

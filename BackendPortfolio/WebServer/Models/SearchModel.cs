@@ -2,8 +2,8 @@
 
 public class SearchModel
 {
-    public string Url { get; set; }
-    public int UserID { get; set; }
-    public string SearchString { get; set; }
-    public DateTime SearchDate { get; set; }
+    public string url { get; set; }
+    public int userId { get; set; }
+    public string searchString { get; set; }
+    public DateTime searchDate { get; set; }
 }

@@ -22,35 +22,31 @@ public class GenresController : BaseController
     [HttpGet(Name = nameof(GetGenre))]
     public IActionResult GetGenre(int page = 0, int pageSize = 10)
     {
-        (var genre, var total) = _dataService.GetGenre(page, pageSize);
-        var genr = genre.Select(CreateGenreModel);
-        var result = Paging(genr, total, page, pageSize, nameof(GetGenre));
+        (var genres, var total) = _dataService.GetGenre(page, pageSize);
+        var genre = genres.Select(CreateGenreModel);
+        var result = Paging(genre, total, page, pageSize, nameof(GetGenre));
         return Ok(result);
     }
 
 
     //Get genre by id
-    [HttpGet("{id}", Name = nameof(GetGenreById))]
-    public IActionResult GetGenreById(int id)
+    [HttpGet("{Id}", Name = nameof(GetGenreById))]
+    public IActionResult GetGenreById(int Id)
     {
-        var genre = _dataService.GetGenreById(id);
+        var genre = _dataService.GetGenreById(Id);
         if (genre == null)
-        {
             return NotFound();
-        }
 
         return Ok(CreateGenreModel(genre));
     }
 
     //Get genre by name
-    [HttpGet("name/{Name}", Name = nameof(GetGenreByName))]
+    [HttpGet("name/{name}", Name = nameof(GetGenreByName))]
     public IActionResult GetGenreByName(string name)
     {
         var genre = _dataService.GetGenreByName(name);
         if (genre == null)
-        {
             return NotFound();
-        }
 
         return Ok(CreateGenreModel(genre));
     }
@@ -59,39 +55,37 @@ public class GenresController : BaseController
     [HttpPost]
     public IActionResult CreateGenre(CreateGenreModel model)
     {
-        var genre = new Genres
+        var genre = new Genre
         {
-            Name = model.Name,
+            name = model.name,
         };
-        Genres newGenre = _dataService.CreateGenre(genre.Name);
+        Genre newGenre = _dataService.CreateGenre(genre.name);
         return Created(GetUrl(nameof(GetGenreByName), new { newGenre.Id }), newGenre);
     }
 
     //Update genre
-    [HttpPut("{id}")]
-    public IActionResult UpdateGenre(int id, Genres newGenre)
+    [HttpPut("{Id}")]
+    public IActionResult UpdateGenre(int id, Genre newGenre)
     {
-        bool result = _dataService.UpdateGenre(id, newGenre.Name);
+        bool result = _dataService.UpdateGenre(id, newGenre.name);
         return result ? Ok() : NotFound();
     }
 
     //Delete genre
-    [HttpDelete("{id}")]
-    public IActionResult DeleteGenre(int id)
+    [HttpDelete("{Id}")]
+    public IActionResult DeleteGenre(int Id)
     {
-        bool result = _dataService.DeleteGenre(id);
+        bool result = _dataService.DeleteGenre(Id);
         return result ? Ok() : NotFound();
     }
 
-
-
-    private GenreModel CreateGenreModel(Genres genre)
+    private GenreModel CreateGenreModel(Genre genre)
     {
         return new GenreModel
         {
             //Url = $"http://localhost:5001/api//{category.Id}",
-            Url = GetUrl(nameof(GetGenreById), new { genre.Id }),
-            Name = genre.Name,
+            url = GetUrl(nameof(GetGenreById), new { genre.Id }),
+            name = genre.name,
         };
     }
 
