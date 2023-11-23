@@ -38,7 +38,7 @@ namespace BackendTests
             Assert.Equal("nm0060799", person.Id);
         }
         [Fact]
-        public void CreatePerson_ValidDatas_ReturnsTrue()
+        public void CreatePerson_ValidData_ReturnsTrue()
         {
             var service = new PersonService();
             Person person = new Person
@@ -50,6 +50,28 @@ namespace BackendTests
             bool result = service.CreatePerson(person);
             Assert.True(result);
         }
-        //TODO: Add tests for Update/Delete
+        [Fact]
+        public void DeletePerson_ValidId_ReturnsTrue()
+        {
+            var service = new PersonService();
+            Person person = new Person
+            {
+                PrimaryName = "ToBeDeleted",
+                DateOfBirth = "2000",
+                DateOfDeath = "2010"
+            };
+            service.CreatePerson(person );
+            string id = service.GetPersonByName("ToBeDeleted").Id;
+            bool result = service.DeletePerson(id);
+            Assert.True(result);
+        }
+        [Fact]
+        public void DeletePerson_InvalidId_ReturnsFalse()
+        {
+            var service = new PersonService();
+            bool result = service.DeletePerson("DefinitelyAGoodId");
+            Assert.False(result);
+        }
+        //TODO: Add tests for Update
     }
 }

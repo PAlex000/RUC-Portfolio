@@ -1,5 +1,6 @@
 ﻿using DataLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace DataLayer.Database;
 
@@ -75,21 +76,16 @@ public class PersonService : IPersonService
             return db.SaveChanges() > 0;
         }
         return false;
-    }
+    }*/
 
     public bool DeletePerson(string personId)
     {
-        var db = new MovieContext();
-        var personDelete = db.Persons
-            .Include(p => p.PersonAssociation)
-            .SingleOrDefault(x => x.Id == personId);
-        if (personDelete == null)
+        Person person = db.Persons.FirstOrDefault(x => x.Id == personId);
+        if (person != null)
         {
-            Console.WriteLine($"The actor with Id {personId} could not be found");
-            return false;
+            db.Persons.Remove(person);
+            return db.SaveChanges() > 0;
         }
-        db.Persons.Remove(personDelete);
-        db.SaveChanges();
-        return true;
-    }*/
+        return false;
+    }
 }
