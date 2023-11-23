@@ -8,7 +8,7 @@ namespace DataLayer.Models
 {
     public class TitleAkas
     {
-        public string? ID { get; set; }
+        public string Id { get; set; }
         public int ordering { get; set; }
         public string? title { get; set; }
         public string? region { get; set; }
@@ -16,7 +16,6 @@ namespace DataLayer.Models
         public string? type { get; set; }
         public string? language { get; set; }
         public bool isOriginalTitle { get; set; }
-        public TitleBasics Basics { get; set; }
-
+        public TitleBasics basics { get; set; }
     }
 }

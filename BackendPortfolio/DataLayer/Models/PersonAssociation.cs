@@ -8,8 +8,9 @@ namespace DataLayer.Models
 {
     public class PersonAssociation
     {
-        public string TitleID { get; set; }
-        public string PersonID { get; set; }
-        public int Ordering { get; set; }
+        public string titleId { get; set; }
+        public string personId { get; set; }
+        public int ordering { get; set; }
+        public float job {  get; set; }
     }
 }

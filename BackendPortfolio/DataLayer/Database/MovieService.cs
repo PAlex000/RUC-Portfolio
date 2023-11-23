@@ -14,22 +14,24 @@ public class MovieService : IMovieService
     }
     public TitleBasics GetMovieById(string movieId)
     {
-        return db.TitleBasics.FirstOrDefault(x => x.ID == movieId);
+        return db.TitleBasics.FirstOrDefault(x => x.Id == movieId);
     }
     public List<TitleBasics> SearchMovies(string searchString)
     {
-        var search = db.TitleBasics.Include(tb => tb.Akas)
-            .Where(tb => tb.description.Contains(searchString) || tb.Akas.Any(aka => aka.title.Contains(searchString))).ToList();
+        var search = db.TitleBasics.Include(tb => tb.akas)
+            .Where(tb => tb.description.Contains(searchString) ||tb.akas.Any(aka => aka.title.Contains(searchString)))
+            .ToList();
         return search;
     }
 
     public List<TitleBasics> GetSimilarMovies(string movieId)
     {
-        var targetMovie = db.TitleBasics.FirstOrDefault(x => x.ID == movieId);
-        if (targetMovie == null) return new List<TitleBasics>();
+        var targetMovie = db.TitleBasics.FirstOrDefault(x => x.Id == movieId);
+        if (targetMovie == null)
+            return new List<TitleBasics>();
 
         var similarMovies = db.TitleBasics
-            .Where(x => x.ID != movieId)
+            .Where(x => x.Id != movieId)
             //.Where(x => x.type == targetMovie.type)
             .Where(x => x.isAdult == targetMovie.isAdult)
             .Where(x => x.startYear == targetMovie.startYear)
@@ -41,19 +43,17 @@ public class MovieService : IMovieService
 
     public bool DoesMovieExist(string movieId)
     {
-        return db.TitleBasics.Any(m => m.ID == movieId);
+        return db.TitleBasics.Any(m => m.Id == movieId);
     }
 
     public bool CreateMovie(TitleBasics newMovie, TitleAkas newTitleAkas)
     {
-        var existingMovie = db.TitleBasics.Find(newMovie.ID);
+        var existingMovie = db.TitleBasics.Find(newMovie.Id);
         if (existingMovie != null)
-        {
             return false;
-        }
 
-        newTitleAkas.Basics = newMovie;
-        newMovie.Akas = new List<TitleAkas> { newTitleAkas };
+        newTitleAkas.basics = newMovie;
+        newMovie.akas = new List<TitleAkas> { newTitleAkas };
 
         db.TitleBasics.Add(newMovie);
         db.SaveChanges();
@@ -62,33 +62,31 @@ public class MovieService : IMovieService
 
     public bool DeleteMovie(string movieId)
     {
-        var movieToDelete = db.TitleBasics.Include(tb => tb.Akas)
-                                .FirstOrDefault(m => m.ID == movieId);
+        var movieToDelete = db.TitleBasics.Include(tb => tb.akas)
+                                .FirstOrDefault(m => m.Id == movieId);
 
         if (movieToDelete != null)
         {
-            var associatedPersons = db.PersonAssociation
-                                      .Where(pa => pa.TitleID == movieId)
+            var associatedPeople = db.PersonAssociation
+                                      .Where(pa => pa.titleId == movieId)
                                       .ToList();
-            if (associatedPersons.Any())
+            if (associatedPeople.Any())
             {
-                db.PersonAssociation.RemoveRange(associatedPersons);
+                db.PersonAssociation.RemoveRange(associatedPeople);
             }
 
-            db.TitleAkas.RemoveRange(movieToDelete.Akas);
+            db.TitleAkas.RemoveRange(movieToDelete.akas);
             db.TitleBasics.Remove(movieToDelete);
-
             db.SaveChanges();
             return true;
         }
-
         return false;
     }
 
     public void UpdateMovie(string movieId, TitleBasics updatedMovie, List<TitleAkas> updatedAkasList)
     {
-        var existingMovie = db.TitleBasics.Include(tb => tb.Akas)
-                                .FirstOrDefault(m => m.ID == movieId);
+        var existingMovie = db.TitleBasics.Include(tb => tb.akas)
+                                .FirstOrDefault(m => m.Id == movieId);
         if (existingMovie != null)
         {
             existingMovie.type = updatedMovie.type;
@@ -101,7 +99,7 @@ public class MovieService : IMovieService
 
             foreach (var updatedAkas in updatedAkasList)
             {
-                var existingAkas = existingMovie.Akas.FirstOrDefault(aka => aka.ID == updatedAkas.ID);
+                var existingAkas = existingMovie.akas.FirstOrDefault(aka => aka.Id == updatedAkas.Id);
                 if (existingAkas != null)
                 {
                     existingAkas.ordering = updatedAkas.ordering;
@@ -114,13 +112,12 @@ public class MovieService : IMovieService
                 }
                 else
                 {
-                    updatedAkas.Basics = existingMovie;
-                    existingMovie.Akas.Add(updatedAkas);
+                    updatedAkas.basics = existingMovie;
+                    existingMovie.akas.Add(updatedAkas);
                 }
             }
 
-            existingMovie.Akas.RemoveAll(aka => !updatedAkasList.Any(uaka => uaka.ID == aka.ID));
-
+            existingMovie.akas.RemoveAll(aka => !updatedAkasList.Any(uaka => uaka.Id == aka.Id));
             db.SaveChanges();
         }
     }

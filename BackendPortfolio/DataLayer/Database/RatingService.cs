@@ -12,34 +12,33 @@ public class RatingService : IRatingService
 
     public IList<Rating> GetRatingHistory()
     {
-        var ratings = db.RatingsHistory.ToList();
-        return ratings;
+        return db.RatingsHistory.ToList();
     }
 
-    public IList<Rating> GetRatingistoryByUserId(int _userID)
+    public IList<Rating> GetRatingHistoryByUserId(int _userID)
     {
         return db.RatingsHistory
-            .Where(x => x.UserID == _userID)
+            .Where(x => x.userId == _userID)
             .Select(x => new Rating
             {
-                TitleID = x.TitleID,
-                UserID = _userID,
-                ReviewText = x.ReviewText,
-                Grade = x.Grade,
-                RateDate = x.RateDate
+                titleId = x.titleId,
+                userId = _userID,
+                reviewText = x.reviewText,
+                grade = x.grade,
+                rateDate = x.rateDate
             })
             .ToList();
     }
 
-    public Rating GetRatingByUserIdAndTitleId(int userId, string titleId)
+    public Rating GetRatingByUserIdAndTitleId(int _userID, string _titleId)
     {
-        return db.RatingsHistory.FirstOrDefault(r => r.UserID == userId && r.TitleID == titleId);
+        return db.RatingsHistory.FirstOrDefault(r => r.userId == _userID && r.titleId == _titleId);
     }
 
-    public Rating CreateRating(string titleId, int userId, int grade, string reviewText)
+    public Rating CreateRating(string _titleId, int _userId, int _grade, string _reviewText)
     {
         // Check if the rating with the same UserID and TitleID already exists
-        var existingRating = GetRatingByUserIdAndTitleId(userId, titleId);
+        var existingRating = GetRatingByUserIdAndTitleId(_userId, _titleId);
         if (existingRating != null)
         {
             return null; // Indicate that the rating already exists
@@ -48,47 +47,41 @@ public class RatingService : IRatingService
         // Create a new rating
         var rating = new Rating
         {
-            TitleID = titleId,
-            UserID = userId,
-            Grade = grade,
-            ReviewText = reviewText
+            titleId = _titleId,
+            userId = _userId,
+            grade = _grade,
+            reviewText = _reviewText
         };
 
         db.Add(rating);
         db.SaveChanges();
-        Console.WriteLine("Rating created successfully.");
         return rating;
     }
 
-    public List<Rating> ReadRatingsForMovie(String titleID)
+    public List<Rating> ReadRatingsForMovie(string _titleID)
     {
-        Console.WriteLine($"Searching for ratings with titleID: {titleID}");
+        var ratings = db.RatingsHistory.Where(r => r.titleId == _titleID).ToList();
 
-        var ratings = db.RatingsHistory.Where(r => r.TitleID == titleID).ToList();
-
-        if (ratings.Count == 0)
-        {
-            Console.WriteLine($"No ratings found for titleID: {titleID}");
-        }
+        if (ratings.Count() == 0)
+            return null;
 
         return ratings;
     }
 
-    public void UpdateRating(String titleID, int userID, int newRatingValue, string newReview)
+    public void UpdateRating(string _titleID, int _userID, int newRatingValue, string newReview)
     {
-        var rating = db.RatingsHistory.FirstOrDefault(r => r.TitleID == titleID && r.UserID == userID);
+        var rating = db.RatingsHistory.FirstOrDefault(r => r.titleId == _titleID && r.userId == _userID);
         if (rating != null)
         {
-            rating.Grade = newRatingValue;
-            rating.ReviewText = newReview;
-            Console.WriteLine("Rating updated successfully.");
+            rating.grade = newRatingValue;
+            rating.reviewText = newReview;
             db.SaveChanges();
         }
     }
 
-    public void DeleteRating(String titleID, int userID)
+    public void DeleteRating(string _titleID, int _userID)
     {
-        var rating = db.RatingsHistory.FirstOrDefault(r => r.TitleID == titleID && r.UserID == userID);
+        var rating = db.RatingsHistory.FirstOrDefault(r => r.titleId == _titleID && r.userId == _userID);
         if (rating != null)
         {
             db.RatingsHistory.Remove(rating);

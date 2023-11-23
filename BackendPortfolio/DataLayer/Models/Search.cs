@@ -4,8 +4,8 @@ namespace DataLayer.Models
 {
     public class Search
     {
-        public int userID { get; set; }
-        public string? searchString { get; set; }
+        public int userId { get; set; }
+        public string searchString { get; set; }
         public DateTime searchDate { get; set; }
     }
 }

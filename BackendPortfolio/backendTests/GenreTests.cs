@@ -7,9 +7,9 @@ namespace BackendTests
         [Fact]
         public void Genre_Object_HasIDName()
         {
-            var genre = new Genres();
+            var genre = new Genre();
             Assert.Equal(0, genre.Id);
-            Assert.Null(genre.Name);
+            Assert.Null(genre.name);
         }
         [Fact]
         public void GetAllGenres_NoArgument_ReturnsAllGenres()
@@ -22,14 +22,13 @@ namespace BackendTests
         public void CreateGenre_NoArgument_CreatesGenre()
         {
             var service = new GenreService();
-            var genres = service.CreateGenre("Test genre");
-            Assert.NotNull(genres);
+            var genre = service.CreateGenre("Test genre");
+            Assert.NotNull(genre);
         }
         [Fact]
         public void DeleteGenre_ValidId_RemoveGenre()
         {
             var service = new GenreService();
-
             var result = service.DeleteGenre(1535);
             Assert.True(result);
         }

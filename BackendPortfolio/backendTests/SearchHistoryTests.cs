@@ -8,7 +8,7 @@ namespace BackendTests
         public void Search_Object_HasUserIDSearchStringSearchDate()
         {
             var search = new Search();
-            Assert.Equal(0, search.userID);
+            Assert.Equal(0, search.userId);
             Assert.Null(search.searchString);
             Assert.Equal(DateTime.MinValue, search.searchDate);
         }

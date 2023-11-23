@@ -2,9 +2,9 @@
 {
     public class Bookmark
     {
-        public int ID { get; set; }
-        public string? titleID { get; set; }
-        public int userID { get; set; }
+        public int Id { get; set; }
+        public string titleId { get; set; }
+        public int userId { get; set; }
         public bool status { get; set; }
     }
 }

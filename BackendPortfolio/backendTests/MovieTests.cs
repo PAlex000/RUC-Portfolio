@@ -8,7 +8,7 @@ namespace BackendTests
         public void Movie_Object_HasIDTypeIsAdultStartYearEndYearPosterDescriptionRatingAkas()
         {
             var movie = new TitleBasics();
-            Assert.Null(movie.ID);
+            Assert.Null(movie.Id);
             Assert.Null(movie.type);
             Assert.False(movie.isAdult);
             Assert.Null(movie.startYear);
@@ -16,7 +16,7 @@ namespace BackendTests
             Assert.Null(movie.poster);
             Assert.Null(movie.description);
             Assert.Null(movie.rating);
-            Assert.Null(movie.Akas);
+            Assert.Null(movie.akas);
         }
         [Fact]
         public void GetMovie_WithoutArgument_ReturnsAllMovies()
@@ -80,7 +80,7 @@ namespace BackendTests
             var service = new MovieService();
             TitleAkas titleAkas = new TitleAkas
             {
-                ID = "ttTestID",
+                Id = "ttTestID",
                 ordering = 1,
                 title = "TestTitle",
                 region = "EN",
@@ -91,7 +91,7 @@ namespace BackendTests
             };
             TitleBasics movie = new TitleBasics
             {
-                ID = "ttTestID",
+                Id = "ttTestID",
                 type = "TestType",
                 isAdult = true,
                 startYear = "2020",
@@ -99,11 +99,11 @@ namespace BackendTests
                 poster = "PosterLink",
                 description = "Harry Potter",
                 rating = 0,
-                Akas = new List<TitleAkas> { titleAkas }
+                akas = new List<TitleAkas> { titleAkas }
             };
             var result = service.CreateMovie(movie, titleAkas);
             Assert.True(result);
-            service.DeleteMovie(movie.ID);
+            service.DeleteMovie(movie.Id);
         }
         [Fact]
         public void DeleteMovie_ValidMovieId_ReturnsTrue()
@@ -111,7 +111,7 @@ namespace BackendTests
             var service = new MovieService();
             TitleAkas titleAkas = new TitleAkas
             {
-                ID = "ttTestID",
+                Id = "ttTestID",
                 ordering = 1,
                 title = "TestTitle",
                 region = "EN",
@@ -122,7 +122,7 @@ namespace BackendTests
             };
             TitleBasics movie = new TitleBasics
             {
-                ID = "ttTestID",
+                Id = "ttTestID",
                 type = "TestType",
                 isAdult = true,
                 startYear = "2020",
@@ -130,10 +130,10 @@ namespace BackendTests
                 poster = "PosterLink",
                 description = "Harry Potter",
                 rating = 0,
-                Akas = new List<TitleAkas> { titleAkas }
+                akas = new List<TitleAkas> { titleAkas }
             };
             service.CreateMovie(movie, titleAkas);
-            var result = service.DeleteMovie(movie.ID);
+            var result = service.DeleteMovie(movie.Id);
             Assert.True(result);
         }
         [Fact]
@@ -150,7 +150,7 @@ namespace BackendTests
             var result = service.GetMovieById("tt5343524");
             TitleBasics updatedMovie = new TitleBasics
             {
-                ID = "tt5343524",
+                Id = "tt5343524",
                 type = "long",
                 isAdult = true,
                 startYear = "2016",
@@ -160,7 +160,7 @@ namespace BackendTests
             };
             TitleAkas titleAkas = new TitleAkas
             {
-                ID = "ttTestID",
+                Id = "ttTestID",
                 ordering = 1,
                 title = "TestTitle",
                 region = "EN",
@@ -169,9 +169,9 @@ namespace BackendTests
                 language = "EN",
                 isOriginalTitle = true
             };
-            service.UpdateMovie(result.ID, updatedMovie, new List<TitleAkas> { titleAkas });
+            service.UpdateMovie(result.Id, updatedMovie, new List<TitleAkas> { titleAkas });
             var newMovie = service.GetMovieById("tt5343524");
-            Assert.Equal("tt5343524", newMovie.ID);
+            Assert.Equal("tt5343524", newMovie.Id);
             Assert.Equal("long", newMovie.type);
             Assert.True(newMovie.isAdult);
             Assert.Equal("2016", newMovie.startYear);

@@ -11,17 +11,17 @@ namespace BackendTests
         {
             var person = new Person();
             Assert.Null(person.Id);
-            Assert.Null(person.PrimaryName);
-            Assert.Null(person.DateOfBirth);
-            Assert.Null(person.DateOfDeath);
+            Assert.Null(person.primaryName);
+            Assert.Null(person.dateOfBirth);
+            Assert.Null(person.dateOfDeath);
         }
         [Fact]
-        public void GetPersons_NoArgument_ReturnsAllPersons()
+        public void GetPeople_NoArgument_ReturnsAllPersons()
         {
             var service = new PersonService();
-            var persons = service.GetPersons(10,10);
-            Assert.Equal(331314, persons.count);
-            Assert.Equal("Tom Cleary", persons.persons.First().PrimaryName);
+            var people = service.GetPeople(10,10);
+            Assert.Equal(331314, people.count);
+            Assert.Equal("Tom Cleary", people.people.First().primaryName);
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace BackendTests
         {
             var service = new PersonService();
             var person = service.GetPersonById("nm0060799");
-            Assert.Equal("Geoffrey Bateman", person.PrimaryName);
+            Assert.Equal("Geoffrey Bateman", person.primaryName);
         }
         [Fact]
         public void GetPersonByName_ValidId_ReturnsPersonObject()
@@ -44,9 +44,9 @@ namespace BackendTests
             var service = new PersonService();
             Person person = new Person
             {
-                PrimaryName = "Primary01",
-                DateOfBirth = "2000",
-                DateOfDeath = "2010"
+                primaryName = "Primary01",
+                dateOfBirth = "2000",
+                dateOfDeath = "2010"
             };
             bool result = service.CreatePerson(person);
             Assert.True(result);
@@ -58,9 +58,9 @@ namespace BackendTests
             var service = new PersonService();
             Person person = new Person
             {
-                PrimaryName = "ToBeDeleted",
-                DateOfBirth = "2000",
-                DateOfDeath = "2010"
+                primaryName = "ToBeDeleted",
+                dateOfBirth = "2000",
+                dateOfDeath = "2010"
             };
             service.CreatePerson(person );
             string id = service.GetPersonByName("ToBeDeleted").Id;
@@ -80,17 +80,17 @@ namespace BackendTests
             var service = new PersonService();
             Person person = new Person
             {
-                PrimaryName = "ToBeUpdated",
-                DateOfBirth = "2000",
-                DateOfDeath = ""
+                primaryName = "ToBeUpdated",
+                dateOfBirth = "2000",
+                dateOfDeath = ""
             };
             service.CreatePerson(person);
             string id = service.GetPersonByName("ToBeUpdated").Id;
             Person updatePerson = new Person
             {
-                PrimaryName = "ValidPrimaryName",
-                DateOfBirth = "2000",
-                DateOfDeath = "2023"
+                primaryName = "ValidPrimaryName",
+                dateOfBirth = "2000",
+                dateOfDeath = "2023"
             };
             bool result = service.UpdatePerson(id, updatePerson);
             Assert.True(result);
@@ -102,9 +102,9 @@ namespace BackendTests
             var service = new PersonService();
             Person updatePerson = new Person
             {
-                PrimaryName = "ValidPrimaryName",
-                DateOfBirth = "2000",
-                DateOfDeath = "2023"
+                primaryName = "ValidPrimaryName",
+                dateOfBirth = "2000",
+                dateOfDeath = "2023"
             };
             bool result = service.UpdatePerson("DefinitelyAGoodId", updatePerson);
             Assert.False(result);
