@@ -5,10 +5,10 @@ namespace DataLayer.Database;
 
 public class PersonService : IPersonService
 {
+    private readonly MovieContext db = new MovieContext();
 
     public (IList<Person> persons, int count) GetPersons(int page, int pageSize)
     {
-        var db = new MovieContext();
         var person =
             db.Persons
             .Skip(page * pageSize)
@@ -19,16 +19,12 @@ public class PersonService : IPersonService
 
     public Person? GetPersonById(string personId)
     {
-        var db = new MovieContext();
-        var searchPId = db.Persons.FirstOrDefault(x => x.Id == personId);
-        return searchPId;
+        return db.Persons.FirstOrDefault(x => x.Id == personId);
     }
 
     public Person? GetPersonByName(string primaryName)
     {
-        var db = new MovieContext();
-        var result = db.Persons.FirstOrDefault(x => x.PrimaryName == primaryName);
-        return result;
+        return db.Persons.FirstOrDefault(x => x.PrimaryName == primaryName);
     }
 
 
@@ -44,25 +40,24 @@ public class PersonService : IPersonService
         return searchPKeyword.ToList();
 
     } */
-    /*
+
     public bool CreatePerson(Person newPerson)
     {
-        var db = new MovieContext();
-        var id = db.Persons.Max(x => x.Id) + 1;
-
-        var person = new Person
+        //id is nm99937091 -- Cutting the "nm" part, casting it to int, add 1 to it then cast back to string
+        int id = int.Parse(db.Persons.Max(x => x.Id).Substring(2));
+        id++;
+        Person person = new Person
         {
-            Id = id,
+            Id = "nm" + id,
             PrimaryName = newPerson.PrimaryName,
             DateOfBirth = newPerson.DateOfBirth,
             DateOfDeath = newPerson.DateOfDeath
         };
-
         db.Persons.Add(person);
         db.SaveChanges();
         return true;
     }
-
+    /*
     public bool UpdatePerson(string personId, Person updatePerson)
 
     {

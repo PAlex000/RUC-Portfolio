@@ -37,6 +37,19 @@ namespace BackendTests
             var person = service.GetPersonByName("Geoffrey Bateman");
             Assert.Equal("nm0060799", person.Id);
         }
-        //TODO: Add tests for Update/Delete/Create
+        [Fact]
+        public void CreatePerson_ValidDatas_ReturnsTrue()
+        {
+            var service = new PersonService();
+            Person person = new Person
+            {
+                PrimaryName = "Primary01",
+                DateOfBirth = "2000",
+                DateOfDeath = "2010"
+            };
+            bool result = service.CreatePerson(person);
+            Assert.True(result);
+        }
+        //TODO: Add tests for Update/Delete
     }
 }
