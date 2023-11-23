@@ -32,8 +32,6 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddControllers();
-
 builder.Services.AddSingleton<IPersonService, PersonService>();
 builder.Services.AddSingleton<IBookmarkService, BookmarkService>();
 builder.Services.AddSingleton<IGenreService, GenreService>();
@@ -43,7 +41,6 @@ builder.Services.AddSingleton<IRatingService, RatingService>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddControllers().AddJsonOptions(x =>
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
-
 
 var app = builder.Build();
 
