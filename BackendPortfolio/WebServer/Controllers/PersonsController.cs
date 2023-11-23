@@ -7,7 +7,6 @@ using WebServer.Models;
 namespace WebServer.Controllers;
 [Route("api/person")]
 [ApiController]
-
 public class PersonsController : BaseController
 {
     private readonly IPersonService _personService;
@@ -22,22 +21,20 @@ public class PersonsController : BaseController
     [HttpGet(Name = nameof(GetPersons))]
     public IActionResult GetPersons(int page = 0, int pageSize = 10)
     {
-        (var persons, var total) = _personService.GetPersons(page, pageSize);
-        var actor = persons.Select(CreatePersonModel);
+        (var people, var total) = _personService.GetPeople(page, pageSize);
+        var actor = people.Select(CreatePersonModel);
         var result = Paging(actor, total, page, pageSize, nameof(GetPersons));
         return Ok(result);
     }
 
 
-    [HttpGet("{id}", Name = nameof(GetPersonById))]
+    [HttpGet("{Id}", Name = nameof(GetPersonById))]
 
-    public IActionResult GetPersonById(string id)
+    public IActionResult GetPersonById(string Id)
     {
-        var person = _personService.GetPersonById(id);
+        var person = _personService.GetPersonById(Id);
         if (person == null)
-        {
             return NotFound();
-        }
 
         return Ok(CreatePersonModel(person));
     }
@@ -48,9 +45,7 @@ public class PersonsController : BaseController
     {
         var personName = _personService.GetPersonByName(primaryName);
         if (personName == null)
-        {
             return NotFound();
-        }
 
         return Ok(CreatePersonModel(personName));
     }
@@ -83,11 +78,10 @@ public class PersonsController : BaseController
     {
         return new PersonModel
         {
-            Url = GetUrl(nameof(GetPersons), new { person.Id }),
-            PrimaryName = person.PrimaryName,
-            DateOfBirth = person.DateOfBirth,
-            DateOfDeath = person.DateOfDeath
+            url = GetUrl(nameof(GetPersons), new { person.Id }),
+            primaryName = person.primaryName,
+            dateOfBirth = person.dateOfBirth,
+            dateOfDeath = person.dateOfDeath
         };
     }
-
 }

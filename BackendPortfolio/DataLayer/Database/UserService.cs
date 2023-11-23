@@ -7,24 +7,27 @@ namespace DataLayer.Database;
 public class UserService : IUserService
 {
     private readonly MovieContext db = new MovieContext();
+
     public IList<User> GetUsers()
     {
         return db.Users.ToList();
     }
+
     public User? GetUserById(int _userId)
     {
-        return db.Users.FirstOrDefault(x => x.userID == _userId);
+        return db.Users.FirstOrDefault(x => x.userId == _userId);
     }
     public User? GetUserByEmail(string _email)
     {
         return db.Users.FirstOrDefault(x => x.email == _email);
     }
-    public User CreateUser(string _firstName, string _lastName, string _email, string _pwdHash, string _phoneNo = null)
+
+    public bool CreateUser(string _firstName, string _lastName, string _email, string _pwdHash, string _phoneNo = null)
     {
-        int id = db.Users.Max(x => x.userID) + 1;
+        int Id = db.Users.Max(x => x.userId) + 1;
         User user = new User
         {
-            userID = id,
+            userId = Id,
             firstName = _firstName,
             lastName = _lastName,
             email = _email,
@@ -35,11 +38,11 @@ public class UserService : IUserService
         };
         db.Add(user);
         db.SaveChanges();
-        return user;
+        return true;
     }
-    public bool UpdateUserEmail(int _userid, string _email)
+    public bool UpdateUserEmail(int _userId, string _email)
     {
-        User user = db.Users.FirstOrDefault(x => x.userID == _userid);
+        User user = db.Users.FirstOrDefault(x => x.userId == _userId);
         if (user != null)
         {
             user.email = _email;
@@ -48,9 +51,10 @@ public class UserService : IUserService
         }
         return false;
     }
-    public bool UpdateUserPassword(int _userid, string _pwdHash)
+
+    public bool UpdateUserPassword(int _userId, string _pwdHash)
     {
-        User user = db.Users.FirstOrDefault(x => x.userID == _userid);
+        User user = db.Users.FirstOrDefault(x => x.userId == _userId);
         if (user != null)
         {
             user.pwdHash = _pwdHash;
@@ -60,33 +64,32 @@ public class UserService : IUserService
         return false;
     }
 
-    public bool UpdateUserProperties(int userId, string firstName = null, string lastName = null, string email = null, string phoneNo = null)
+    public bool UpdateUserProperties(int _userId, string _firstName = null, string _lastName = null, string _email = null, string _phoneNo = null)
     {
-        User user = db.Users.FirstOrDefault(x => x.userID == userId);
+        User user = db.Users.FirstOrDefault(x => x.userId == _userId);
 
         if (user != null)
         {
-            if (firstName != null)
-                user.firstName = firstName;
+            if (_firstName != null)
+                user.firstName = _firstName;
 
-            if (lastName != null)
-                user.lastName = lastName;
+            if (_lastName != null)
+                user.lastName = _lastName;
 
-            if (email != null)
-                user.email = email;
+            if (_email != null)
+                user.email = _email;
 
-            if (phoneNo != null)
-                user.phoneNo = phoneNo;
+            if (_phoneNo != null)
+                user.phoneNo = _phoneNo;
 
             db.SaveChanges();
             return true;
         }
-
         return false;
     }
-    public bool DeleteUser(int _userid)
+    public bool DeleteUser(int _userId)
     {
-        User user = db.Users.FirstOrDefault(x => x.userID == _userid);
+        User user = db.Users.FirstOrDefault(x => x.userId == _userId);
         if (user != null)
         {
             db.Users.Remove(user);

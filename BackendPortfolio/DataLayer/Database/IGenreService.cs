@@ -4,11 +4,11 @@ namespace DataLayer.Database;
 
 	public interface IGenreService
 	{
-        (IList<Genres> genre, int count) GetGenre(int page, int pageSize);
-        Genres? GetGenreById(int id);
-        Genres? GetGenreByName(string name);
-        Genres? CreateGenre(string name);
-        bool DeleteGenre(Genres genre);
-        bool DeleteGenre(int id);
-        bool UpdateGenre(int id, string name);
+        (IList<Genre> genre, int count) GetGenre(int page, int pageSize);
+        Genre? GetGenreById(int genreId);
+        Genre? GetGenreByName(string genreName);
+        Genre? CreateGenre(string genreName);
+        bool DeleteGenre(Genre genre);
+        bool DeleteGenre(int genreId);
+        bool UpdateGenre(int genreId, string name);
 	}

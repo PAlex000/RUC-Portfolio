@@ -17,7 +17,6 @@ public class SearchController : ControllerBase
         _searchService = searchService;
     }
 
-    // Get search history
     [HttpGet]
     public ActionResult<IList<Search>> GetSearchHistory()
     {
@@ -27,7 +26,6 @@ public class SearchController : ControllerBase
         return !searchHistory.Any() ? NotFound() : Ok(searchHistory);
     }
 
-    // Get search by user ID
     [HttpGet("user/{userId}")]
     public ActionResult<IList<Search>> GetSearchHistoryByUserId(int userId)
     {
@@ -37,34 +35,31 @@ public class SearchController : ControllerBase
         return !searchHistory.Any() ? NotFound() : Ok(searchHistory);
     }
 
-    // Create a search
     [HttpPost]
     public ActionResult<Search> CreateSearch(CreateSearchModel model)
     {
-        var newSearch = _searchService.CreateSearch(model.UserID, model.SearchString);
-        if (newSearch == null)
-        {
+        var newSearch = _searchService.CreateSearch(model.userId, model.searchString);
+        if (!newSearch)
             return BadRequest("Could not create the search entry.");
-        }
-        return CreatedAtAction(nameof(GetSearchHistoryByUserId), new { userId = newSearch.userID }, newSearch);
+        return Ok();
+        //return CreatedAtAction(nameof(GetSearchHistoryByUserId), new { userId = search.userId }, newSearch);
     }
 
-    // Delete a search
     [HttpDelete]
     public IActionResult DeleteSearch(CreateSearchModel model)
     {
-        bool result = _searchService.DeleteSearch(model.SearchString, model.UserID);
+        bool result = _searchService.DeleteSearch(model.searchString, model.userId);
         return result ? Ok() : NotFound();
     }
     private SearchModel CreateSearchModel(Search search)
     {
         return new SearchModel
         {
-            Url = $"http://localhost:5001/api/search/user/{search.userID}",
+            url = $"http://localhost:5001/api/search/user/{search.userId}",
             //Url = GetUrl(nameof(GetBookmark), new { bookmark.ID }),
-            UserID = search.userID,
-            SearchString = search.searchString,
-            SearchDate = search.searchDate
+            userId = search.userId,
+            searchString = search.searchString,
+            searchDate = search.searchDate
         };
     }
 }

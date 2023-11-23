@@ -27,9 +27,8 @@ public class UserController : ControllerBase
     {
         var users = _userService.GetUsers();
         if (users == null)
-        {
             return NotFound("No user history found.");
-        }
+
         return Ok(users);
     }
 
@@ -45,51 +44,45 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("register")]
-    public IActionResult Register([FromBody] CreateUserModel userRequest)
+    public IActionResult Register(CreateUserModel userRequest)
     {
         // Check if a user with the provided email already exists
         var existingUser = _userService.GetUserByEmail(userRequest.email);
 
         if (existingUser != null)
-        {
             return BadRequest("Email is already in use");
-        }
 
         // Hash and salt the password (secure hashing library?)
         string passwordHash = userRequest.password; // Replace with actual password hashing logic
 
         // Create the user and store it in the database
-        User user = _userService.CreateUser(
+        _userService.CreateUser(
             userRequest.firstName,
             userRequest.lastName,
             userRequest.email,
             passwordHash, // Use the hashed password here
             userRequest.phoneNo
         );
+        User user = _userService.GetUserByEmail(userRequest.email);
 
         var token = GenerateJwtToken(user);
         return Ok(new { Token = token });
     }
 
-
     [HttpPost("login")]
-    public IActionResult Login([FromBody] UserModel loginRequest)
+    public IActionResult Login(UserModel loginRequest)
     {
         // Find the user by email
         var user = _userService.GetUserByEmail(loginRequest.email);
 
         if (user == null)
-        {
             return Unauthorized("Invalid credentials");
-        }
 
         // Verify the password here (compare password hash)
         string providedPasswordHash = loginRequest.password;//Hash the provided password here
 
         if (user.pwdHash != providedPasswordHash)
-        {
             return Unauthorized("Invalid credentials");
-        }
 
         // Password is valid, generate a JWT token
         var token = GenerateJwtToken(user);
@@ -97,22 +90,17 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("{userId}/update-email")]
-    public IActionResult UpdateUserEmail(int userId, [FromBody] User userUpdate)
+    public IActionResult UpdateUserEmail(int userId, User userUpdate)
     {
         var existingUser = _userService.GetUserById(userId);
 
         if (existingUser == null)
-        {
             return NotFound($"User with ID {userId} not found");
-        }
-
-        // Update user properties based on the request
-        existingUser.email = userUpdate.email;
 
         // Perform the update
         _userService.UpdateUserEmail(userId, userUpdate.email);
 
-        return Ok($"User with ID {userId} updated email successfully to {existingUser.email}");
+        return Ok();
     }
 
     [HttpPut("{userId}/update-password")]
@@ -131,7 +119,7 @@ public class UserController : ControllerBase
         // Perform the update
         _userService.UpdateUserPassword(userId, userUpdate.pwdHash); // Use the hashed password here
 
-        return Ok($"User with ID {userId} updated password successfully");
+        return Ok();
     }
 
     [HttpDelete("{userId}")]
@@ -140,14 +128,12 @@ public class UserController : ControllerBase
         var existingUser = _userService.GetUserById(userId);
 
         if (existingUser == null)
-        {
             return NotFound($"User with ID {userId} not found");
-        }
 
         // Perform the delete
         _userService.DeleteUser(userId);
 
-        return Ok($"User with ID {userId} deleted successfully");
+        return Ok();
     }
 
     [HttpGet("protected")]
@@ -156,7 +142,6 @@ public class UserController : ControllerBase
     {
         // This endpoint is protected, only accessible with a valid JWT token
         return Ok(new { Message = "Access granted to Movie Database!" });
-        Console.WriteLine("Access granted");
     }
 
     string GenerateJwtToken(User user)
@@ -167,7 +152,7 @@ public class UserController : ControllerBase
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.email),
-            new Claim(ClaimTypes.NameIdentifier, user.userID.ToString()),
+            new Claim(ClaimTypes.NameIdentifier, user.userId.ToString()),
             //Add more claims as needed (e.g., user roles).
         };
 

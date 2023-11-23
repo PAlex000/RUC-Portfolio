@@ -1,52 +1,43 @@
 ﻿using DataLayer.Models;
 
-namespace DataLayer.Database
+namespace DataLayer.Database;
+public class GenreService : IGenreService
 {
-    public class GenreService : IGenreService
-	{
     private readonly MovieContext db = new MovieContext();
 
-
-    public (IList<Genres> genre, int count) GetGenre(int page, int pageSize)
+    public (IList<Genre> genre, int count) GetGenre(int page, int pageSize)
     {
-        var genre =
-            db.Genres
+        var genre = db.Genres
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToList();
         return (genre, db.Genres.Count());
     }
 
-
-
-        public Genres? GetGenreById(int genresId)
+    public Genre? GetGenreById(int genreId)
     {
-        return db.Genres.FirstOrDefault(x => x.Id == genresId);
+        return db.Genres.FirstOrDefault(x => x.Id == genreId);
     }
 
-    public Genres? GetGenreByName(string name)
+    public Genre? GetGenreByName(string genreName)
     {
-            return db.Genres.FirstOrDefault(x => x.Name == name);
+        return db.Genres.FirstOrDefault(x => x.name == genreName);
+    }
 
-        }
-
-
-        public Genres? CreateGenre(string name)
+    public Genre? CreateGenre(string genreName)
     {
-        var id = db.Genres.Max(x => x.Id) + 1;
-        var genre = new Genres
+        var genreId = db.Genres.Max(x => x.Id) + 1;
+        var genre = new Genre
         {
-            Id = id,
-            Name = name,
+            Id = genreId,
+            name = genreName,
         };
         db.Add(genre);
         db.SaveChanges();
         return genre;
-
     }
 
-
-    public bool DeleteGenre(Genres genre)
+    public bool DeleteGenre(Genre genre)
     {
         return DeleteGenre(genre.Id);
     }
@@ -61,18 +52,16 @@ namespace DataLayer.Database
         }
         return false;
     }
-    public bool UpdateGenre(int id, string name)
-    {
 
-        var genre = GetGenreById(id);
+    public bool UpdateGenre(int genreId, string genreName)
+    {
+        var genre = GetGenreById(genreId);
         if (genre != null)
         {
-            genre.Name = name;
+            genre.name = genreName;
             db.Update(genre);
             return db.SaveChanges() > 0;
         }
         return false;
-    }
-
     }
 }

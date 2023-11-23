@@ -2,7 +2,7 @@
 
 public class CreateSearchModel
 {
-    public int UserID { get; set; }
-    public string SearchString { get; set; }
+    public int userId { get; set; }
+    public string searchString { get; set; }
 
 }

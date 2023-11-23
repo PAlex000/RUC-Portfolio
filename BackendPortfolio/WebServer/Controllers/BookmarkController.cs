@@ -43,8 +43,8 @@ public class BookmarksController : ControllerBase
     {
         var bookmark = new Bookmark
         {
-            titleID = model.titleID,
-            userID = model.userID,
+            titleId = model.titleId,
+            userId = model.userId,
             status = model.status
         };
 
@@ -53,10 +53,10 @@ public class BookmarksController : ControllerBase
     }
 
     //Delete bookamrk
-    [HttpDelete("{id}")]
-    public IActionResult DeleteBookmark(int id)
+    [HttpDelete("{Id}")]
+    public IActionResult DeleteBookmark(int Id)
     {
-        bool result = _dataService.DeleteBookmark(id);
+        bool result = _dataService.DeleteBookmark(Id);
         return result ? Ok() : NotFound();
     }
 
@@ -65,9 +65,9 @@ public class BookmarksController : ControllerBase
         return new BookmarkModel
         {
             //Url = $"http://localhost:5001/api//{bookmark.Id}",
-            Url = GetUrl(nameof(GetBookmark), new { bookmark.ID }),
-            titleID = bookmark.titleID,
-            userID = bookmark.userID,
+            url = GetUrl(nameof(GetBookmark), new { bookmark.Id }),
+            titleId = bookmark.titleId,
+            userId = bookmark.userId,
             status = bookmark.status,
         };
     }

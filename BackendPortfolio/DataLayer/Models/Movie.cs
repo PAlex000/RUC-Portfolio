@@ -10,9 +10,9 @@ namespace DataLayer.Models
     public class Movie
     {
         [Key]
-        public String TitleID { get; set; }
-        public string? TitleName { get; set; }
-        public Rating? Rating { get; set; }
-        public double AverageRating { get; set; }
+        public String titleId { get; set; }
+        public string? titleName { get; set; }
+        public Rating? rating { get; set; }
+        public double averageRating { get; set; }
     }
 }

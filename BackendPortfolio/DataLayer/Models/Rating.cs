@@ -9,13 +9,10 @@ namespace DataLayer.Models
 {
    public class Rating
     {
-        [Required]
-        public String TitleID { get; set; }
-        [Required]
-        public int UserID { get; set; }
-        [Required]
-        public int Grade {  get; set; }
-        public String ReviewText { get; set; }
-        public DateTime RateDate { get; set; }
+        public string titleId { get; set; }
+        public int userId { get; set; }
+        public int grade {  get; set; }
+        public string? reviewText { get; set; }
+        public DateTime rateDate { get; set; }
     }
 }

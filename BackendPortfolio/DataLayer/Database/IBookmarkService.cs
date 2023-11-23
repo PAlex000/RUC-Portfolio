@@ -7,7 +7,7 @@ namespace DataLayer.Database
     {
         IList<Bookmark> GetBookmarks();
         public Bookmark? GetBookmarkById(int bookmarkId);
-        IList<Bookmark> GetBookmarksByUserId(int userId);
+        IList<Bookmark> GetBookmarksByUserId(int _userId);
         public Bookmark? CreateBookmark(Bookmark bookmark);
         public bool DeleteBookmark(Bookmark bookmark);
         public bool DeleteBookmark(int bookmarkId);
