@@ -33,6 +33,18 @@ public class UserController : ControllerBase
         return Ok(users);
     }
 
+    [HttpGet("userinfo/{userid}")]
+    public ActionResult<IList<User>> GetUsersById(int userid)
+    {
+        var user = _userService.GetUserById(userid);
+        if (user == null)
+        {
+            return NotFound($"User with ID {userid} not found");
+        }
+        var userList = new List<User> { user };
+        return Ok(userList);
+    }
+
     [HttpPost("register")]
     public IActionResult Register([FromBody] CreateUserModel userRequest)
     {
