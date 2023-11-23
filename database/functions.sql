@@ -154,6 +154,7 @@ CREATE TRIGGER update_search_before_deletion_trigger
 
 --D3
 drop trigger if exists update_movie_rating_trigger on rating;
+drop trigger if exists delete_movie_rating_trigger ON rating;
 drop function if exists update_movie_rating_fnc();
 CREATE OR REPLACE FUNCTION update_movie_rating_fnc()
 RETURNS trigger AS $$
@@ -171,11 +172,24 @@ BEGIN
 );
 	RETURN NEW;
 END; $$ LANGUAGE plpgsql;
-
+-- Trigger for insert operation
 CREATE TRIGGER update_movie_rating_trigger
   AFTER Insert
   ON rating
   EXECUTE PROCEDURE update_movie_rating_fnc();
+
+-- Trigger for DELETE rating operation
+CREATE TRIGGER delete_movie_rating_trigger
+AFTER DELETE ON rating
+FOR EACH ROW
+EXECUTE PROCEDURE update_movie_rating_fnc();
+
+-- Trigger for DELETE user operation
+CREATE TRIGGER delete_user_rating_trigger
+AFTER DELETE ON user
+FOR EACH ROW
+EXECUTE PROCEDURE update_movie_rating_fnc();
+
 
 drop procedure if exists rate(tid varchar(255), pid int4, grade int, reviewText varchar(255));
 create or replace PROCEDURE rate(tid varchar(255), pid int4, grade int, reviewText varchar(255) default '')
