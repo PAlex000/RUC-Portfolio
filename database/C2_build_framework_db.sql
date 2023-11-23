@@ -25,8 +25,8 @@ drop table if exists Rating;
 Create table Rating (
     titleID varchar(255) not null,
     userID SERIAL not null,
-    grade INT not null,
-    reviewText TEXT not null,
+    grade int not null,
+    reviewText text not null,
     rateDate date not null,
     PRIMARY KEY (titleID, userID),
     FOREIGN KEY (titleID) REFERENCES TitleBasics(titleID),

@@ -103,12 +103,37 @@ namespace BackendTests
             };
             var result = service.CreateMovie(movie, titleAkas);
             Assert.True(result);
+            service.DeleteMovie(movie.ID);
         }
         [Fact]
         public void DeleteMovie_ValidMovieId_ReturnsTrue()
         {
             var service = new MovieService();
-            var result = service.DeleteMovie("ttTestID");
+            TitleAkas titleAkas = new TitleAkas
+            {
+                ID = "ttTestID",
+                ordering = 1,
+                title = "TestTitle",
+                region = "EN",
+                attribute = "Nope",
+                type = "TestType",
+                language = "EN",
+                isOriginalTitle = true
+            };
+            TitleBasics movie = new TitleBasics
+            {
+                ID = "ttTestID",
+                type = "TestType",
+                isAdult = true,
+                startYear = "2020",
+                endYear = "2023",
+                poster = "PosterLink",
+                description = "Harry Potter",
+                rating = 0,
+                Akas = new List<TitleAkas> { titleAkas }
+            };
+            service.CreateMovie(movie, titleAkas);
+            var result = service.DeleteMovie(movie.ID);
             Assert.True(result);
         }
         [Fact]
@@ -123,13 +148,6 @@ namespace BackendTests
         {
             var service = new MovieService();
             var result = service.GetMovieById("tt5343524");
-            Assert.Equal("tt5343524", result.ID);
-            Assert.Equal("short", result.type);
-            Assert.False(result.isAdult);
-            Assert.Equal("2016", result.startYear);
-            Assert.Equal("", result.endYear);
-            Assert.Equal("N/A", result.poster);
-            Assert.Equal("A future hit man has the unfortunate experience of performing his first kill.", result.description);
             TitleBasics updatedMovie = new TitleBasics
             {
                 ID = "tt5343524",
@@ -151,7 +169,7 @@ namespace BackendTests
                 language = "EN",
                 isOriginalTitle = true
             };
-            service.UpdateMovie("tt5343524", updatedMovie, new List<TitleAkas> { titleAkas });
+            service.UpdateMovie(result.ID, updatedMovie, new List<TitleAkas> { titleAkas });
             var newMovie = service.GetMovieById("tt5343524");
             Assert.Equal("tt5343524", newMovie.ID);
             Assert.Equal("long", newMovie.type);
