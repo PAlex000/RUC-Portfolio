@@ -33,7 +33,7 @@ public class RatingController : ControllerBase
     public IActionResult GetRatingsByTitleID(string titleId)
     {
         var ratings = _ratingService.ReadRatingsForMovie(titleId);
-        if (ratings ==null)
+        if (ratings == null || !ratings.Any())
         {
             return NotFound($"No ratings found on title ID: {titleId}");
         }
@@ -44,7 +44,7 @@ public class RatingController : ControllerBase
     public IActionResult GetRatingsByUserId(int userId)
     {
         var ratings = _ratingService.GetRatingistoryByUserId(userId);
-        if (ratings == null)
+        if (ratings == null || !ratings.Any())
         {
             return NotFound($"No ratings found on user ID: {userId}");
         }
