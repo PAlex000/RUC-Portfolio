@@ -1,3 +1,4 @@
+using Azure.Core.Pipeline;
 using DataLayer.Database;
 using DataLayer.Models;
 
@@ -49,6 +50,7 @@ namespace BackendTests
             };
             bool result = service.CreatePerson(person);
             Assert.True(result);
+            service.DeletePerson(service.GetPersonByName("Primary01").Id);
         }
         [Fact]
         public void DeletePerson_ValidId_ReturnsTrue()
@@ -72,6 +74,40 @@ namespace BackendTests
             bool result = service.DeletePerson("DefinitelyAGoodId");
             Assert.False(result);
         }
-        //TODO: Add tests for Update
+        [Fact]
+        public void UpdatePerson_ValidId_ReturnsTrue()
+        {
+            var service = new PersonService();
+            Person person = new Person
+            {
+                PrimaryName = "ToBeUpdated",
+                DateOfBirth = "2000",
+                DateOfDeath = ""
+            };
+            service.CreatePerson(person);
+            string id = service.GetPersonByName("ToBeUpdated").Id;
+            Person updatePerson = new Person
+            {
+                PrimaryName = "ValidPrimaryName",
+                DateOfBirth = "2000",
+                DateOfDeath = "2023"
+            };
+            bool result = service.UpdatePerson(id, updatePerson);
+            Assert.True(result);
+            service.DeletePerson(id);
+        }
+        [Fact]
+        public void UpdatePerson_InvalidId_ReturnsFalse()
+        {
+            var service = new PersonService();
+            Person updatePerson = new Person
+            {
+                PrimaryName = "ValidPrimaryName",
+                DateOfBirth = "2000",
+                DateOfDeath = "2023"
+            };
+            bool result = service.UpdatePerson("DefinitelyAGoodId", updatePerson);
+            Assert.False(result);
+        }
     }
 }

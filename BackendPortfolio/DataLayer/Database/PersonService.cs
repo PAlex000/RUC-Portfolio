@@ -58,25 +58,22 @@ public class PersonService : IPersonService
         db.SaveChanges();
         return true;
     }
-    /*
+
     public bool UpdatePerson(string personId, Person updatePerson)
-
     {
-        var db = new MovieContext();
-        var personExists = db.Persons
-            .FirstOrDefault(x => x.Id == personId);
+        Person person = db.Persons.FirstOrDefault(x => x.Id == personId);
 
-        if (personExists != null)
+        if (person != null)
         {
-            personExists.PrimaryName = updatePerson.PrimaryName;
-            personExists.DateOfBirth = updatePerson.DateOfBirth;
-            personExists.DateOfDeath = updatePerson.DateOfDeath;
+            person.PrimaryName = updatePerson.PrimaryName;
+            person.DateOfBirth = updatePerson.DateOfBirth;
+            person.DateOfDeath = updatePerson.DateOfDeath;
 
-            db.Update(personExists);
+            db.Persons.Update(person);
             return db.SaveChanges() > 0;
         }
         return false;
-    }*/
+    }
 
     public bool DeletePerson(string personId)
     {
