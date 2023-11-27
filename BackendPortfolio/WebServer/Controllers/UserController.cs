@@ -15,12 +15,13 @@ public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
     private readonly LinkGenerator _linkGenerator;
-    private readonly string _secretKey = "YourSecretKey";
+    private readonly IAuthService _authService;
 
-    public UserController(IUserService userService, LinkGenerator linkGenerator)
+    public UserController(IUserService userService, LinkGenerator linkGenerator, IAuthService aservice)
     {
         _userService = userService;
         _linkGenerator = linkGenerator;
+        _authService = aservice;
     }
     [HttpGet]
     public ActionResult<IList<User>> GetUsers()
@@ -65,7 +66,7 @@ public class UserController : ControllerBase
         );
         User user = _userService.GetUserByEmail(userRequest.email);
 
-        var token = GenerateJwtToken(user);
+        var token = _authService.GenerateJwtToken(user);
         return Ok(new { Token = token });
     }
 
@@ -85,7 +86,7 @@ public class UserController : ControllerBase
             return Unauthorized("Invalid credentials");
 
         // Password is valid, generate a JWT token
-        var token = GenerateJwtToken(user);
+        var token = _authService.GenerateJwtToken(user);
         return Ok(new { Token = token });
     }
 
@@ -142,28 +143,5 @@ public class UserController : ControllerBase
     {
         // This endpoint is protected, only accessible with a valid JWT token
         return Ok(new { Message = "Access granted to Movie Database!" });
-    }
-
-    string GenerateJwtToken(User user)
-    {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey.PadRight(16)));
-        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, user.email),
-            new Claim(ClaimTypes.NameIdentifier, user.userId.ToString()),
-            //Add more claims as needed (e.g., user roles).
-        };
-
-        var token = new JwtSecurityToken(
-            issuer: "YourIssuer",
-            audience: "YourAudience",
-            claims: claims,
-            expires: DateTime.UtcNow.AddHours(1), // Token expiration time
-            signingCredentials: credentials
-        );
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
