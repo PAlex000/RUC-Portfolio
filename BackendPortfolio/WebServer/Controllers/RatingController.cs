@@ -43,7 +43,7 @@ public class RatingController : ControllerBase
     [HttpGet("ByUserId/{userId}")]
     public IActionResult GetRatingsByUserId(int userId)
     {
-        var ratings = _ratingService.GetRatingistoryByUserId(userId);
+        var ratings = _ratingService.GetRatingHistoryByUserId(userId);
         if (ratings == null || !ratings.Any())
         {
             return NotFound($"No ratings found on user ID: {userId}");
@@ -55,22 +55,22 @@ public class RatingController : ControllerBase
     public IActionResult CreateRating([FromBody] CreateRatingModel rating)
     {
         // Check if the rating with the same UserID and TitleID already exists
-        var existingRating = _ratingService.GetRatingByUserIdAndTitleId(rating.UserID, rating.TitleID);
+        var existingRating = _ratingService.GetRatingByUserIdAndTitleId(rating.userId, rating.titleId);
         if (existingRating != null)
         {
             return BadRequest("Rating already exists");
         }
 
         // Create a new rating
-        var newRating = _ratingService.CreateRating(rating.TitleID, rating.UserID, rating.Grade, rating.ReviewText);
-        return CreatedAtAction(nameof(GetRatingHistory), new { id = newRating.TitleID }, newRating);
+        var newRating = _ratingService.CreateRating(rating.titleId, rating.userId, rating.grade, rating.reviewText);
+        return CreatedAtAction(nameof(GetRatingHistory), new { id = newRating.titleId }, newRating);
     }
 
     [HttpPut("{titleId}/{userId}")]
     public IActionResult UpdateRating(string titleId, int userId, Rating rating)
     {
         var existingRating = _ratingService.ReadRatingsForMovie(titleId)
-                                          .FirstOrDefault(r => r.UserID == userId);
+                                          .FirstOrDefault(r => r.userId == userId);
 
         if (existingRating == null)
         {
@@ -78,10 +78,10 @@ public class RatingController : ControllerBase
         }
 
         // Update the existing rating with the new values
-        existingRating.Grade = rating.Grade;
-        existingRating.ReviewText = rating.ReviewText;
+        existingRating.grade = rating.grade;
+        existingRating.reviewText = rating.reviewText;
 
-        _ratingService.UpdateRating(titleId, userId, rating.Grade, rating.ReviewText);
+        _ratingService.UpdateRating(titleId, userId, rating.grade, rating.reviewText);
 
         return Ok(existingRating); // Return the updated rating
     }
@@ -92,7 +92,7 @@ public class RatingController : ControllerBase
     public IActionResult DeleteRating(string titleId, int userId)
     {
         var existingRating = _ratingService.ReadRatingsForMovie(titleId)
-                                          .FirstOrDefault(r => r.UserID == userId);
+                                          .FirstOrDefault(r => r.userId == userId);
 
         if (existingRating == null)
         {
