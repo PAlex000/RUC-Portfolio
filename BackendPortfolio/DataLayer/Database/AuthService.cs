@@ -81,7 +81,7 @@ public class AuthService : IAuthService
         public string HashSHA256(string password, string saltString)
         {
             byte[] hashInput = Encoding.UTF8.GetBytes(saltString + password);
-            byte[] hashOutput = IteratedSHA256(hashInput, 1);
+            byte[] hashOutput = IteratedSHA256(hashInput, 100000);
             return Convert.ToHexString(hashOutput);
         }
 

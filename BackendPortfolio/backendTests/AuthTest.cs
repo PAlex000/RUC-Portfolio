@@ -49,7 +49,6 @@ namespace BackendTests
         {
            
             var authService = new AuthService();
-            var userService = new UserService();
             var userEmail = "john.smith@example.com";
             var userPassword = "securepassword";
 
