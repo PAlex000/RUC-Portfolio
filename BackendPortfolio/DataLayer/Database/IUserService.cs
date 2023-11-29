@@ -8,7 +8,7 @@ namespace DataLayer.Database
         public IList<User> GetUsers();
         public User GetUserById(int _userId);
         public User GetUserByEmail(string _email);
-        public bool CreateUser(string _firstName, string _lastName, string _email, string _pwdHash, string _phoneNo = null);
+        public bool CreateUser(string _firstName, string _lastName, string _email, string salt, string _pwdHash, string _phoneNo = null);
         public bool UpdateUserEmail(int _userId, string _email);
         public bool UpdateUserPassword(int _userId, string _pwdHash);
 

@@ -22,7 +22,7 @@ public class UserService : IUserService
         return db.Users.FirstOrDefault(x => x.email == _email);
     }
 
-    public bool CreateUser(string _firstName, string _lastName, string _email, string _pwdHash, string _phoneNo = null)
+    public bool CreateUser(string _firstName, string _lastName, string _email, string _salt, string _pwdHash, string _phoneNo = null)
     {
         int Id = db.Users.Max(x => x.userId) + 1;
         User user = new User
@@ -31,6 +31,7 @@ public class UserService : IUserService
             firstName = _firstName,
             lastName = _lastName,
             email = _email,
+            salt = _salt,
             pwdHash = _pwdHash,
             phoneNo = _phoneNo,
             isVerified = false,

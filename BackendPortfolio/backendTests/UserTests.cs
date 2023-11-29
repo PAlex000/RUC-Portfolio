@@ -56,7 +56,7 @@ namespace BackendTests
         public void DeleteUser_ValidId_RemoveUser()
         {
             var service = new UserService();
-            service.CreateUser("firstName", "lastName", "rteszr@gmail.clm", "123asd");
+            service.CreateUser("firstName", "lastName", "rteszr@gmail.clm", "123", "123asd");
             var user = service.GetUserByEmail("rteszr@gmail.clm");
             var result = service.DeleteUser(user.userId);
             Assert.True(result);

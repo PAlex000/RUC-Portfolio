@@ -9,6 +9,10 @@ namespace DataLayer.Database
 {
     public interface IAuthService
     {
+        public (string Hash, string SaltString) Hash(string password);
         public string GenerateJwtToken(User user);
+
+        public bool Verify(string userEmail, string login_password);
+
     }
 }

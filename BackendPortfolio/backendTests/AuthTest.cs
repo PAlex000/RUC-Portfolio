@@ -1,6 +1,7 @@
 ﻿using DataLayer.Database;
 using DataLayer.Models;
 using Newtonsoft.Json;
+using System.Security.Cryptography;
 using System.Text;
 using WebServer.Controllers;
 using WebServer.Models;
@@ -31,6 +32,46 @@ namespace BackendTests
             var responseContent = await response.Content.ReadAsStringAsync();
             var token = JsonConvert.DeserializeAnonymousType(responseContent, new { Token = "" });
             Assert.NotNull(token.Token);
+        }
+        [Fact]
+        public void Hash_ShouldReturnValidTuple()
+        {
+            var authService = new AuthService();
+
+            var result = authService.Hash("password123");
+
+            Assert.NotNull(result);
+            Assert.NotNull(result.Hash);
+            Assert.NotNull(result.SaltString);
+        }
+        [Fact]
+        public void Verify_CorrectPassword_ShouldReturnTrue()
+        {
+           
+            var authService = new AuthService();
+            var userService = new UserService();
+            var userEmail = "john.smith@example.com";
+            var userPassword = "securepassword";
+
+            var isValid = authService.Verify(userEmail, userPassword);
+            Assert.True(isValid);
+        }
+        [Fact]
+        public void Verify_IncorrectPassword_ShouldReturnFalse()
+        {
+            
+            var authService = new AuthService();
+            var userService = new UserService();
+            var userEmail = "john.smith@example.com";
+            var correctPassword = "securepassword"; 
+            var incorrectPassword = "securepassword2"; 
+
+            var hashResult = authService.Hash(correctPassword);
+            var registeredUser = userService.GetUserByEmail(userEmail);
+
+            var isValid = authService.Verify(userEmail, incorrectPassword);
+
+            Assert.False(isValid);
         }
     }
 }

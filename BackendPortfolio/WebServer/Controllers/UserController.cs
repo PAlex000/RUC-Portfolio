@@ -8,6 +8,7 @@ using DataLayer.Models;
 using WebServer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Validations;
+using System.Security.Cryptography;
 
 [Route("api/user")]
 [ApiController]
@@ -53,15 +54,18 @@ public class UserController : ControllerBase
         if (existingUser != null)
             return BadRequest("Email is already in use");
 
-        // Hash and salt the password (secure hashing library?)
-        string passwordHash = userRequest.password; // Replace with actual password hashing logic
+
+        var hashResult = _authService.Hash(userRequest.password);
+        string passwordHash = hashResult.Item1;
+        string salt = hashResult.Item2;
 
         // Create the user and store it in the database
         _userService.CreateUser(
             userRequest.firstName,
             userRequest.lastName,
             userRequest.email,
-            passwordHash, // Use the hashed password here
+            salt,
+            passwordHash,
             userRequest.phoneNo
         );
         User user = _userService.GetUserByEmail(userRequest.email);
@@ -80,9 +84,9 @@ public class UserController : ControllerBase
             return Unauthorized("Invalid credentials");
 
         // Verify the password here (compare password hash)
-        string providedPasswordHash = loginRequest.password;//Hash the provided password here
+       bool isPasswordValid =_authService.Verify(loginRequest.email,loginRequest.password);
 
-        if (user.pwdHash != providedPasswordHash)
+        if (!isPasswordValid)
             return Unauthorized("Invalid credentials");
 
         // Password is valid, generate a JWT token
@@ -114,11 +118,10 @@ public class UserController : ControllerBase
             return NotFound($"User with ID {userId} not found");
         }
 
-        // Update user properties based on the request
-        existingUser.pwdHash = userUpdate.pwdHash; // Replace with actual password hashing logic
+        existingUser.pwdHash = userUpdate.pwdHash;
 
         // Perform the update
-        _userService.UpdateUserPassword(userId, userUpdate.pwdHash); // Use the hashed password here
+        _userService.UpdateUserPassword(userId, userUpdate.pwdHash);
 
         return Ok();
     }

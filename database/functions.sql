@@ -1,10 +1,11 @@
 --D1
 --USER FUNCTIONS
-drop procedure if exists create_user(firstName varchar(40), lastName varchar(40), email varchar(150), pwdHash varchar(255), phoneno varchar(20), isverified bool, isactive bool);
+drop procedure if exists create_user(firstName varchar(40), lastName varchar(40), email varchar(150), salt varchar(255), pwdHash varchar(255), phoneno varchar(20), isverified bool, isactive bool);
 create procedure create_user(
 	firstName varchar(40),
 	lastName varchar(40),
 	email varchar(150),
+    salt varchar(255),
 	pwdHash varchar(255),
 	phoneno varchar(20) default null,
 	isverified bool default false,
@@ -15,6 +16,7 @@ $$
 		firstName,
 		lastName,
 		email,
+        salt,
 		pwdHash,
 		phoneno,
 		isverified,
@@ -23,7 +25,9 @@ $$
 	values (
 		firstName,
 		lastName,
-		email, pwdHash,
+		email, 
+        salt,
+        pwdHash,
 		phoneno,
 		isverified,
 		isactive
