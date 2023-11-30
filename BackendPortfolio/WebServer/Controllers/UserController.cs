@@ -28,7 +28,7 @@ public class UserController : ControllerBase
     public ActionResult<IList<User>> GetUsers()
     {
         var users = _userService.GetUsers();
-        if (users == null)
+        if (users == null || !users.Any())
             return NotFound("No user history found.");
 
         return Ok(users);
