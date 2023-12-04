@@ -1,6 +1,10 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
+
+// @Cristina | Instead of using the Nav.Link you will have to use the Link from 'react-router-dom' which is imported. I've done the rest of the config for react-router-dom
+// The Navbar is just a placeholder I found on the bootstrap website.
 
 const Navigation = () => {
   return (

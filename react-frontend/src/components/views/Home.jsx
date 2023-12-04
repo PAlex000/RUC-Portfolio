@@ -3,6 +3,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CardComp from "../common/CardComp";
 import Dropdowns from "../common/Dropdown";
+import Header from "../layout/Header";
 import shawshank from "../../assets/shawshank.jpg";
 import departed from "../../assets/departed.jpg";
 import header from "../../assets/movieHeader.jpg";
@@ -72,38 +73,10 @@ const backgroundContainer = {
   backgroundColor: "#000",
 };
 
-const headerStyle = {
-  position: "relative",
-  textAlign: "center",
-  color: "white",
-  width: "80%",
-  paddingTop: "50px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  margin: "0 auto",
-  borderRadius: "15px",
-};
-
-const overlayTextStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  fontSize: "2rem",
-};
-
 const Home = () => {
   return (
     <Container className="px-5" fluid style={backgroundContainer}>
-      <div style={headerStyle}>
-        <img
-          src={header}
-          alt="Header Image"
-          style={{ width: "100%", height: "auto" }}
-        />
-        <div style={overlayTextStyle}>Welcome to Our Movie Collection</div>
-      </div>
+      <Header header={header} />
       <Row className="d-flex justify-content-center">
         <Row className="mr-4">
           <Col className="d-flex justify-content-end">
