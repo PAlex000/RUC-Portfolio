@@ -23,43 +23,6 @@ The repository is only for a portfolio projects in RUC
 
 -- File Structure example (which we are following):
 
-my-app/
-├── public/
-│   ├── index.html
-│   └── ...
-├── src/
-│   ├── components/
-│   │   ├── common/
-│   │   │   ├── Button.tsx
-│   │   │   └── ...
-│   │   ├── layout/
-│   │   │   ├── Header.tsx
-│   │   │   ├── Footer.tsx
-│   │   │   └── ...
-│   │   └── views/
-│   │       ├── Home.tsx
-│   │       ├── Profile.tsx
-│   │       └── ...
-│   ├── hooks/
-│   │   └── useAuth.tsx
-│   ├── redux/
-│   │   ├── actions/
-│   │   ├── reducers/
-│   │   └── store/
-│   ├── services/
-│   │   └── api.ts
-│   ├── utils/
-│   │   └── ...
-│   ├── types/
-│   │   └── ...
-│   ├── routes/
-│   │   └── ...
-│   ├── assets/
-│   │   └── ...
-│   ├── styles/
-│   │   └── index.css
-│   ├── App.tsx
-│   └── index.tsx
-├── package.json
-└── ...
+![image](https://github.com/PAlex000/RUC-Portfolio/assets/54646142/738671f0-f991-4587-8d9e-c743c9193a4b)
+
 
