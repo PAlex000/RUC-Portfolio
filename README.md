@@ -1,6 +1,11 @@
 # RUC-Portfolio
 The repository is only for a portfolio projects in RUC
 
+#CODING STANDARDS
+
+1. camelCase
+2. Do not merge to main without consent from other group members
+
 #DATABASES
 
 #BACKEND WITH .NET
