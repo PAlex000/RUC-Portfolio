@@ -5,6 +5,7 @@ import CardComp from "../common/CardComp";
 import Dropdowns from "../common/Dropdown";
 import shawshank from "../../assets/shawshank.jpg";
 import departed from "../../assets/departed.jpg";
+import header from "../../assets/movieHeader.jpg";
 
 //Hard coded data as we create the skellet. useEffect with GET calls when we establish connection. Async/Await, fetch.
 const movieData = [
@@ -71,9 +72,38 @@ const backgroundContainer = {
   backgroundColor: "#000",
 };
 
+const headerStyle = {
+  position: "relative",
+  textAlign: "center",
+  color: "white",
+  width: "80%",
+  paddingTop: "50px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  margin: "0 auto",
+  borderRadius: "15px",
+};
+
+const overlayTextStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  fontSize: "2rem",
+};
+
 const Home = () => {
   return (
     <Container className="px-5" fluid style={backgroundContainer}>
+      <div style={headerStyle}>
+        <img
+          src={header}
+          alt="Header Image"
+          style={{ width: "100%", height: "auto" }}
+        />
+        <div style={overlayTextStyle}>Welcome to Our Movie Collection</div>
+      </div>
       <Row className="d-flex justify-content-center">
         <Row className="mr-4">
           <Col className="d-flex justify-content-end">
