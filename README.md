@@ -30,7 +30,8 @@ The repository is only for a portfolio projects in RUC
 1. New files should always be named Pascal (Button.js, Home.js, etc.)
 2. Folders should be named with small letters
 3. Use Visual Studio Code as IDE for frontend
-4. Work with the following extensions in VS Code: Prettier, ES7-React Snippets, ESLint, npm intellisense, Simple React Snippets.
+4. Work with the following extensions in VS Code: Prettier, ES7-React Snippets, npm intellisense, Simple React Snippets.
+5. ReUse components at all times! React is created to keep code clean and simple and it also enforces consistency in design throughout the project. Use Props and components. Create your own too. 
 
 -- File Structure example (which we are following):
 
