@@ -24,7 +24,11 @@ The repository is only for a portfolio projects in RUC
 -- Commands to run for the frontend server to work
 
 1. Npm run dev (dev server)
-2. Npm start (for production)
+
+-- Additional standards
+
+1. New files should always be named Pascal (Button.js, Home.js, etc.)
+2. Folders should be named with small letters
 
 -- File Structure example (which we are following):
 
