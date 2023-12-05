@@ -26,7 +26,7 @@ select distinct * from string_search(2, 'Cause life gets complicated, baby.');
 --D1
 
 select * from userrelation;
-call create_user('6th', 'Chosen', 'chose.doe@example.com', 'hashed_pwd', true, true);
+call create_user('6th', 'Chosen', 'chose.doe@example.com','salted', 'hashed_pwd', '01234', true, true);
 select * from userrelation;
 call delete_user(6);
 select * from userrelation;

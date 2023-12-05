@@ -5,7 +5,7 @@ create procedure create_user(
 	firstName varchar(40),
 	lastName varchar(40),
 	email varchar(150),
-    salt varchar(255),
+	salt varchar(255),
 	pwdHash varchar(255),
 	phoneno varchar(20) default null,
 	isverified bool default false,
@@ -16,7 +16,7 @@ $$
 		firstName,
 		lastName,
 		email,
-        salt,
+		salt,
 		pwdHash,
 		phoneno,
 		isverified,
@@ -25,8 +25,8 @@ $$
 	values (
 		firstName,
 		lastName,
-		email, 
-        salt,
+		email,
+		salt,
         pwdHash,
 		phoneno,
 		isverified,
@@ -190,7 +190,7 @@ EXECUTE PROCEDURE update_movie_rating_fnc();
 
 -- Trigger for DELETE user operation
 CREATE TRIGGER delete_user_rating_trigger
-AFTER DELETE ON user
+AFTER DELETE ON userrelation
 FOR EACH ROW
 EXECUTE PROCEDURE update_movie_rating_fnc();
 
