@@ -8,9 +8,13 @@ namespace DataLayer.Database;
 public class MovieService : IMovieService
 {
     private readonly MovieContext db = new MovieContext();
-    public List<TitleBasics> GetMovie()
+    public (IList<TitleBasics> movie, int count) GetMovie(int page, int pageSize)
     {
-        return db.TitleBasics.ToList();
+        var movie = db.TitleBasics
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToList();
+        return (movie, db.TitleBasics.Count());
     }
     public TitleBasics GetMovieById(string movieId)
     {

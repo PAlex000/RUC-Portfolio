@@ -65,14 +65,13 @@ public class PersonsController : BaseController
         Person newPerson = _personService.CreatePerson(person.PrimaryName, person.DateOfBirth, person.DateOfDeath, person.NameRating);
         return Created(GetUrl(nameof(GetPerson), new { newPerson.Id }), newPerson);
     }
-
+    
     [HttpDelete("{id}")]
-    public IActionResult DeletePerson(int id)
+    public IActionResult DeletePerson(string id)
     {
         bool result = _personService.DeletePerson(id);
         return result ? Ok() : NotFound();
-
-    } */
+    }*/
 
     private PersonModel CreatePersonModel(Person person)
     {

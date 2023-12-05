@@ -5,7 +5,7 @@ namespace DataLayer.Database;
 
 public interface IMovieService
 {
-    public List<TitleBasics> GetMovie();
+    public (IList<TitleBasics> movie, int count) GetMovie(int page, int pageSize);
     public TitleBasics GetMovieById(string movieId);
     public List<TitleBasics> SearchMovies(string searchString);
     public List<TitleBasics> GetSimilarMovies(string movieId);

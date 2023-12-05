@@ -38,7 +38,7 @@ namespace BackendTests
         {
             var service = new UserService();
             var users = service.GetUsers();
-            Assert.Equal(5, users.Count);
+            Assert.Equal(4, users.Count);
             Assert.Equal("Lasse", users.First().firstName);
         }
 

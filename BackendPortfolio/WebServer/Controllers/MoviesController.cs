@@ -8,15 +8,31 @@ namespace WebServer.Controllers;
 
 [Route("api/movie")]
 [ApiController]
-public class MoviesController : ControllerBase
+public class MoviesController : BaseController
 {
     private readonly IMovieService _movieService;
 
-    public MoviesController(IMovieService movieService)
+    public MoviesController(IMovieService movieService, LinkGenerator linkGenerator) : base(linkGenerator)
     {
         _movieService = movieService;
     }
+    [HttpGet(Name = nameof(GetMovie))]
+    public IActionResult GetMovie(int page = 0, int pageSize = 10)
+    {
+        (var movies, var total) = _movieService.GetMovie(page, pageSize);
+        var genre = movies.Select(CreateMovieModel);
+        var result = Paging(genre, total, page, pageSize, nameof(GetMovie));
+        return Ok(result);
+    }   
+    [HttpGet("{Id}", Name = nameof(GetMovieById))]
+    public IActionResult GetMovieById(string Id)
+    {
+        var movie = _movieService.GetMovieById(Id);
+        if (movie == null)
+            return NotFound();
 
+        return Ok(CreateMovieModel(movie));
+    }
     // Search movies
     [HttpGet("search/{searchString}")]
     public ActionResult<List<TitleBasics>> SearchMovies(string searchString)
@@ -139,5 +155,19 @@ public class MoviesController : ControllerBase
 
         _movieService.UpdateMovie(movieId, updatedMovie, updatedMovie.akas);
         return NoContent();
+    }
+    private MovieModel CreateMovieModel(TitleBasics movie)
+    {
+        return new MovieModel
+        {
+            url = GetUrl(nameof(GetMovieById), new { movie.Id }),
+            type = movie.type,
+            isAdult = movie.isAdult,
+            startYear = movie.startYear,
+            endYear = movie.endYear,
+            poster = movie.poster,
+            description = movie.description,
+            rating = movie.rating
+        };
     }
 }

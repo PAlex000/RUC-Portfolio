@@ -22,8 +22,8 @@ namespace BackendTests
         public void GetMovie_WithoutArgument_ReturnsAllMovies()
         {
             var service = new MovieService();
-            var movies = service.GetMovie();
-            Assert.Equal(109380, movies.Count);
+            var movies = service.GetMovie(0, 10);
+            Assert.Equal(10, movies.movie.Count);
         }
         [Fact]
         public void GetMovieById_ValidMovieId_ReturnsMovie()
