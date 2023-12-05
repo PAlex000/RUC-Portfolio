@@ -1,10 +1,10 @@
 --Creating test datas
 --users
-call create_user('Lasse', 'Doe', 'lasse.doe@example.com', 'hashed_password1', '01234', TRUE, TRUE);
-call create_user('Cristina', 'Doe', 'cristina.doe@example.com', 'hashed_password2', '56789', TRUE, TRUE);
-call create_user('Karsten', 'Doe', 'karsten.doe@example.com', 'hashed_password3', '01234', TRUE, TRUE);
-call create_user('Alex', 'Doe', 'alex.doe@example.com', 'hashed_password4', '01234', TRUE, TRUE);
-call create_user('Bianca', 'Doe', 'bianca.doe@example.com', 'hashed_password5', '01234', TRUE, TRUE);
+call create_user('Lasse', 'Doe', 'lasse.doe@example.com','salted', 'hashed_password1', '01234', TRUE, TRUE);
+call create_user('Cristina', 'Doe', 'cristina.doe@example.com', 'salted',  'hashed_password2', '56789', TRUE, TRUE);
+call create_user('Karsten', 'Doe', 'karsten.doe@example.com', 'salted', 'hashed_password3', '01234', TRUE, TRUE);
+call create_user('Alex', 'Doe', 'alex.doe@example.com', 'salted', 'hashed_password4', '01234', TRUE, TRUE);
+call create_user('Bianca', 'Doe', 'bianca.doe@example.com','salted', 'hashed_password5', '01234', TRUE, TRUE);
 
 --bookmarks
 call bookmark_movie(1, 'tt7535994', true);
@@ -26,7 +26,7 @@ select distinct * from string_search(2, 'Cause life gets complicated, baby.');
 --D1
 
 select * from userrelation;
-call create_user('6th', 'Chosen', 'chose.doe@example.com', 'hashed_pwd', '012', true, true);
+call create_user('6th', 'Chosen', 'chose.doe@example.com', 'hashed_pwd', true, true);
 select * from userrelation;
 call delete_user(6);
 select * from userrelation;

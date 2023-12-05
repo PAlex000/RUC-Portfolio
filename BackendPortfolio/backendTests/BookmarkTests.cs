@@ -18,7 +18,7 @@ namespace BackendTests
         {
             var service = new BookmarkService();
             var bookmarks = service.GetBookmarks();
-            Assert.Equal(3, bookmarks.Count);
+            Assert.Equal(5, bookmarks.Count);
             Assert.Equal("tt7535994", bookmarks.First().titleId);
         }
         [Fact]

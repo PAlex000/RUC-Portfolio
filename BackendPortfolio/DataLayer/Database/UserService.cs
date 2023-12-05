@@ -22,15 +22,27 @@ public class UserService : IUserService
         return db.Users.FirstOrDefault(x => x.email == _email);
     }
 
-    public bool CreateUser(string _firstName, string _lastName, string _email, string _pwdHash, string _phoneNo = null)
+    public bool CreateUser(string _firstName, string _lastName, string _email, string _salt, string _pwdHash, string _phoneNo = null)
     {
-        int Id = db.Users.Max(x => x.userId) + 1;
+        int Id;
+
+        if (db.Users.Any())
+        {
+            // Users exist, get the maximum userId
+            Id = db.Users.Max(x => x.userId) + 1;
+        }
+        else
+        {
+            // No users exist, set the userId to 1
+            Id = 1;
+        }
         User user = new User
         {
             userId = Id,
             firstName = _firstName,
             lastName = _lastName,
             email = _email,
+            salt = _salt,
             pwdHash = _pwdHash,
             phoneNo = _phoneNo,
             isVerified = false,

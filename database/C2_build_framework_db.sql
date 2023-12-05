@@ -4,6 +4,7 @@ Create table UserRelation(
 	firstName VARCHAR(40) NOT NULL,
 	lastName VARCHAR(40) NOT NULL,
 	email VARCHAR(150) NOT NULL,
+	salt VARCHAR(255) NOT NULL,
 	pwdHash VARCHAR(255) NOT NULL,
 	phoneNo VARCHAR(20),
 	isVerified BOOLEAN NOT NULL,

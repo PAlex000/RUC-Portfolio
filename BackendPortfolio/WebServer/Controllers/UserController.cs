@@ -8,6 +8,7 @@ using DataLayer.Models;
 using WebServer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Validations;
+using System.Security.Cryptography;
 
 [Route("api/user")]
 [ApiController]
@@ -15,18 +16,19 @@ public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
     private readonly LinkGenerator _linkGenerator;
-    private readonly string _secretKey = "YourSecretKey";
+    private readonly IAuthService _authService;
 
-    public UserController(IUserService userService, LinkGenerator linkGenerator)
+    public UserController(IUserService userService, LinkGenerator linkGenerator, IAuthService aservice)
     {
         _userService = userService;
         _linkGenerator = linkGenerator;
+        _authService = aservice;
     }
     [HttpGet]
     public ActionResult<IList<User>> GetUsers()
     {
         var users = _userService.GetUsers();
-        if (users == null)
+        if (users == null || !users.Any())
             return NotFound("No user history found.");
 
         return Ok(users);
@@ -52,20 +54,23 @@ public class UserController : ControllerBase
         if (existingUser != null)
             return BadRequest("Email is already in use");
 
-        // Hash and salt the password (secure hashing library?)
-        string passwordHash = userRequest.password; // Replace with actual password hashing logic
+
+        var hashResult = _authService.Hash(userRequest.password);
+        string passwordHash = hashResult.Item1;
+        string salt = hashResult.Item2;
 
         // Create the user and store it in the database
         _userService.CreateUser(
             userRequest.firstName,
             userRequest.lastName,
             userRequest.email,
-            passwordHash, // Use the hashed password here
+            salt,
+            passwordHash,
             userRequest.phoneNo
         );
         User user = _userService.GetUserByEmail(userRequest.email);
 
-        var token = GenerateJwtToken(user);
+        var token = _authService.GenerateJwtToken(user);
         return Ok(new { Token = token });
     }
 
@@ -79,13 +84,13 @@ public class UserController : ControllerBase
             return Unauthorized("Invalid credentials");
 
         // Verify the password here (compare password hash)
-        string providedPasswordHash = loginRequest.password;//Hash the provided password here
+       bool isPasswordValid =_authService.Verify(loginRequest.email,loginRequest.password);
 
-        if (user.pwdHash != providedPasswordHash)
+        if (!isPasswordValid)
             return Unauthorized("Invalid credentials");
 
         // Password is valid, generate a JWT token
-        var token = GenerateJwtToken(user);
+        var token = _authService.GenerateJwtToken(user);
         return Ok(new { Token = token });
     }
 
@@ -113,11 +118,10 @@ public class UserController : ControllerBase
             return NotFound($"User with ID {userId} not found");
         }
 
-        // Update user properties based on the request
-        existingUser.pwdHash = userUpdate.pwdHash; // Replace with actual password hashing logic
+        existingUser.pwdHash = userUpdate.pwdHash;
 
         // Perform the update
-        _userService.UpdateUserPassword(userId, userUpdate.pwdHash); // Use the hashed password here
+        _userService.UpdateUserPassword(userId, userUpdate.pwdHash);
 
         return Ok();
     }
@@ -142,28 +146,5 @@ public class UserController : ControllerBase
     {
         // This endpoint is protected, only accessible with a valid JWT token
         return Ok(new { Message = "Access granted to Movie Database!" });
-    }
-
-    string GenerateJwtToken(User user)
-    {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey.PadRight(16)));
-        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, user.email),
-            new Claim(ClaimTypes.NameIdentifier, user.userId.ToString()),
-            //Add more claims as needed (e.g., user roles).
-        };
-
-        var token = new JwtSecurityToken(
-            issuer: "YourIssuer",
-            audience: "YourAudience",
-            claims: claims,
-            expires: DateTime.UtcNow.AddHours(1), // Token expiration time
-            signingCredentials: credentials
-        );
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
