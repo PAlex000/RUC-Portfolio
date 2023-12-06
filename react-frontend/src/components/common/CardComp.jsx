@@ -8,6 +8,7 @@ import {
   PlusCircleFill,
 } from "react-bootstrap-icons";
 
+//rating & Starfill potentially to be used as we connect to the data layer
 const CardComp = ({ title, rating, image }) => {
   const cardStyle = {
     backgroundColor: "#313131",
