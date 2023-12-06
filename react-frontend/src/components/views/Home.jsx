@@ -9,7 +9,7 @@ import header from "../../assets/movieHeader.jpg";
 import CustomContainer from "../common/CustomContainer";
 
 //Hard coded data as we create the skellet. useEffect with GET calls when we establish connection. Async/Await, fetch.
-const movieData = [
+export const movieData = [
   {
     id: 1,
     title:
@@ -74,6 +74,120 @@ const movieData = [
     btnText: "Learn More",
     imageUrl: departed,
     rating: 2,
+  },
+  {
+    id: 9,
+    title:
+      "Shawshank Redemption Shawshank Redemption Shawshank Redemption Shawshank Redemption",
+    text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
+    btnText: "Learn More",
+    imageUrl: shawshank,
+  },
+  {
+    id: 10,
+    title: "Spiderman No Way Home",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: departed,
+  },
+  {
+    id: 11,
+    title: "The Avengers",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: shawshank,
+  },
+  {
+    id: 12,
+    title: "Spiderman Homecoming",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: departed,
+  },
+  {
+    id: 13,
+    title: "Remember the Titans",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: shawshank,
+  },
+  {
+    id: 14,
+    title: "Dangerous Minds",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: departed,
+  },
+  {
+    id: 15,
+    title: "Get Rich Or Die Tryin'",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: shawshank,
+  },
+  {
+    id: 16,
+    title: "American Gangster",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: departed,
+  },
+  {
+    id: 17,
+    title:
+      "Shawshank Redemption Shawshank Redemption Shawshank Redemption Shawshank Redemption",
+    text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
+    btnText: "Learn More",
+    imageUrl: shawshank,
+  },
+  {
+    id: 18,
+    title: "Spiderman No Way Home",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: departed,
+  },
+  {
+    id: 19,
+    title: "The Avengers",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: shawshank,
+  },
+  {
+    id: 20,
+    title: "Spiderman Homecoming",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: departed,
+  },
+  {
+    id: 21,
+    title: "Remember the Titans",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: shawshank,
+  },
+  {
+    id: 22,
+    title: "Dangerous Minds",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: departed,
+  },
+  {
+    id: 23,
+    title: "Get Rich Or Die Tryin'",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: shawshank,
+  },
+  {
+    id: 24,
+    title: "American Gangster",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: departed,
   },
 ];
 
