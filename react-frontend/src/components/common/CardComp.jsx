@@ -5,12 +5,10 @@ import ListGroup from "react-bootstrap/ListGroup";
 import {
   StarFill,
   Star,
-  BiPlus,
   InfoCircleFill,
   PlayFill,
   PlusCircleFill,
 } from "react-bootstrap-icons";
-import "./CardComp.scss";
 
 //rating & Starfill potentially to be used as we connect to the data layer
 const CardComp = ({ title, rating, image }) => {
@@ -50,9 +48,8 @@ const CardComp = ({ title, rating, image }) => {
           {title}
         </Card.Title>
         <WatchlistButton>
-          <div className="watchlist-btn-content">
-            <BiPlus className="watchlist-icon" />
-            <p className="watchlist-text">Watchlist</p>
+          <div className="d-flex justify-content-center align-items-center">
+            <p className="ms-2">Watchlist</p> {/* Added margin for spacing */}
           </div>
         </WatchlistButton>
       </Card.Body>

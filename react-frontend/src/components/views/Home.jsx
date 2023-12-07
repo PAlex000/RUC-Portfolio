@@ -7,6 +7,7 @@ import shawshank from "../../assets/shawshank.jpg";
 import departed from "../../assets/departed.jpg";
 import header from "../../assets/movieHeader.jpg";
 import CustomContainer from "../common/CustomContainer";
+import { useState } from "react";
 
 //Hard coded data as we create the skellet. useEffect with GET calls when we establish connection. Async/Await, fetch.
 export const movieData = [
@@ -16,6 +17,7 @@ export const movieData = [
       "Shawshank Redemption Shawshank Redemption Shawshank Redemption Shawshank Redemption",
     text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
     btnText: "Learn More",
+    genre: "drama",
     imageUrl: shawshank,
     rating: 10,
   },
@@ -24,6 +26,7 @@ export const movieData = [
     title: "Spiderman No Way Home",
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
+    genre: "action",
     imageUrl: departed,
     rating: 5,
   },
@@ -32,6 +35,7 @@ export const movieData = [
     title: "The Avengers",
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
+    genre: "action",
     imageUrl: shawshank,
     rating: 0,
   },
@@ -40,6 +44,7 @@ export const movieData = [
     title: "Spiderman Homecoming",
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
+    genre: "action",
     imageUrl: departed,
     rating: 3,
   },
@@ -48,6 +53,7 @@ export const movieData = [
     title: "Remember the Titans",
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
+    genre: "drama",
     imageUrl: shawshank,
     rating: 2,
   },
@@ -56,6 +62,7 @@ export const movieData = [
     title: "Dangerous Minds",
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
+    genre: "crime",
     imageUrl: departed,
     rating: 8,
   },
@@ -64,6 +71,7 @@ export const movieData = [
     title: "Get Rich Or Die Tryin'",
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
+    genre: "crime",
     imageUrl: shawshank,
     rating: 6,
   },
@@ -72,6 +80,7 @@ export const movieData = [
     title: "American Gangster",
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
+    genre: "crime",
     imageUrl: departed,
     rating: 2,
   },
@@ -81,6 +90,7 @@ export const movieData = [
       "Shawshank Redemption Shawshank Redemption Shawshank Redemption Shawshank Redemption",
     text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
     btnText: "Learn More",
+    genre: "drama",
     imageUrl: shawshank,
   },
   {
@@ -192,15 +202,26 @@ export const movieData = [
 ];
 
 const Home = () => {
+  const [selectedGenre, setSelectedGenre] = useState("all"); // 'all' indicates no filter
+
+  const handleGenreChange = (genre) => {
+    setSelectedGenre(genre);
+  };
+
+  const filteredMovies =
+    selectedGenre === "all"
+      ? movieData
+      : movieData.filter((movie) => movie.genre === selectedGenre);
+
   return (
     <CustomContainer fluid>
       <Header style={{ maxWidth: "90%" }} header={header} />
       <div style={{ maxWidth: "90%", margin: "0 auto" }}>
         <Row className="justify-content-between align-items-start">
           <Row xs={12} md={3} lg={2} className="mb-4 d-none d-md-block">
-            <Dropdowns />
+            <Dropdowns onGenreSelect={handleGenreChange} />
           </Row>
-          {movieData.map((movie) => (
+          {filteredMovies.map((movie) => (
             <Col
               key={movie.id}
               xs={12}
