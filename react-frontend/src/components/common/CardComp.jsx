@@ -49,7 +49,7 @@ const CardComp = ({ title, rating, image }) => {
         </Card.Title>
         <WatchlistButton>
           <div className="d-flex justify-content-center align-items-center">
-            <p className="ms-2">Watchlist</p> {/* Added margin for spacing */}
+            <p className="ms-2">Watchlist</p>
           </div>
         </WatchlistButton>
       </Card.Body>
