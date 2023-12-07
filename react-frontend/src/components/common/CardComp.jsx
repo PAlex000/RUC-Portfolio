@@ -8,7 +8,6 @@ import {
   InfoCircleFill,
   PlayFill,
 } from "react-bootstrap-icons";
-import "./CardComp.scss";
 
 const CardComp = ({ title, rating, image, onClick }) => {
   const cardStyles = {

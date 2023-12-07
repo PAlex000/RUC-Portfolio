@@ -8,6 +8,7 @@ import Dropdowns from "../common/Dropdown";
 import Header from "../layout/Header";
 import header from "../../assets/movieHeader.jpg";
 import CustomContainer from "../common/CustomContainer";
+import { useState } from "react";
 
 const headerData = [
   {
@@ -30,6 +31,7 @@ const headerData = [
       "Shawshank Redemption Shawshank Redemption Shawshank Redemption Shawshank Redemption",
     text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
     btnText: "Learn More",
+    genre: "drama",
     imageUrl: shawshank,
   },
   {
@@ -163,7 +165,7 @@ const Home = () => {
       <div style={{ maxWidth: "75%", margin: "0 auto" }}>
         <Row className="justify-content-between align-items-center">
           <Row xs={12} md={3} lg={2} className="mb-4 d-none d-md-block">
-            <Dropdowns />
+            <Dropdowns onGenreSelect={handleGenreChange} />
           </Row>
           {movies.map((movie) => (
             <Col
