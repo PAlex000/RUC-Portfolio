@@ -4,11 +4,9 @@ import { Container, Row, Col } from "react-bootstrap";
 import {
   StarFill,
   Star,
-  BiPlus,
   InfoCircleFill,
   PlayFill,
 } from "react-bootstrap-icons";
-import "./CardComp.scss";
 
 const CardComp = ({ title, rating, image, onClick }) => {
   const cardStyles = {
@@ -51,9 +49,8 @@ const CardComp = ({ title, rating, image, onClick }) => {
           {title}
         </Card.Title>
         <WatchlistButton>
-          <div className="watchlist-btn-content">
-            <BiPlus className="watchlist-icon" />
-            <p className="watchlist-text">Watchlist</p>
+          <div className="d-flex justify-content-center align-items-center">
+            <p className="ms-2">Watchlist</p> {/* Added margin for spacing */}
           </div>
         </WatchlistButton>
         <Container>
