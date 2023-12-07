@@ -1,4 +1,4 @@
-const Header = ({ header }) => {
+const Header = ({ header, style = {} }) => {
   const headerStyle = {
     position: "relative",
     textAlign: "center",
@@ -9,7 +9,8 @@ const Header = ({ header }) => {
     justifyContent: "center",
     alignItems: "center",
     margin: "0 auto",
-    borderRadius: "15px",
+    marginBottom: "20px",
+    ...style,
   };
 
   const overlayTextStyle = {

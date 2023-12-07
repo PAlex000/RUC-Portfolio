@@ -194,25 +194,19 @@ export const movieData = [
 const Home = () => {
   return (
     <CustomContainer fluid>
-      <Header header={header} />
-      <div style={{ maxWidth: "85%", margin: "0 auto" }}>
+      <Header style={{ maxWidth: "90%" }} header={header} />
+      <div style={{ maxWidth: "90%", margin: "0 auto" }}>
         <Row className="justify-content-between align-items-start">
-          <Row
-            style={{ marginLeft: "60px" }}
-            xs={12}
-            md={3}
-            lg={3}
-            className="mb-4 d-none d-md-block"
-          >
-            <Dropdowns className="ml-4" />
+          <Row xs={12} md={3} lg={2} className="mb-4 d-none d-md-block">
+            <Dropdowns />
           </Row>
           {movieData.map((movie) => (
             <Col
               key={movie.id}
               xs={12}
               sm={6}
-              md={3}
-              lg={3}
+              md={4}
+              lg={2}
               className="d-flex justify-content-center mb-4"
             >
               <CardComp
