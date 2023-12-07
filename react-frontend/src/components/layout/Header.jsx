@@ -10,6 +10,7 @@ const Header = ({ headers, style = {} }) => {
     justifyContent: "center",
     alignItems: "center",
     margin: "0 auto",
+    marginBottom: "20px",
     ...style,
   };
 

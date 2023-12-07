@@ -4,10 +4,11 @@ import { Container, Row, Col } from "react-bootstrap";
 import {
   StarFill,
   Star,
-  Plus,
+  BiPlus,
   InfoCircleFill,
   PlayFill,
 } from "react-bootstrap-icons";
+import "./CardComp.scss";
 
 const CardComp = ({ title, rating, image, onClick }) => {
   const cardStyles = {
@@ -43,17 +44,16 @@ const CardComp = ({ title, rating, image, onClick }) => {
       <Card.Body>
         <div className="d-flex align-items-center">
           <StarFill color="yellow" className="mb-2" />
-          <p className="text-white mb-2 ms-2">{rating}</p>
-          <Star className="text-primary mb-2 ms-4" />{" "}
-          {/* OnCLick prop in star to add to favorites*/}
+          <p className="text-white mb-2 ms-2">8.0</p>
+          <Star className="text-primary mb-2 ms-4" />
         </div>
         <Card.Title className="text-white" style={titleStyle}>
           {title}
         </Card.Title>
         <WatchlistButton>
-          <div className="d-flex justify-content-center align-items-center text-primary">
-            <p className="text-primary"></p>
-            <Plus style={{ fontSize: "24px" }} /> Watchlist
+          <div className="watchlist-btn-content">
+            <BiPlus className="watchlist-icon" />
+            <p className="watchlist-text">Watchlist</p>
           </div>
         </WatchlistButton>
         <Container>
