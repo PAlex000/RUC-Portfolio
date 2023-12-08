@@ -7,6 +7,7 @@ import CardComp from "../common/CardComp";
 import Dropdowns from "../common/Dropdown";
 import Header from "../layout/Header";
 import header from "../../assets/movieHeader.jpg";
+import ramboHeader from "../../assets/dieHardHeader.jpg";
 import CustomContainer from "../common/CustomContainer";
 import { useState } from "react";
 
@@ -33,20 +34,25 @@ const headerData = [
     btnText: "Learn More",
     genre: "drama",
     imageUrl: shawshank,
+    rating: 9.2,
   },
   {
     id: 10,
     title: "Spiderman No Way Home",
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
+    genre: "drama",
     imageUrl: departed,
+    rating: 9.2,
   },
   {
     id: 11,
     title: "The Avengers",
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
+    genre: "drama",
     imageUrl: shawshank,
+    rating: 9.2,
   },
   {
     id: 12,
@@ -54,6 +60,7 @@ const headerData = [
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
     imageUrl: departed,
+    rating: 9.2,
   },
   {
     id: 13,
@@ -61,6 +68,7 @@ const headerData = [
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
     imageUrl: shawshank,
+    rating: 9.2,
   },
   {
     id: 14,
@@ -139,6 +147,23 @@ const headerData = [
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
     imageUrl: departed,
+  },
+];
+
+const headerData = [
+  {
+    imageUrl: ramboHeader,
+    overlayText: {
+      title: "First Image Title",
+      description: "Description for the first image",
+    },
+  },
+  {
+    imageUrl: header,
+    overlayText: {
+      title: "Second Image Title",
+      description: "Description for the second image",
+    },
   },
 ];
 

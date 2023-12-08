@@ -42,16 +42,16 @@ const CardComp = ({ title, rating, image, onClick }) => {
       <Card.Body>
         <div className="d-flex align-items-center">
           <StarFill color="yellow" className="mb-2" />
-          <p className="text-white mb-2 ms-2">8.0</p>
+          <p className="text-white mb-2 ms-2">{rating}</p>
           <Star className="text-primary mb-2 ms-4" />
         </div>
         <Card.Title className="text-white" style={titleStyle}>
           {title}
         </Card.Title>
         <WatchlistButton>
-          <div className="d-flex justify-content-center align-items-center">
-            <p className="ms-2">Watchlist</p>
-          </div>
+          <p className="text-primary" style={textStyle}>
+            Watchlist
+          </p>
         </WatchlistButton>
         <Container>
           <Row style={{ color: "#fff", marginTop: "1rem" }}>
