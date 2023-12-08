@@ -1,22 +1,26 @@
 import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
 import { Link } from "react-router-dom";
-
-// @Cristina | Instead of using the Nav.Link you will have to use the Link from 'react-router-dom' which is imported. I've done the rest of the config for react-router-dom
-// The Navbar is just a placeholder I found on the bootstrap website.
+import "./Navigation.scss";
 
 const Navigation = () => {
   return (
-    <Navbar
-      className="d-flex justify-content-between"
-      bg="dark"
-      data-bs-theme="dark"
-    >
+    <Navbar className="navbar-custom" bg="dark" expand="lg">
       <Container>
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand as={Link} to="/" className="logo">
           IMDB
         </Navbar.Brand>
+        <Form className="search-wrapper d-flex">
+          <FormControl
+            type="search"
+            placeholder="Search Recommendations..."
+            className="me-2"
+            aria-label="Search"
+          />
+        </Form>
         <Nav className="me-auto">
           <Link to="/" className="nav-link">
             Home
