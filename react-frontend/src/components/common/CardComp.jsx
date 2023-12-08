@@ -1,6 +1,12 @@
 import { WatchlistButton } from "./Buttons";
 import Card from "react-bootstrap/Card";
-import { StarFill, Star } from "react-bootstrap-icons";
+import {
+  StarFill,
+  Star,
+  Plus,
+  InfoCircleFill,
+  PlayFill,
+} from "react-bootstrap-icons";
 
 const CardComp = ({ title, rating, image }) => {
   const cardStyles = {
@@ -44,7 +50,7 @@ const CardComp = ({ title, rating, image }) => {
         </Card.Title>
         <WatchlistButton>
           <p className="text-primary" style={textStyle}>
-            Watchlist
+            <Plus style={{ fontSize: "24px" }} /> Watchlist
           </p>
         </WatchlistButton>
       </Card.Body>

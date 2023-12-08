@@ -6,7 +6,6 @@ import Header from "../layout/Header";
 import shawshank from "../../assets/shawshank.jpg";
 import departed from "../../assets/departed.jpg";
 import header from "../../assets/movieHeader.jpg";
-import ramboHeader from "../../assets/dieHardHeader.jpg";
 import CustomContainer from "../common/CustomContainer";
 import { useState } from "react";
 
@@ -211,7 +210,7 @@ export const movieData = [
 
 const headerData = [
   {
-    imageUrl: ramboHeader,
+    imageUrl: header,
     overlayText: {
       title: "First Image Title",
       description: "Description for the first image",

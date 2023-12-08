@@ -6,7 +6,7 @@ const WatchlistButtonStyle = {
   width: "100%",
   height: "20%",
   marginTop: "25px",
-  paddingBottom: "22px",
+  paddingBottom: "16px",
   borderRadius: "4px",
 };
 

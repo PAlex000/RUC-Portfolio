@@ -13,6 +13,11 @@ const Header = ({ headers, style = {} }) => {
     ...style,
   };
 
+  const imageStyle = {
+    width: "100%", // Full width of the carousel container
+    height: "auto", // Maintain aspect ratio
+  };
+
   return (
     <div style={headerStyle}>
       <Carousel>
@@ -20,7 +25,7 @@ const Header = ({ headers, style = {} }) => {
           <Carousel.Item key={index}>
             <img
               src={header.imageUrl}
-              style={headerStyle}
+              style={imageStyle}
               alt={`Header Image ${index}`}
             />
             {header.overlayText && (
