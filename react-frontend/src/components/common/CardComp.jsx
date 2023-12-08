@@ -1,16 +1,7 @@
-import Button from "react-bootstrap/Button";
 import { WatchlistButton } from "./Buttons";
 import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import {
-  StarFill,
-  Star,
-  InfoCircleFill,
-  PlayFill,
-  PlusCircleFill,
-} from "react-bootstrap-icons";
+import { StarFill, Star } from "react-bootstrap-icons";
 
-//rating & Starfill potentially to be used as we connect to the data layer
 const CardComp = ({ title, rating, image }) => {
   const cardStyles = {
     width: "15rem",
@@ -35,6 +26,10 @@ const CardComp = ({ title, rating, image }) => {
     minHeight: "2.4em",
   };
 
+  const textStyle = {
+    fontWeight: "bold",
+  };
+
   return (
     <Card style={cardStyles}>
       <Card.Img src={image} style={cardImageStyle}></Card.Img>
@@ -48,9 +43,9 @@ const CardComp = ({ title, rating, image }) => {
           {title}
         </Card.Title>
         <WatchlistButton>
-          <div className="d-flex justify-content-center align-items-center">
-            <p className="ms-2">Watchlist</p>
-          </div>
+          <p className="text-primary" style={textStyle}>
+            Watchlist
+          </p>
         </WatchlistButton>
       </Card.Body>
     </Card>

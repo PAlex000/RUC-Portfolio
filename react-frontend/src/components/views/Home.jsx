@@ -6,6 +6,7 @@ import Header from "../layout/Header";
 import shawshank from "../../assets/shawshank.jpg";
 import departed from "../../assets/departed.jpg";
 import header from "../../assets/movieHeader.jpg";
+import ramboHeader from "../../assets/dieHardHeader.jpg";
 import CustomContainer from "../common/CustomContainer";
 import { useState } from "react";
 
@@ -19,7 +20,7 @@ export const movieData = [
     btnText: "Learn More",
     genre: "drama",
     imageUrl: shawshank,
-    rating: 10,
+    rating: 9.2,
   },
   {
     id: 2,
@@ -28,7 +29,7 @@ export const movieData = [
     btnText: "Learn More",
     genre: "action",
     imageUrl: departed,
-    rating: 5,
+    rating: 8.2,
   },
   {
     id: 3,
@@ -37,7 +38,7 @@ export const movieData = [
     btnText: "Learn More",
     genre: "action",
     imageUrl: shawshank,
-    rating: 0,
+    rating: 9.0,
   },
   {
     id: 4,
@@ -46,7 +47,7 @@ export const movieData = [
     btnText: "Learn More",
     genre: "action",
     imageUrl: departed,
-    rating: 3,
+    rating: 8.4,
   },
   {
     id: 5,
@@ -55,7 +56,7 @@ export const movieData = [
     btnText: "Learn More",
     genre: "drama",
     imageUrl: shawshank,
-    rating: 2,
+    rating: 8.4,
   },
   {
     id: 6,
@@ -64,7 +65,7 @@ export const movieData = [
     btnText: "Learn More",
     genre: "crime",
     imageUrl: departed,
-    rating: 8,
+    rating: 7.4,
   },
   {
     id: 7,
@@ -73,7 +74,7 @@ export const movieData = [
     btnText: "Learn More",
     genre: "crime",
     imageUrl: shawshank,
-    rating: 6,
+    rating: 9.2,
   },
   {
     id: 8,
@@ -82,7 +83,7 @@ export const movieData = [
     btnText: "Learn More",
     genre: "crime",
     imageUrl: departed,
-    rating: 2,
+    rating: 9.2,
   },
   {
     id: 9,
@@ -92,20 +93,25 @@ export const movieData = [
     btnText: "Learn More",
     genre: "drama",
     imageUrl: shawshank,
+    rating: 9.2,
   },
   {
     id: 10,
     title: "Spiderman No Way Home",
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
+    genre: "drama",
     imageUrl: departed,
+    rating: 9.2,
   },
   {
     id: 11,
     title: "The Avengers",
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
+    genre: "drama",
     imageUrl: shawshank,
+    rating: 9.2,
   },
   {
     id: 12,
@@ -113,6 +119,7 @@ export const movieData = [
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
     imageUrl: departed,
+    rating: 9.2,
   },
   {
     id: 13,
@@ -120,6 +127,7 @@ export const movieData = [
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
     imageUrl: shawshank,
+    rating: 9.2,
   },
   {
     id: 14,
@@ -201,6 +209,23 @@ export const movieData = [
   },
 ];
 
+const headerData = [
+  {
+    imageUrl: ramboHeader,
+    overlayText: {
+      title: "First Image Title",
+      description: "Description for the first image",
+    },
+  },
+  {
+    imageUrl: header,
+    overlayText: {
+      title: "Second Image Title",
+      description: "Description for the second image",
+    },
+  },
+];
+
 const Home = () => {
   const [selectedGenre, setSelectedGenre] = useState("all"); // 'all' indicates no filter
 
@@ -215,16 +240,16 @@ const Home = () => {
 
   return (
     <CustomContainer fluid>
-      <Header style={{ maxWidth: "90%" }} header={header} />
-      <div style={{ maxWidth: "90%", margin: "0 auto" }}>
-        <Row className="justify-content-between align-items-start">
+      <Header headers={headerData} />
+      <div style={{ maxWidth: "75%", margin: "0 auto" }}>
+        <Row className="justify-content-between align-items-center">
           <Row xs={12} md={3} lg={2} className="mb-4 d-none d-md-block">
             <Dropdowns onGenreSelect={handleGenreChange} />
           </Row>
           {filteredMovies.map((movie) => (
             <Col
               key={movie.id}
-              xs={12}
+              xs={6}
               sm={6}
               md={4}
               lg={2}
@@ -235,6 +260,7 @@ const Home = () => {
                 text={movie.text}
                 btnText={movie.btnText}
                 image={movie.imageUrl}
+                rating={movie.rating}
               />
             </Col>
           ))}

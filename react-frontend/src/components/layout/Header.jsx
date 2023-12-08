@@ -1,34 +1,37 @@
-const Header = ({ header, style = {} }) => {
+import { Carousel } from "react-bootstrap";
+
+const Header = ({ headers, style = {} }) => {
   const headerStyle = {
-    position: "relative",
-    textAlign: "center",
     color: "white",
     width: "80%",
-    paddingTop: "50px",
+    height: "75%",
+    paddingTop: "10px",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     margin: "0 auto",
-    marginBottom: "20px",
     ...style,
-  };
-
-  const overlayTextStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    fontSize: "2rem",
   };
 
   return (
     <div style={headerStyle}>
-      <img
-        src={header}
-        alt="Header Image"
-        style={{ width: "100%", height: "auto" }}
-      />
-      <div style={overlayTextStyle}>Welcome to Our Movie Collection</div>
+      <Carousel>
+        {headers.map((header, index) => (
+          <Carousel.Item key={index}>
+            <img
+              src={header.imageUrl}
+              style={headerStyle}
+              alt={`Header Image ${index}`}
+            />
+            {header.overlayText && (
+              <Carousel.Caption>
+                <h3>{header.overlayText.title}</h3>
+                <p>{header.overlayText.description}</p>
+              </Carousel.Caption>
+            )}
+          </Carousel.Item>
+        ))}
+      </Carousel>
     </div>
   );
 };

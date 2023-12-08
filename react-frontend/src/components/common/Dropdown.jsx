@@ -12,7 +12,7 @@ function Dropdowns({ onGenreSelect }) {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={() => handleSelect("")}>All</Dropdown.Item>
+        <Dropdown.Item onClick={() => handleSelect("all")}>All</Dropdown.Item>
         <Dropdown.Item onClick={() => handleSelect("action")}>
           Action
         </Dropdown.Item>
