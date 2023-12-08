@@ -147,7 +147,7 @@ const headerData = [
     btnText: "Learn More",
     imageUrl: departed,
   },
-];
+]; */
 
 const headerData = [
   {
