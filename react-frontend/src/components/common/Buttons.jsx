@@ -13,9 +13,7 @@ const WatchlistButtonStyle = {
 export const WatchlistButton = ({ onClick, children }) => {
   return (
     <Button style={WatchlistButtonStyle} onClick={onClick}>
-      <div className="d-flex justify-content-center align-items-center">
-        {children}
-      </div>
+      {children}
     </Button>
   );
 };

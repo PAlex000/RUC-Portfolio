@@ -250,7 +250,7 @@ const Home = () => {
               key={movie.id}
               xs={6}
               sm={6}
-              md={4}
+              md={5}
               lg={2}
               className="d-flex justify-content-center mb-4"
             >
