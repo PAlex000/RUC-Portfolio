@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovies } from "../../redux/actions/MovieActions";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CardComp from "../common/CardComp";
@@ -10,7 +13,7 @@ import CustomContainer from "../common/CustomContainer";
 import { useState } from "react";
 
 //Hard coded data as we create the skellet. useEffect with GET calls when we establish connection. Async/Await, fetch.
-export const movieData = [
+/* export const movieData = [
   {
     id: 1,
     title:
@@ -206,7 +209,7 @@ export const movieData = [
     btnText: "Learn More",
     imageUrl: departed,
   },
-];
+]; */
 
 const headerData = [
   {
@@ -226,16 +229,19 @@ const headerData = [
 ];
 
 const Home = () => {
-  const [selectedGenre, setSelectedGenre] = useState("all"); // 'all' indicates no filter
+  const dispatch = useDispatch();
+  const { movies, loading, error } = useSelector((state) => state.movies);
 
-  const handleGenreChange = (genre) => {
+  /*   const [selectedGenre, setSelectedGenre] = useState("all"); */ // 'all' indicates no filter
+
+  /*   const handleGenreChange = (genre) => {
     setSelectedGenre(genre);
-  };
+  }; */
 
-  const filteredMovies =
+  /*   const filteredMovies =
     selectedGenre === "all"
       ? movieData
-      : movieData.filter((movie) => movie.genre === selectedGenre);
+      : movieData.filter((movie) => movie.genre === selectedGenre); */
 
   return (
     <CustomContainer fluid>

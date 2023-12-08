@@ -17,7 +17,7 @@ import {
   DELETE_PERSON_REQUEST,
   DELETE_PERSON_SUCCESS,
   DELETE_PERSON_FAILURE,
-} from "./../actions/PersonActions";
+} from "./../actions/PersonsActions";
 
 const initialState = {
   persons: [],
