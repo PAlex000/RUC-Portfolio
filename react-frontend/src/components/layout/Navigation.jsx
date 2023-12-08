@@ -14,13 +14,25 @@ const Navigation = () => {
       data-bs-theme="dark"
     >
       <Container>
-        <Navbar.Brand href="#home">IMDB</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+          IMDB
+        </Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
-          <Nav.Link href="bookmark">Bookmark</Nav.Link>
-          <Nav.Link href="ratinghistory">RatingHistory</Nav.Link>
+          <Link to="/" className="nav-link">
+            Home
+          </Link>
+          <Link to="/explorer" className="nav-link">
+            Explorer
+          </Link>
+          <Link to="/details" className="nav-link">
+            Details
+          </Link>
+          <Link to="/bookmark" className="nav-link">
+            Bookmark
+          </Link>
+          <Link to="/ratinghistory" className="nav-link">
+            RatingHistory
+          </Link>
         </Nav>
       </Container>
     </Navbar>
