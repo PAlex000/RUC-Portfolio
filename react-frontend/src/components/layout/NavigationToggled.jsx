@@ -6,25 +6,31 @@ import "./NavigationToggle.scss";
 
 const NavigationOpen = ({ isOpen, onChange }) => {
   useEffect(() => {
+    const body = document.body;
+    const scrollBarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+    const bodyPaddingRight = parseInt(
+      getComputedStyle(body).getPropertyValue("padding-right") || "0",
+      10
+    );
+
     if (isOpen) {
-      document.body.classList.add("noscroll");
+      body.style.overflow = "hidden";
+      body.style.paddingRight = `${bodyPaddingRight + scrollBarWidth}px`; // Prevent width reflow
     } else {
-      document.body.classList.remove("noscroll");
+      body.style.overflow = "";
+      body.style.paddingRight = "";
     }
 
     return () => {
-      document.body.classList.remove("noscroll");
+      body.style.overflow = "";
+      body.style.paddingRight = "";
     };
   }, [isOpen]);
 
   return (
     <div className={`Menu ${isOpen ? "open" : ""}`}>
-      <span
-        className="material-icons btn-close"
-        onClick={() => onChange(false)}
-      >
-        <AiOutlineClose />
-      </span>
+      <AiOutlineClose className="btn-close" onClick={() => onChange(false)} />
       <div className="Menu-items">
         {items.map((item, index) => (
           <Link to={item.itemLink} key={index} onClick={() => onChange(false)}>
