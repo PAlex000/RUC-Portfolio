@@ -8,146 +8,6 @@ import Dropdowns from "../common/Dropdown";
 import Header from "../layout/Header";
 import header from "../../assets/movieHeader.jpg";
 import CustomContainer from "../common/CustomContainer";
-import { useState } from "react";
-
-const headerData = [
-  {
-    imageUrl: header,
-    overlayText: {
-      title: "First Image Title",
-      description: "Description for the first image",
-    },
-  },
-  {
-    imageUrl: header,
-    overlayText: {
-      title: "Second Image Title",
-      description: "Description for the second image",
-    },
-  },
-  {
-    id: 9,
-    title:
-      "Shawshank Redemption Shawshank Redemption Shawshank Redemption Shawshank Redemption",
-    text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-    btnText: "Learn More",
-    genre: "drama",
-    imageUrl: shawshank,
-    rating: 9.2,
-  },
-  {
-    id: 10,
-    title: "Spiderman No Way Home",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    genre: "drama",
-    imageUrl: departed,
-    rating: 9.2,
-  },
-  {
-    id: 11,
-    title: "The Avengers",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    genre: "drama",
-    imageUrl: shawshank,
-    rating: 9.2,
-  },
-  {
-    id: 12,
-    title: "Spiderman Homecoming",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: departed,
-    rating: 9.2,
-  },
-  {
-    id: 13,
-    title: "Remember the Titans",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: shawshank,
-    rating: 9.2,
-  },
-  {
-    id: 14,
-    title: "Dangerous Minds",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: departed,
-  },
-  {
-    id: 15,
-    title: "Get Rich Or Die Tryin'",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: shawshank,
-  },
-  {
-    id: 16,
-    title: "American Gangster",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: departed,
-  },
-  {
-    id: 17,
-    title:
-      "Shawshank Redemption Shawshank Redemption Shawshank Redemption Shawshank Redemption",
-    text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-    btnText: "Learn More",
-    imageUrl: shawshank,
-  },
-  {
-    id: 18,
-    title: "Spiderman No Way Home",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: departed,
-  },
-  {
-    id: 19,
-    title: "The Avengers",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: shawshank,
-  },
-  {
-    id: 20,
-    title: "Spiderman Homecoming",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: departed,
-  },
-  {
-    id: 21,
-    title: "Remember the Titans",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: shawshank,
-  },
-  {
-    id: 22,
-    title: "Dangerous Minds",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: departed,
-  },
-  {
-    id: 23,
-    title: "Get Rich Or Die Tryin'",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: shawshank,
-  },
-  {
-    id: 24,
-    title: "American Gangster",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: departed,
-  },
-];
 
 const headerData = [
   {
@@ -169,6 +29,7 @@ const headerData = [
 const Home = () => {
   const dispatch = useDispatch();
   const { movies, loading, error } = useSelector((state) => {
+    console.log(state);
     return state.moviesReducer;
   });
 
@@ -176,6 +37,7 @@ const Home = () => {
     dispatch(fetchMovies());
   }, [dispatch]);
 
+  console.log("Movies:", movies);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -187,7 +49,7 @@ const Home = () => {
       <div style={{ maxWidth: "75%", margin: "0 auto" }}>
         <Row className="justify-content-between align-items-center">
           <Row xs={12} md={3} lg={2} className="mb-4 d-none d-md-block">
-            <Dropdowns onGenreSelect={handleGenreChange} />
+            <Dropdowns />
           </Row>
           {movies.map((movie) => (
             <Col
@@ -199,8 +61,12 @@ const Home = () => {
               className="d-flex justify-content-center mb-4"
             >
               <CardComp
-                title={movie.type}
-                text={movie.description}
+                title={
+                  movie.akas && movie.akas.length > 0
+                    ? movie.akas[0].title
+                    : "Default Title"
+                }
+                description={movie.description}
                 btnText="Learn More"
                 image={movie.poster}
                 rating={movie.rating}
