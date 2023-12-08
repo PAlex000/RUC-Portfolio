@@ -50,7 +50,7 @@ const CardComp = ({ title, rating, image, onClick }) => {
         </Card.Title>
         <WatchlistButton>
           <p className="text-primary" style={textStyle}>
-            Watchlist
+            <Plus style={{ fontSize: "24px" }} /> Watchlist
           </p>
         </WatchlistButton>
         <Container>
