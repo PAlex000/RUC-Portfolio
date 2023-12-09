@@ -8,7 +8,6 @@ import Dropdowns from "../common/Dropdown";
 import Header from "../layout/Header";
 import header from "../../assets/movieHeader.jpg";
 import CustomContainer from "../common/CustomContainer";
-import { useState } from "react";
 
 const headerData = [
   {
