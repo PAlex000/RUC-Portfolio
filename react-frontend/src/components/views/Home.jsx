@@ -29,19 +29,19 @@ const headerData = [
 const Home = () => {
   const dispatch = useDispatch();
   const { movies, loading, error } = useSelector((state) => {
-    console.log(state); // This will log the current state
-    return state.moviesReducer; // This returns the part of the state you're interested in
+    console.log(state);
+    return state.moviesReducer;
   });
 
   useEffect(() => {
     dispatch(fetchMovies());
   }, [dispatch]);
 
-  console.log("Movies:", movies); // Debug the movies array
+  console.log("Movies:", movies);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-  if (!movies) return <div>No movies available</div>; // Handle undefined or null movies array
+  if (!movies) return <div>No movies available</div>;
 
   return (
     <CustomContainer fluid>
