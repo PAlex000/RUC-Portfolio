@@ -7,15 +7,15 @@ import online from "../../assets/online.png";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import {ArrowRight} from "react-bootstrap-icons";
-import { MdOutlineCake } from "react-icons/md";
-import { IoLocationOutline } from "react-icons/io5";
-import { FaFemale } from "react-icons/fa";
-import { MdCardMembership } from "react-icons/md";
+import { MdOutlineEmail } from "react-icons/md";
+import { MdOutlinePermPhoneMsg } from "react-icons/md";
 import shawshank from "../../assets/shawshank.jpg";
 import departed from "../../assets/departed.jpg";
 import CardComp from "../common/CardComp";
 import scream from "../../assets/scream.jpg";
 import hunger_games from "../../assets/poster_movie.jpg";
+import { MdOutlineVerified } from "react-icons/md";
+import home_alone from "../../assets/home_alone.jpg";
 
 const movieData = [
   {
@@ -49,10 +49,10 @@ const movieData = [
   },
   {
     id: 5,
-    title: "Scream",
+    title: "Home Alone",
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
-    imageUrl: scream,
+    imageUrl: home_alone,
   },
 ]
 
@@ -61,6 +61,7 @@ const backgroundContainer = {
 };
 
 const imgPicture = {
+  position: "relative",
   width: 171,
   height: 181,
   borderRadius: "50%",
@@ -75,20 +76,44 @@ const cardHeader = {
 }
 
 const cardBody = {
-  backgroundColor: "#303030"
+  backgroundColor: "#303030",
 }
 
 const cardText = {
   color: "#FFFFFF",
-  fontSize: "20px"
+  fontSize: "23px"
 }
 
 const buttonFont = {
-  fontSize: "20px"
+  fontSize: "20px",
+  color: "#000000",
+  fontWeight: "bold",
 }
 
 const secondContainer = {
   backgroundColor: "#D9D9D9"
+}
+
+const icon = {
+  fontSize: "30px"
+}
+
+const link = {
+  color: "#FFFFFF"
+}
+
+const addImg = {
+  position: "absolute",
+  backgroundColor: "#F9B93C",
+  width: 60,
+  height: 60,
+  borderRadius: "50%",
+  color: "#000000",
+  fontWeight: "bold",
+  fontSize: "36px",
+  top: 270,
+  left: 870
+
 }
 
 
@@ -101,6 +126,8 @@ const ProfileSettings = () => {
           <Col className="p-5 text-center">
 
           <img src={user_picture} style={imgPicture}/>
+
+          <div style={addImg}>+</div>
           
           <h1 style={{
             color: "#FFFFFF",
@@ -123,11 +150,10 @@ const ProfileSettings = () => {
             <Card border="dark">
               <Card.Header as="h2" style={cardHeader} className="p-3">About You</Card.Header>
               <Card.Body style={cardBody}>
-                <Card.Text style={cardText} className="mt-4"><MdOutlineCake className="mx-3"/>Born October 11th</Card.Text>
-                <Card.Text style={cardText}><IoLocationOutline className="mx-3" />Denmark</Card.Text>
-                <Card.Text style={cardText}><FaFemale className="mx-3" />Female</Card.Text>
-                <Card.Text style={cardText}><MdCardMembership className="mx-3" />Member since December 2023</Card.Text>
-                <Button className="mt-4 mb-2 mx-3" style={buttonFont}>Edit your profile <ArrowRight/></Button>
+                <Card.Text style={cardText} className="mt-4"><MdOutlineEmail className="mx-3" style={icon}/>biancagrecu121@gmail.com</Card.Text>
+                <Card.Text style={cardText}><MdOutlinePermPhoneMsg className="mx-3" style={icon}/>(+45) 53 33 73 77</Card.Text>
+                <Card.Text style={cardText}><MdOutlineVerified className="mx-3" style={icon}/>Not verified yet, <a href="" style={link}>validate your email here.</a></Card.Text> 
+                <Button className="mt-4 mb-2 mx-3" variant="warning" style={buttonFont}>Edit your profile <ArrowRight/></Button>
               </Card.Body>
             </Card>
           </Col>
@@ -137,7 +163,7 @@ const ProfileSettings = () => {
           <Card.Header as="h2" style={cardHeader} className="p-3">Your ratings</Card.Header>
           <Card.Body style={cardBody}>
             <Card.Text style={cardText} className="mx-3 mt-4">Movie worth of 5 stars? Or maybe 8 stars? Visit the movies you have seen and rate them accordingly...to your feelings!</Card.Text>
-            <Button className="mt-4 mb-2 mx-3" style={buttonFont}>Get Started! <ArrowRight/></Button>
+            <Button className="mt-4 mb-2 mx-3" variant="warning" style={buttonFont}>Get Started! <ArrowRight/></Button>
 
           </Card.Body>
         </Card>
@@ -148,19 +174,8 @@ const ProfileSettings = () => {
               <Card.Header as="h2" style={cardHeader} className="p-3">Your bookmarks</Card.Header>
               <Card.Body style={cardBody}>
                 <Card.Text style={cardText} className="mx-3 mt-4">There are no any bookmarks...yet! Visit any movie you have watched and feel free to bookmark it, easy peasy!</Card.Text>
-                <Button className="mt-4 mb-2 mx-3" style={buttonFont}>Get Started! <ArrowRight/></Button>
+                <Button className="mt-4 mb-2 mx-3" variant="warning" style={buttonFont}>Get Started! <ArrowRight/></Button>
 
-              </Card.Body>
-            </Card>
-            </Col>
-            
-
-            <Col md={{span: 4, offset: 6 }} className="g-2 mb-5" >
-            <Card border="dark">
-              <Card.Header as="h2" style={cardHeader} className="p-3">Your reviews</Card.Header>
-              <Card.Body style={cardBody}>
-                <Card.Text style={cardText} className="mx-3 mt-4">Something you want to share about a movie you have just watched? Visit your seen movies and rate them, and they will make their grand entrance here!</Card.Text>
-                <Button className="mt-4 mb-2 mx-3" style={buttonFont}>Get Started! <ArrowRight/></Button>
               </Card.Body>
             </Card>
             </Col>
@@ -169,7 +184,7 @@ const ProfileSettings = () => {
 
       <Container fluid style={secondContainer}>
         <Row className="p-2 justify-content-center">
-          <h1 className="mt-4">Recently viewed</h1>
+          <h1 className="mt-4 px-4">Recently viewed</h1>
         {movieData.map((movie) => (
           <Col key={movie.id} sm={6} md={4} lg={2} className="mb-4 mx-2">
             <CardComp
