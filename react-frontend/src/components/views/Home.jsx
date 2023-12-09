@@ -189,7 +189,7 @@ const Home = () => {
       <div style={{ maxWidth: "75%", margin: "0 auto" }}>
         <Row className="justify-content-between align-items-center">
           <Row xs={12} md={3} lg={2} className="mb-4 d-none d-md-block">
-            <Dropdowns onGenreSelect={handleGenreChange} />
+            <Dropdowns />
           </Row>
           {movies.map((movie) => (
             <Col
