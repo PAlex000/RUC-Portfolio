@@ -1,0 +1,15 @@
+/* In your CSS file or a <style> tag */
+.watchlist-btn-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.watchlist-icon {
+  color: blue !important; /* Force color */
+}
+
+.watchlist-text {
+  color: blue !important; /* Force color */
+  margin-left: 0.5rem; /* Spacing between icon and text */
+}
