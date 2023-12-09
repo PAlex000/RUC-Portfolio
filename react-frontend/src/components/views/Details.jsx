@@ -1,5 +1,9 @@
 const Details = () => {
-  return <div></div>;
+  return (
+    <div>
+      <p>sup sup sup</p>
+    </div>
+  );
 };
 
 export default Details;
