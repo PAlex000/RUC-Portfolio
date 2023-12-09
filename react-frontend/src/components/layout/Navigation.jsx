@@ -51,9 +51,6 @@ const Navigation = () => {
             <Link to="/ratinghistory" className="nav-link">
               RatingHistory
             </Link>
-            <Link to="/bookmarks" className="nav-link">
-              Watchlist
-            </Link>
             <Link to="/login" className="nav-link">
               Sign in
             </Link>
