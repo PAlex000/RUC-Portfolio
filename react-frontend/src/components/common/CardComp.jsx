@@ -13,7 +13,7 @@ const CardComp = ({ title, rating, image }) => {
     backgroundColor: "#313131",
     color: "white",
     width: "14rem",
-    height: "23rem",
+    height: "25rem",
   };
 
   const titleStyle = {
@@ -45,13 +45,20 @@ const CardComp = ({ title, rating, image }) => {
     <Card style={cardStyle} className="mt-5">
       <Card.Img variant="top" src={image} style={imageStyle} />
       <Card.Body>
+        <Card.Text className="d-flex align-items-center">
+          Rating: {rating}
+          <div
+            style={{ paddingLeft: "0.2rem" }}
+            className="d-flex align-items-center"
+          >
+            <StarFill></StarFill>
+          </div>
+        </Card.Text>
         <Card.Title style={titleStyle}>{title}</Card.Title>
         <ListGroup variant="flush">
           <ListGroup.Item
             style={{ backgroundColor: "#313131", border: "none" }}
-          >
-            {/* <StarFill color="yellow" /> {rating} */}
-          </ListGroup.Item>
+          ></ListGroup.Item>
         </ListGroup>
         <div style={cardFooterStyle}>
           <div className="d-flex justify-content-between align-items-center mt-2">

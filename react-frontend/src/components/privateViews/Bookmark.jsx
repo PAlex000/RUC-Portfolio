@@ -7,73 +7,58 @@ import Header from "../layout/Header";
 import shawshank from "../../assets/shawshank.jpg";
 import departed from "../../assets/departed.jpg";
 import header from "../../assets/movieHeader.jpg";
+import Navigation from "../layout/Navigation";
 
 //Hard coded data as we create the skellet. useEffect with GET calls when we establish connection. Async/Await, fetch.
-const movieData = [
+const bookmarkData = [
   {
-    id: 1,
     title:
       "Shawshank Redemption Shawshank Redemption Shawshank Redemption Shawshank Redemption",
     text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-    btnText: "Learn More",
     imageUrl: shawshank,
     rating: 10,
   },
   {
-    id: 2,
     title: "Spiderman No Way Home",
     text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
     imageUrl: departed,
     rating: 5,
   },
   {
-    id: 3,
     title: "The Avengers",
     text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
     imageUrl: shawshank,
     rating: 0,
   },
   {
-    id: 4,
     title: "Spiderman Homecoming",
     text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
     imageUrl: departed,
     rating: 3,
   },
   {
-    id: 5,
     title: "Remember the Titans",
     text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
     imageUrl: shawshank,
-    rating: 2,
+    rating: 5,
   },
   {
-    id: 6,
     title: "Dangerous Minds",
     text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
     imageUrl: departed,
-    rating: 8,
+    rating: 3,
   },
   {
-    id: 7,
     title: "Get Rich Or Die Tryin'",
     text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
     imageUrl: shawshank,
-    rating: 6,
+    rating: 2,
   },
   {
-    id: 8,
     title: "American Gangster",
     text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
     imageUrl: departed,
-    rating: 2,
+    rating: 8,
   },
 ];
 
@@ -81,24 +66,19 @@ const backgroundContainer = {
   backgroundColor: "#000",
 };
 
-const Home = () => {
+const Bookmark = () => {
   return (
     <Container className="px-5" fluid style={backgroundContainer}>
-      <Header header={header} />
+      <Navigation />
       <Row className="d-flex justify-content-center">
-        <Row className="mr-4">
-          <Col className="d-flex justify-content-end">
-            <Dropdowns />
-          </Col>
-        </Row>
-        {movieData.map((movie) => (
-          <Col key={movie.id} sm={6} md={4} lg={2} className="mb-4 mx-2">
+        <Row className="mr-4"></Row>
+        {bookmarkData.map((data) => (
+          <Col key={data.id} sm={6} md={4} lg={2} className="mb-4 mx-2">
             <CardComp
-              title={movie.title}
-              text={movie.text}
-              btnText={movie.btnText}
-              image={movie.imageUrl}
-              rating={movie.rating}
+              title={data.title}
+              text={data.text}
+              image={data.imageUrl}
+              rating={data.rating}
             />
           </Col>
         ))}
@@ -107,4 +87,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Bookmark;
