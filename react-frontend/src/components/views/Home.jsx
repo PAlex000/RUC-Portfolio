@@ -28,16 +28,20 @@ const headerData = [
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { movies, loading, error } = useSelector(
-    (state) => state.moviesReducer
-  );
+  const { movies, loading, error } = useSelector((state) => {
+    console.log(state); // This will log the current state
+    return state.moviesReducer; // This returns the part of the state you're interested in
+  });
 
   useEffect(() => {
     dispatch(fetchMovies());
   }, [dispatch]);
 
+  console.log("Movies:", movies); // Debug the movies array
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
+  if (!movies) return <div>No movies available</div>; // Handle undefined or null movies array
 
   return (
     <CustomContainer fluid>
@@ -57,10 +61,10 @@ const Home = () => {
               className="d-flex justify-content-center mb-4"
             >
               <CardComp
-                title={movie.title}
-                text={movie.text}
-                btnText={movie.btnText}
-                image={movie.imageUrl}
+                title={movie.type}
+                text={movie.description}
+                btnText="Learn More"
+                image={movie.poster}
                 rating={movie.rating}
               />
             </Col>

@@ -19,7 +19,7 @@ export const fetchMoviesFailure = (error) => ({
 });
 
 // Thunk Action
-export const fetchMovies = (page = 0, pageSize = 10) => {
+export const fetchMovies = (page = 0, pageSize = 12) => {
   return async (dispatch) => {
     dispatch(fetchMoviesRequest());
     try {
@@ -27,7 +27,7 @@ export const fetchMovies = (page = 0, pageSize = 10) => {
         `/api/movie?page=${page}&pageSize=${pageSize}`
       );
       const data = await response.json();
-      dispatch(fetchMoviesSuccess(data.movies, data.total));
+      dispatch(fetchMoviesSuccess(data.items.$values, data.total)); // items: {$id, $values[id, url, type, etc.]}
     } catch (error) {
       dispatch(fetchMoviesFailure(error.toString()));
     }
