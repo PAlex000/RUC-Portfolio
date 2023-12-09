@@ -2,6 +2,7 @@ import { Container, Row } from "react-bootstrap";
 import RatingCard from "../common/RatingCard";
 import shawshank from "../../assets/shawshank.jpg";
 import departed from "../../assets/departed.jpg";
+import Navigation from "../layout/Navigation";
 
 //Hard coded data as we create the skellet. useEffect with GET calls when we establish connection. Async/Await, fetch.
 const ratingData = [
@@ -52,6 +53,7 @@ const backgroundContainer = {
 const RatingHistory = () => {
   return (
     <Container className="px-5" fluid style={backgroundContainer}>
+      <Navigation />
       {ratingData.map((rating) => (
         <Row key={rating.titleid}>
           <RatingCard

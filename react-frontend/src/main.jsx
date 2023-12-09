@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RatingHistory from "./components/privateViews/RatingHistory.jsx";
-import { Bookmark } from "react-bootstrap-icons";
+import Bookmark from "./components/privateViews/Bookmark.jsx";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/bookmark",
-    element: <Bookmark />,
+    element: <Bookmark/>,
   },
 ]);
 

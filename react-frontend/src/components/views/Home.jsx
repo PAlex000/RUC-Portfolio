@@ -17,6 +17,7 @@ const movieData = [
     text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
     btnText: "Learn More",
     imageUrl: shawshank,
+    rating: 10,
   },
   {
     id: 2,
@@ -24,6 +25,7 @@ const movieData = [
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
     imageUrl: departed,
+    rating: 5,
   },
   {
     id: 3,
@@ -31,6 +33,7 @@ const movieData = [
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
     imageUrl: shawshank,
+    rating: 0,
   },
   {
     id: 4,
@@ -38,6 +41,7 @@ const movieData = [
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
     imageUrl: departed,
+    rating: 3,
   },
   {
     id: 5,
@@ -45,6 +49,7 @@ const movieData = [
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
     imageUrl: shawshank,
+    rating: 2,
   },
   {
     id: 6,
@@ -52,6 +57,7 @@ const movieData = [
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
     imageUrl: departed,
+    rating: 8,
   },
   {
     id: 7,
@@ -59,6 +65,7 @@ const movieData = [
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
     imageUrl: shawshank,
+    rating: 6,
   },
   {
     id: 8,
@@ -66,6 +73,7 @@ const movieData = [
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
     imageUrl: departed,
+    rating: 2,
   },
 ];
 
@@ -90,6 +98,7 @@ const Home = () => {
               text={movie.text}
               btnText={movie.btnText}
               image={movie.imageUrl}
+              rating={movie.rating}
             />
           </Col>
         ))}
