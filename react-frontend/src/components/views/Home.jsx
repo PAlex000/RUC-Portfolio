@@ -37,7 +37,7 @@ const Home = () => {
     dispatch(fetchMovies());
   }, [dispatch]);
 
-  console.log("Movies:", movies);
+  console.log("Movies:", movies); // Debug the movies array
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
