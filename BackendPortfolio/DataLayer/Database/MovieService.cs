@@ -14,17 +14,33 @@ public class MovieService : IMovieService
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToList();
+        foreach (var mv in movie)
+        {
+            if (mv == null)
+                mv.akas = null;
+            else
+                mv.akas = db.TitleAkas.Where(x => x.Id == mv.Id).ToList();
+        }
         return (movie, db.TitleBasics.Count());
     }
     public TitleBasics GetMovieById(string movieId)
     {
-        return db.TitleBasics.FirstOrDefault(x => x.Id == movieId);
+        var movie = db.TitleBasics.FirstOrDefault(x => x.Id == movieId);
+        movie.akas = db.TitleAkas.Where(x => x.Id == movie.Id).ToList();
+        return movie;
     }
     public List<TitleBasics> SearchMovies(string searchString)
     {
         var search = db.TitleBasics.Include(tb => tb.akas)
             .Where(tb => tb.description.Contains(searchString) ||tb.akas.Any(aka => aka.title.Contains(searchString)))
             .ToList();
+        foreach (var mv in search)
+        {
+            if (mv == null)
+                mv.akas = null;
+            else
+                mv.akas = db.TitleAkas.Where(x => x.Id == mv.Id).ToList();
+        }
         return search;
     }
 
@@ -41,7 +57,13 @@ public class MovieService : IMovieService
             .Where(x => x.startYear == targetMovie.startYear)
             .Take(8)
             .ToList();
-
+        foreach (var mv in similarMovies)
+        {
+            if (mv == null)
+                mv.akas = null;
+            else
+                mv.akas = db.TitleAkas.Where(x => x.Id == mv.Id).ToList();
+        }
         return similarMovies;
     }
 
