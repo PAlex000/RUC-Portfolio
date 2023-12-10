@@ -20,7 +20,6 @@ const Navigation = () => {
           <Nav.Link href="#home">Home</Nav.Link>
           <Nav.Link href="#features">Features</Nav.Link>
           <Nav.Link href="#pricing">Pricing</Nav.Link>
-          {/* <Nav.Link href="/profilesettings">Your profile</Nav.Link> */}
     <Dropdown>
       <Dropdown.Toggle variant="secondary" id="dropdown-basic" style={{
         marginLeft: "1rem",
@@ -32,7 +31,6 @@ const Navigation = () => {
         <Dropdown.Item href="/profilesettings">Your account</Dropdown.Item>
         <Dropdown.Item href="#ratings">Your ratings</Dropdown.Item>
         <Dropdown.Item href="#bookmarks">Your bookmarks</Dropdown.Item>
-        <Dropdown.Item href="#reviews">Your reviews</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
         </Nav>

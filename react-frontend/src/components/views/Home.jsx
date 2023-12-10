@@ -7,13 +7,14 @@ import Header from "../layout/Header";
 import shawshank from "../../assets/shawshank.jpg";
 import departed from "../../assets/departed.jpg";
 import header from "../../assets/movieHeader.jpg";
+import CardSearch from "../common/CardSearch";
 
 //Hard coded data as we create the skellet. useEffect with GET calls when we establish connection. Async/Await, fetch.
 const movieData = [
   {
     id: 1,
     title:
-      "Shawshank Redemption Shawshank Redemption Shawshank Redemption Shawshank Redemption",
+      "Shawshank Redemption",
     text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
     btnText: "Learn More",
     imageUrl: shawshank,
@@ -75,6 +76,7 @@ const backgroundContainer = {
 
 const Home = () => {
   return (
+    <>
     <Container className="px-5" fluid style={backgroundContainer}>
       <Header header={header} />
       <Row className="d-flex justify-content-center">
@@ -94,7 +96,24 @@ const Home = () => {
           </Col>
         ))}
       </Row>
+      </Container>
+
+<Container>
+<Row className="p-2 mb-5 justify-content-center">
+          <h1 className="mt-5 px-4">Recently searched</h1>
+        {movieData.map((movie) => (
+          <Col key={movie.id} sm={6} md={4} lg={2} className="mb-4 mx-2">
+            <CardSearch
+              title={movie.title}
+              text={movie.text}
+              btnText={movie.btnText}
+              image={movie.imageUrl}
+            />
+          </Col>
+        ))}
+        </Row>
     </Container>
+    </>
   );
 };
 
