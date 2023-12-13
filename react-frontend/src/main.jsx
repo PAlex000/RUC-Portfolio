@@ -9,6 +9,7 @@ import Details from "./components/views/Details.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RatingHistory from "./components/privateViews/RatingHistory.jsx";
 import Bookmark from "./components/privateViews/Bookmark.jsx";
+import Login from "./components/views/Login.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,8 +19,9 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "explorer", element: <Explorer /> },
       { path: "details", element: <Details /> },
+      { path: "login", element: <Login /> },
       { path: "ratinghistory", element: <RatingHistory /> },
-      { path: "bookmark", element: <Bookmark /> },
+      { path: "bookmark", element: <Bookmark  /> },
     ],
   },
 ]);
