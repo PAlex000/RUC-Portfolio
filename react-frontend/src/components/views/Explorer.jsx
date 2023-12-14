@@ -1,4 +1,4 @@
-import { movieData } from "./Home";
+import { movies } from "../../types/Types";
 import CustomContainer from "../common/CustomContainer";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -19,7 +19,7 @@ const Explorer = () => {
           >
             <Dropdowns className="ml-4" />
           </Row>
-          {movieData.map((movie) => (
+          {movies.map((movie) => (
             <Col
               key={movie.id}
               xs={12}

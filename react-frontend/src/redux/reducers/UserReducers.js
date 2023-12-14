@@ -49,13 +49,11 @@ const userReducer = (state = initialState, action) => {
         loading: false,
       };
     case UPDATE_USER_EMAIL_SUCCESS:
-      // might be an issue here
       return {
         ...state,
         loading: false,
       };
     case DELETE_USER_SUCCESS:
-      //if id is available
       return {
         ...state,
         users: state.users.filter((user) => user.id !== action.payload.userId),

@@ -78,6 +78,9 @@ export const loginUser = (loginData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(loginData),
     });
+    if (!response.ok) {
+      throw new Error("Failed to login");
+    }
     const data = await response.json();
     dispatch(loginUserSuccess(data.Token));
   } catch (error) {

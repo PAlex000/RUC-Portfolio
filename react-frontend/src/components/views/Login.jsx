@@ -1,62 +1,49 @@
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../redux/actions/UserActions";
 import { Form, Button, Alert } from "react-bootstrap";
-import { useState } from "react";
 import "./Login.scss";
-
-import BackgroundImage from "../../assets/images/background.png";
-import Logo from "../../assets/images/logo.png";
 
 const Login = () => {
   const [inputUsername, setInputUsername] = useState("");
   const [inputPassword, setInputPassword] = useState("");
 
-  const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { loading, error, token } = useSelector((state) => state.userReducer);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    setLoading(true);
-    await delay(500);
-    console.log(`Username :${inputUsername}, Password :${inputPassword}`);
-    if (inputUsername !== "admin" || inputPassword !== "admin") {
-      setShow(true);
-    }
-    setLoading(false);
+    dispatch(loginUser({ username: inputUsername, password: inputPassword }));
   };
 
-  const handlePassword = () => {};
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem("userToken", token);
+      //redirect to a private route maybe?
+    }
 
-  function delay(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
+    if (error) {
+      console.log(error);
+    }
+  }, [token, error]);
 
   return (
-    <div
-      className="sign-in__wrapper"
-      style={{ backgroundImage: `url(${BackgroundImage})` }}
-    >
-      {/* Overlay */}
+    <div className="sign-in__wrapper">
       <div className="sign-in__backdrop"></div>
-      {/* Form */}
       <Form className="shadow p-4 bg-white rounded" onSubmit={handleSubmit}>
-        {/* Header */}
-        <img
-          className="img-thumbnail mx-auto d-block mb-2"
-          src={Logo}
-          alt="logo"
-        />
+        <div className="logoContainer">
+          <div className="logo">IMDB</div>
+        </div>
         <div className="h4 mb-2 text-center">Sign In</div>
-        {/* ALert */}
-        {show ? (
+        {error && (
           <Alert
             className="mb-2"
             variant="danger"
-            onClose={() => setShow(false)}
+            onClose={() => {}}
             dismissible
           >
             Incorrect username or password.
           </Alert>
-        ) : (
-          <div />
         )}
         <Form.Group className="mb-2" controlId="username">
           <Form.Label>Username</Form.Label>
@@ -78,9 +65,6 @@ const Login = () => {
             required
           />
         </Form.Group>
-        <Form.Group className="mb-2" controlId="checkbox">
-          <Form.Check type="checkbox" label="Remember me" />
-        </Form.Group>
         {!loading ? (
           <Button className="w-100" variant="primary" type="submit">
             Log In
@@ -91,19 +75,11 @@ const Login = () => {
           </Button>
         )}
         <div className="d-grid justify-content-end">
-          <Button
-            className="text-muted px-0"
-            variant="link"
-            onClick={handlePassword}
-          >
+          <Button className="text-muted px-0" variant="link">
             Forgot password?
           </Button>
         </div>
       </Form>
-      {/* Footer */}
-      <div className="w-100 mb-2 position-absolute bottom-0 start-50 translate-middle-x text-white text-center">
-        Made by Hendrik C | &copy;2022
-      </div>
     </div>
   );
 };

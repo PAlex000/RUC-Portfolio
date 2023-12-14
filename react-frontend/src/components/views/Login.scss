@@ -5,6 +5,7 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
+  background-color: #000;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -16,14 +17,23 @@
     z-index: 1;
     animation: showSignInForm 1s;
 
-    .logo {
-      font: bold 24px "Roboto";
-      color: #000;
-      background: #f5c618;
-      padding: 7px;
-      border-radius: 6px;
-      margin: 0;
-      text-decoration: none;
+    .logoContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      .logo {
+        font: bold 24px "Roboto";
+        color: #000;
+        width: 100px;
+        text-align: center;
+        background: #f5c618;
+        padding: 7px;
+        border-radius: 6px;
+        margin: 0;
+        text-decoration: none;
+      }
     }
   }
 }
