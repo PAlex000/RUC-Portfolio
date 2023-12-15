@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signupUser } from "../../redux/actions/UserActions";
+import { registerUser } from "../../redux/actions/UserActions";
 import { Form, Button, Alert } from "react-bootstrap";
 import { validateSignup } from "../../utils/helperFunctions/ClientSideValidation";
-import "./Login.scss";
+import "./Signup.scss";
 
 const Signup = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [inputEmail, setInputEmail] = useState("");
+  const [inputFirstName, setInputFirstname] = useState("");
   const [inputPassword, setInputPassword] = useState("");
+  const [inputUsername, setInputUsername] = useState("");
+  const [inputLastName, setInputLastName] = useState("");
+  const [inputPhoneNumber, setInputPhoneNumber] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
 
   const dispatch = useDispatch();
@@ -19,25 +19,25 @@ const Signup = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const errors = validateSignup(
-      firstName,
-      lastName,
-      phoneNumber,
-      inputEmail,
+      inputFirstName,
+      inputLastName,
+      inputPhoneNumber,
+      inputUsername,
       inputPassword
     );
     if (Object.keys(errors).length === 0) {
       dispatch(
-        signupUser({
-          firstName,
-          lastName,
-          phoneNumber,
-          email: inputEmail,
+        registerUser({
+          inputFirstName,
+          inputLastName,
+          inputPhoneNumber,
+          email: inputUsername,
           password: inputPassword,
         })
       );
     } else {
       setValidationErrors(errors);
-      setInputEmail("");
+      setInputUsername("");
       setInputPassword("");
     }
   };
@@ -77,36 +77,36 @@ const Signup = () => {
           <Form.Label>First Name</Form.Label>
           <Form.Control
             type="text"
-            value={firstName}
+            value={inputFirstName}
             placeholder="First Name"
-            onChange={(e) => setFirstName(e.target.value)}
+            onChange={(e) => setInputFirstname(e.target.value)}
           />
         </Form.Group>
         <Form.Group className="mb-2" controlId="lastName">
           <Form.Label>Last Name</Form.Label>
           <Form.Control
             type="text"
-            value={lastName}
+            value={inputLastName}
             placeholder="Last Name"
-            onChange={(e) => setLastName(e.target.value)}
+            onChange={(e) => setInputLastName(e.target.value)}
           />
         </Form.Group>
         <Form.Group className="mb-2" controlId="phoneNumber">
           <Form.Label>Phone Number</Form.Label>
           <Form.Control
             type="text"
-            value={phoneNumber}
+            value={inputPhoneNumber}
             placeholder="Phone Number"
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            onChange={(e) => setInputPhoneNumber(e.target.value)}
           />
         </Form.Group>
         <Form.Group className="mb-2" controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
-            value={inputEmail}
+            value={inputUsername}
             placeholder="Email"
-            onChange={(e) => setInputEmail(e.target.value)}
+            onChange={(e) => setInputUsername(e.target.value)}
           />
         </Form.Group>
         <Form.Group className="mb-2" controlId="password">

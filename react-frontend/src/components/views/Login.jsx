@@ -1,8 +1,14 @@
+// React
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// React Router
+import { Link } from "react-router-dom";
+// Redux
 import { loginUser } from "../../redux/actions/UserActions";
+import { useDispatch, useSelector } from "react-redux";
+// Bootstrap
 import { Form, Button, Alert } from "react-bootstrap";
 import { validateLogin } from "../../utils/helperFunctions/ClientSideValidation";
+// Styling
 import "./Login.scss";
 
 const Login = () => {
@@ -89,9 +95,9 @@ const Login = () => {
           {loading ? "Logging In..." : "Log In"}
         </Button>
         <div className="d-grid justify-content-end">
-          <Button className="text-muted px-0" variant="link">
+          <Link to="/signup" className="text-muted px-0 btn btn-link">
             Click to Sign up
-          </Button>
+          </Link>
         </div>
       </Form>
     </div>
