@@ -2,9 +2,14 @@ import { items } from "../../types/nav/NavItems";
 import { Link } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import { useEffect } from "react";
+import { logout } from "../../utils/helperFunctions/Logout";
+import { useNavigate } from "react-router-dom";
 import "./NavigationToggle.scss";
 
 const NavigationOpen = ({ isOpen, onChange }) => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("userToken");
+
   useEffect(() => {
     const body = document.body;
     const scrollBarWidth =
@@ -28,6 +33,11 @@ const NavigationOpen = ({ isOpen, onChange }) => {
     };
   }, [isOpen]);
 
+  const handleLogout = () => {
+    logout(navigate);
+    onChange(false);
+  };
+
   return (
     <div className={`Menu ${isOpen ? "open" : ""}`}>
       <AiOutlineClose className="btn-close" onClick={() => onChange(false)} />
@@ -37,6 +47,11 @@ const NavigationOpen = ({ isOpen, onChange }) => {
             {item.itemText}
           </Link>
         ))}
+        {token && (
+          <div className="logout" onClick={handleLogout}>
+            Logout
+          </div>
+        )}
       </div>
     </div>
   );

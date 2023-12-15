@@ -15,6 +15,7 @@ import Home from "./components/views/Home.jsx";
 import Login from "./components/views/Login.jsx";
 import RatingHistory from "./components/privateViews/RatingHistory.jsx";
 import Signup from "./components/views/Signup.jsx";
+import PrivateRoute from "./utils/helperFunctions/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,14 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "explorer", element: <Explorer /> },
+      {
+        path: "explorer",
+        element: (
+          <PrivateRoute>
+            <Explorer />
+          </PrivateRoute>
+        ),
+      },
       { path: "details", element: <Details /> },
       { path: "login", element: <Login /> },
       { path: "signup", element: <Signup /> },
