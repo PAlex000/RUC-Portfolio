@@ -1,8 +1,15 @@
+// React
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// Router Dom
+import { Link } from "react-router-dom";
+// Redux
 import { registerUser } from "../../redux/actions/UserActions";
+import { useDispatch, useSelector } from "react-redux";
+// Bootstrap
 import { Form, Button, Alert } from "react-bootstrap";
+// Helpers
 import { validateSignup } from "../../utils/helperFunctions/ClientSideValidation";
+// Scss
 import "./Signup.scss";
 
 const Signup = () => {
@@ -61,7 +68,11 @@ const Signup = () => {
           <div className="logo">IMDB</div>
         </div>
         <div className="h4 mb-2 text-center">Sign Up</div>
-        {error && <Alert variant="danger">{error}</Alert>}
+        {error && (
+          <Alert dismissible variant="danger">
+            Incorrect username or password.
+          </Alert>
+        )}
         {Object.keys(validationErrors).length > 0 && (
           <Alert
             variant="danger"
@@ -126,6 +137,11 @@ const Signup = () => {
         >
           {loading ? "Signing Up..." : "Sign Up"}
         </Button>
+        <div className="d-grid justify-content-end">
+          <Link to="/login" className="text-muted px-0 btn btn-link">
+            Click to Log in
+          </Link>
+        </div>
       </Form>
     </div>
   );

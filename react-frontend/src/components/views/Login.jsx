@@ -34,6 +34,7 @@ const Login = () => {
   useEffect(() => {
     if (token) {
       localStorage.setItem("userToken", token);
+      console.log("Success on login", token);
       //redirect to a private route maybe?
     }
 
