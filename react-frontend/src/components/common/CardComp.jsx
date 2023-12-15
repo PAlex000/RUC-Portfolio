@@ -1,68 +1,74 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import {
-  // StarFill,
-  InfoCircleFill,
-  PlayFill,
-  PlusCircleFill,
-} from "react-bootstrap-icons";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-const CardComp = ({ title, image }) => {
-  const cardStyle = {
-    backgroundColor: "#313131",
-    color: "white",
-    width: "14rem",
-    height: "23rem",
-  };
 
-  const titleStyle = {
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    WebkitLineClamp: 2,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    lineHeight: "1.2em",
-    maxHeight: "2.4em",
-  };
+const CardComp = ({ title, image, text, btnText }) => {
 
-  const imageStyle = {
-    height: "220px",
-    objectFit: "cover",
-  };
+  const cardMovies = {
+    backgroundColor: "#000",
+    color: "#FFF",
+    height: "50rem",
+  }
 
-  const cardFooterStyle = {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    width: "100%",
-    borderTop: "1px solid rgba(0,0,0,.125)",
-    padding: "0.75rem 1.25rem",
-    backgroundColor: "#313131",
-  };
+  const buttonsColAltern = {
+    display: "inline",
+    margin: "1rem 0.20rem",
+    fontSize: "15px",
+    color: "#FFF",
+    backgroundColor: "transparent",
+    fontWeight: "bold",
+    padding: "0.5rem",
+    borderTop: "none",
+    borderBottom: "none",
+    borderLeft: "3px solid #E27F38",
+    borderRight: "none",
+    
+  }
+
+  const plot = {
+    margin: "1.2rem 0",
+    fontSize: "18px",
+  }
+
+  const buttons = {
+  display: "inline",
+  margin: "8px",
+  fontSize: "13.5px",
+  color: "#FFF",
+  // backgroundColor: "#E27F38",
+  fontWeight: "bold",
+  padding: "0.5rem 0.50rem",
+  border: "none",
+  borderRadius: "10px", 
+  textShadow: "1px 2px 5px black",
+
+  }
+
 
   return (
-    <Card style={cardStyle} className="mt-5">
-      <Card.Img variant="top" src={image} style={imageStyle} />
+    <>
+    <Row className="g-5">
+      {Array.from({length: 1}).map((_, idx) => (
+      <Col key={idx}>
+    <Card style={cardMovies}>
+      <Card.Img src={image}/>
       <Card.Body>
-        <Card.Title style={titleStyle}>{title}</Card.Title>
-        <ListGroup variant="flush">
-          <ListGroup.Item
-            style={{ backgroundColor: "#313131", border: "none" }}
-          >
-            {/* <StarFill color="yellow" /> {rating} */}
-          </ListGroup.Item>
-        </ListGroup>
-        <div style={cardFooterStyle}>
-          <div className="d-flex justify-content-between align-items-center mt-2">
-            <PlusCircleFill color="white" />
-            <Button variant="warning">Watchlist</Button>
-            <PlayFill color="white" />
-            <InfoCircleFill color="white" />
-          </div>
-        </div>
+        <Card.Title as="h3" className="my-3" style={{textDecoration: "underline"}}>{title}</Card.Title>
+      <Button style={buttonsColAltern}>Action</Button> 
+      <Button style={buttonsColAltern}>Adventure</Button>
+      <Button style={buttonsColAltern}>Drama</Button>
+
+        <p style={plot}>{text}</p>
+        <Button variant="danger" style={buttons}>{btnText}</Button>
+        <Button variant="warning" style={buttons}>Add Watchlist</Button>
       </Card.Body>
     </Card>
+    </Col>
+    ))};
+    </Row>
+    </>
   );
 };
 

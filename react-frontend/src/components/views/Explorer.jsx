@@ -5,9 +5,8 @@ import Col  from "react-bootstrap/Col";
 import home_alone from "../../assets/home_alone.jpg";
 import scream from "../../assets/scream.jpg";
 import hunger_games from "../../assets/poster_movie.jpg";
-import shawshank from "../../assets/shawshank.jpg";
 import departed from "../../assets/departed.jpg";
-import CardSearch from "../common/CardSearch";
+import CardComp from "../common/CardComp";
 import hunger_games_cropped from "../../assets/poster_movie_cropped.jpg";
 import Button from "react-bootstrap/Button";
 
@@ -15,10 +14,10 @@ const movieData = [
   {
     id: 1,
     title:
-      "Shawshank Redemption Shawshank Redemption Shawshank Redemption Shawshank Redemption",
+      "Scream",
     text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
     btnText: "Learn More",
-    imageUrl: shawshank,
+    imageUrl: scream,
   },
   {
     id: 2,
@@ -141,10 +140,10 @@ const titleBackground = {
   color: "#FFA869",
   fontWeight: "bold",
   left: 30,
-  top: 40,
+  top: 10,
   width: "100%",
   padding: "2rem",
-  textShadow: "2px 3px 5px black"
+  textShadow: "4px 5px 5px black"
 }
 
 const titleBackground2 = {
@@ -153,7 +152,7 @@ const titleBackground2 = {
   color: "#FFF",
   fontWeight: "bold",
   left: 30,
-  top: 110,
+  top: 80,
   width: "60%",
   padding: "2rem",
   textShadow: "1px 4px 5px black"
@@ -164,8 +163,8 @@ const plot = {
   fontSize: "25px",
   color: "#FFF",
   left: 30,
-  top: 260,
-  width: "40%",
+  top: 315,
+  width: "35%",
   padding: "2rem",
   textShadow: "1px 3px 5px black" // offset-x | offset-y | blur | color
 }
@@ -173,7 +172,15 @@ const plot = {
 const buttons = {
   position: "absolute",
   left: 45,
-  top: 430,
+  top: 530,
+  margin: "2rem 0",
+
+}
+
+const buttonGenre = {
+  position: "absolute",
+  left: 45,
+  top: 215,
   margin: "2rem 0",
 
 }
@@ -181,12 +188,29 @@ const buttons = {
 const buttonsCol = {
   display: "inline",
   margin: "18px",
-  fontSize: "23px",
+  fontSize: "22px",
   color: "#FFF",
-  backgroundColor: "#E27F38",
+  // backgroundColor: "#E27F38",
   fontWeight: "bold",
   padding: "0.5rem 1rem",
-  border: "none"
+  border: "none",
+  borderRadius: "10px", 
+  textShadow: "1px 2px 5px black",
+
+}
+
+
+const buttonsColAltern = {
+  display: "inline",
+  margin: "18px",
+  fontSize: "18px",
+  color: "#FFF",
+  backgroundColor: "transparent",
+  fontWeight: "bold",
+  padding: "0.5rem 0.75rem",
+  border: "4px solid #E27F38", 
+  textShadow: "1px 3px 5px black",
+  borderRadius: "10px"
 }
 
 const backgroundStyle_1 = {
@@ -220,9 +244,15 @@ const Explorer = () => {
       <h1 style={titleBackground}>Featured movie</h1>
       <h3 style={titleBackground2}>The Hunger Games - The Ballad Of Songbirds And Snakes</h3>
       <p style={plot}>The Ballad of Songbirds and Snakes tells the backstory of Professor Snow. Students at the most prestigious school in the Capitol become mentors to the tributes in an effort to make the games more entertaining.</p>
+      {/* for now there are three buttons, use .map to retrieve the genres of each movie in future */}
+      <Col style={buttonGenre}>
+      <Button style={buttonsColAltern}>Action</Button> 
+      <Button style={buttonsColAltern}>Adventure</Button>
+      <Button style={buttonsColAltern}>Drama</Button>
+      </Col>
       <Col style={buttons}>
-      <Button style={buttonsCol}>Watch Trailer and More</Button>
-      <Button style={buttonsCol}>Add to Watchlist</Button>
+      <Button style={buttonsCol} variant="danger">Watch Trailer and More</Button>
+      <Button style={buttonsCol} variant="warning">Add to Watchlist</Button>
       </Col>
     </Container>
     <Container fluid style={backgroundStyle_1}>
@@ -263,10 +293,10 @@ const Explorer = () => {
         </ul>
       </Row>
       
-      <Row className="d-flex justify-content-center p-5">
+      <Row className="d-flex justify-content-center p-4">
         {movieData.map((movie) => (
           <Col key={movie.id} sm={6} md={4} lg={2} className="mb-5 mx-2">
-            <CardSearch
+            <CardComp
               title={movie.title}
               text={movie.text}
               btnText={movie.btnText}
