@@ -1,34 +1,34 @@
+import Container from "react-bootstrap/Container";
+
+
 const Header = ({ header }) => {
   const headerStyle = {
+    backgroundColor: "#000",
+    backgroundImage: `linear-gradient(0deg, 
+      rgba(0,0,0,1) 15%, rgba(0,0,0,0) 80%), url(${header}`,
+    backgroundSize: "cover",
+    width: "100%",
+    height: "800px",
+    backgroundPosition: "center",
     position: "relative",
-    textAlign: "center",
-    color: "white",
-    width: "80%",
-    paddingTop: "50px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    margin: "0 auto",
-    borderRadius: "15px",
-  };
-
+  }
+  
   const overlayTextStyle = {
     position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    fontSize: "2rem",
-  };
+    fontSize: "45px",
+    color: "#FFA869",
+    fontWeight: "bold",
+    textAlign: "center",
+    top: 300,
+    width: "100%",
+    padding: "2rem",
+    textShadow: "2px 3px 5px black"
+  }
 
   return (
-    <div style={headerStyle}>
-      <img
-        src={header}
-        alt="Header Image"
-        style={{ width: "100%", height: "auto" }}
-      />
-      <div style={overlayTextStyle}>Welcome to Our Movie Collection</div>
-    </div>
+    <Container fluid style={headerStyle}>
+      <div style={overlayTextStyle}>Welcome to Our Movie Collection!</div>
+    </Container>
   );
 };
 
