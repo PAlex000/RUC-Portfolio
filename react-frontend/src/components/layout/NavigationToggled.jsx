@@ -4,10 +4,12 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useEffect } from "react";
 import { logout } from "../../utils/helperFunctions/Logout";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./NavigationToggle.scss";
 
 const NavigationOpen = ({ isOpen, onChange }) => {
   const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => !!state.userReducer.token);
   const token = localStorage.getItem("userToken");
 
   useEffect(() => {
@@ -21,7 +23,7 @@ const NavigationOpen = ({ isOpen, onChange }) => {
 
     if (isOpen) {
       body.style.overflow = "hidden";
-      body.style.paddingRight = `${bodyPaddingRight + scrollBarWidth}px`; // Prevent width reflow
+      body.style.paddingRight = `${bodyPaddingRight + scrollBarWidth}px`;
     } else {
       body.style.overflow = "";
       body.style.paddingRight = "";
