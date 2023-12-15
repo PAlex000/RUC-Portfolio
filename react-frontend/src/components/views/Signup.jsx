@@ -1,7 +1,7 @@
 // React
 import { useState, useEffect } from "react";
 // Router Dom
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // Redux
 import { registerUser } from "../../redux/actions/UserActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +19,8 @@ const Signup = () => {
   const [inputLastName, setInputLastName] = useState("");
   const [inputPhoneNumber, setInputPhoneNumber] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const { loading, error, token } = useSelector((state) => state.userReducer);
@@ -38,8 +40,8 @@ const Signup = () => {
           inputFirstName,
           inputLastName,
           inputPhoneNumber,
-          email: inputUsername,
-          password: inputPassword,
+          inputUsername,
+          inputPassword,
         })
       );
     } else {
@@ -52,13 +54,13 @@ const Signup = () => {
   useEffect(() => {
     if (token) {
       localStorage.setItem("userToken", token);
-      // Redirect to a private route maybe?
+      navigate("/");
     }
 
     if (error) {
-      console.log(error);
+      console.log("Signup error: ", error);
     }
-  }, [token, error]);
+  }, [token, error, navigate]);
 
   return (
     <div className="sign-up__wrapper">

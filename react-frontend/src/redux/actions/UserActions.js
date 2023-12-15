@@ -39,17 +39,88 @@ export const registerUserFailure = (error) => ({
   payload: { error },
 });
 
+/* export const registerUser = (userData) => async (dispatch) => {
+  dispatch(registerUserRequest());
+  try {
+    const response = await fetch("/api/user/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        firstName: userData.inputFirstName,
+        lastName: userData.inputLastName,
+        phoneNo: userData.inputPhoneNumber,
+        email: userData.inputUsername,
+        password: userData.inputPassword,
+      }),
+    });
+    const data = await response.json();
+    dispatch(registerUserSuccess(data.Token));
+  } catch (error) {
+    dispatch(registerUserFailure(error.toString()));
+  }
+}; */
+
+/* export const registerUser = (userData) => async (dispatch) => {
+  dispatch(registerUserRequest());
+  try {
+    const response = await fetch("/api/user/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        firstName: userData.inputFirstName,
+        lastName: userData.inputLastName,
+        phoneNo: userData.inputPhoneNumber,
+        email: userData.inputUsername,
+        password: userData.inputPassword,
+      }),
+    });
+
+    if (!response.ok) {
+      let errorMsg = "Registration failed";
+      try {
+        const errorData = await response.json();
+        errorMsg = errorData.message || errorMsg;
+      } catch (jsonError) {
+        errorMsg = await response.text();
+      }
+      dispatch(registerUserFailure(errorMsg));
+      return;
+    }
+
+    const data = await response.json();
+    console.log("Received data:", data); // Log the received data
+
+    if (data && data.Token) {
+      dispatch(registerUserSuccess(data.Token));
+    } else {
+      throw new Error("Token not provided in the response");
+    }
+  } catch (error) {
+    console.log("Error in registerUser:", error);
+    dispatch(registerUserFailure(error.toString()));
+  }
+}; */
+
 export const registerUser = (userData) => async (dispatch) => {
   dispatch(registerUserRequest());
   try {
     const response = await fetch("/api/user/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userData),
+      body: JSON.stringify({
+        firstName: userData.inputFirstName,
+        lastName: userData.inputLastName,
+        phoneNo: userData.inputPhoneNumber,
+        email: userData.inputUsername,
+        password: userData.inputPassword,
+      }),
     });
+
     const data = await response.json();
-    dispatch(registerUserSuccess(data.Token));
+    console.log("Received data:", data);
+    dispatch(registerUserSuccess(data.token));
   } catch (error) {
+    console.log("Error in registerUser:", error);
     dispatch(registerUserFailure(error.toString()));
   }
 };
