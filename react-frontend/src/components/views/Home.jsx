@@ -29,7 +29,6 @@ const headerData = [
 const Home = () => {
   const dispatch = useDispatch();
   const { movies, loading, error } = useSelector((state) => {
-    console.log(state);
     return state.moviesReducer;
   });
 
@@ -37,7 +36,6 @@ const Home = () => {
     dispatch(fetchMovies());
   }, [dispatch]);
 
-  console.log("Movies:", movies);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;

@@ -63,8 +63,8 @@ export const fetchMovieById = (movieId) => {
     dispatch(fetchMovieByIdRequest(movieId));
     try {
       const response = await fetch(`/api/movie/${movieId}`);
-      const movie = await response.json();
-      dispatch(fetchMovieByIdSuccess(movie));
+      const data = await response.json();
+      dispatch(fetchMovieByIdSuccess(data.items.$values, data.total));
     } catch (error) {
       dispatch(fetchMovieByIdFailure(error.toString()));
     }

@@ -12,6 +12,7 @@ import {
 
 const initialState = {
   bookmarks: [],
+  bookmarkedMovies: [],
   loading: false,
   error: null,
 };
@@ -28,6 +29,7 @@ const bookmarksReducer = (state = initialState, action) => {
       return {
         ...state,
         bookmarks: action.payload.bookmarks,
+        bookmarkedMovies: action.payload.bookmarkedMovies,
         loading: false,
       };
     case FETCH_BOOKMARKS_FAILURE:
@@ -75,7 +77,7 @@ const bookmarksReducer = (state = initialState, action) => {
         error: action.payload.error,
       };
     default:
-      return state;
+      return { ...state };
   }
 };
 
