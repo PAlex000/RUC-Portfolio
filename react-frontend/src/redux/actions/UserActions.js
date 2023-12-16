@@ -106,29 +106,6 @@ export const loginUser = (userData) => async (dispatch) => {
   }
 };
 
-/* export const loginUser = (loginData) => async (dispatch) => {
-  dispatch(loginUserRequest());
-  try {
-    const response = await fetch("/api/user/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: loginData.inputUsername,
-        password: loginData.inputPassword,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to login");
-    }
-
-    const data = await response.json();
-    dispatch(loginUserSuccess(data.token));
-  } catch (error) {
-    dispatch(loginUserFailure(error.toString()));
-  }
-}; */
-
 //--//
 
 // Action Types
