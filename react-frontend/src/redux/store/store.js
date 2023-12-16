@@ -9,8 +9,8 @@ import userReducer from "../reducers/UserReducers";
 
 export const store = configureStore({
   reducer: {
-    bookmarks: bookmarksReducer,
-    genres: genresReducer,
+    bookmarksReducer: bookmarksReducer,
+    genresReducer: genresReducer,
     moviesReducer: moviesReducer,
     personsReducer: personsReducer,
     ratingsReducer: ratingsReducer,

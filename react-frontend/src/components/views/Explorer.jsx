@@ -1,8 +1,5 @@
-//import { movieData } from "./Home";
 import CustomContainer from "../common/CustomContainer";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import CardComp from "../common/CardComp";
 import Dropdowns from "../common/Dropdown";
 
 const Explorer = () => {

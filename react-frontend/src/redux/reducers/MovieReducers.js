@@ -106,7 +106,7 @@ const moviesReducer = (state = initialState, action) => {
         loading: false,
       };
     default:
-      return state;
+      return { ...state };
   }
 };
 

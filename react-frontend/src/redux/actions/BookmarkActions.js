@@ -3,25 +3,36 @@ export const FETCH_BOOKMARKS_SUCCESS = "FETCH_BOOKMARKS_SUCCESS";
 export const FETCH_BOOKMARKS_FAILURE = "FETCH_BOOKMARKS_FAILURE";
 
 export const fetchBookmarksRequest = () => ({ type: FETCH_BOOKMARKS_REQUEST });
-export const fetchBookmarksSuccess = (bookmarks) => ({
+export const fetchBookmarksSuccess = (bookmarks, bookmarkedMovies, total) => ({
   type: FETCH_BOOKMARKS_SUCCESS,
-  payload: { bookmarks },
+  payload: { bookmarks, bookmarkedMovies, total },
 });
 export const fetchBookmarksFailure = (error) => ({
   type: FETCH_BOOKMARKS_FAILURE,
   payload: { error },
 });
 
-export const fetchBookmarks = () => async (dispatch) => {
+export const fetchBookmarks = (userId) => async (dispatch) => {
   dispatch(fetchBookmarksRequest());
   try {
-    const response = await fetch("/api/bookmark");
-    const bookmarks = await response.json();
-    dispatch(fetchBookmarksSuccess(bookmarks));
+    const response = await fetch(`/api/bookmark/${userId}`);
+    const data = await response.json();
+    var arrayOfTitleIds = [];
+    var bookmarkedMovies = [];
+    data.$values.forEach(movie => {
+      arrayOfTitleIds.push(movie.titleId);
+    });
+    for (const titleId of arrayOfTitleIds) {
+      const temporaryResponse = await fetch(`/api/movie/${titleId}`);
+      const temporaryData = await temporaryResponse.json();
+      bookmarkedMovies.push(temporaryData);
+    }
+    dispatch(fetchBookmarksSuccess(data.$values, bookmarkedMovies, data.total));
   } catch (error) {
     dispatch(fetchBookmarksFailure(error.toString()));
   }
 };
+
 
 //--//
 
