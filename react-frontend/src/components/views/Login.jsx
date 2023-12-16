@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 // React Router
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // Redux
 import { loginUser } from "../../redux/actions/UserActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +16,7 @@ const Login = () => {
   const [inputUsername, setInputUsername] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const { loading, error, token } = useSelector((state) => state.userReducer);
@@ -31,23 +33,11 @@ const Login = () => {
     }
   };
 
-  /*   const handleSubmit = (event) => {
-    event.preventDefault();
-    const errors = validateLogin(inputUsername, inputPassword);
-    if (Object.keys(errors).length === 0) {
-      dispatch(loginUser({ email: inputUsername, password: inputPassword }));
-    } else {
-      setValidationErrors(errors);
-      setInputUsername("");
-      setInputPassword("");
-    }
-  }; */
-
   useEffect(() => {
     if (token) {
       localStorage.setItem("userToken", token);
       console.log("Success on login", token);
-      //redirect to a private route maybe?
+      navigate("/");
     }
 
     if (error) {
@@ -55,7 +45,7 @@ const Login = () => {
       setInputPassword("");
       console.log(error);
     }
-  }, [token, error]);
+  }, [token, error, navigate]);
 
   return (
     <div className="sign-in__wrapper">
