@@ -158,13 +158,9 @@ public class MoviesController : BaseController
     }
     private MovieModel CreateMovieModel(TitleBasics movie)
     {
-
-        var movieTitle = movie.akas.FirstOrDefault()?.title ?? "No title";
-
         return new MovieModel
         {
             url = GetUrl(nameof(GetMovieById), new { movie.Id }),
-            title = movieTitle,
             type = movie.type,
             isAdult = movie.isAdult,
             startYear = movie.startYear,
@@ -172,7 +168,18 @@ public class MoviesController : BaseController
             poster = movie.poster,
             description = movie.description,
             rating = movie.rating,
-            akas = movie.akas
+            akas = movie.akas?.Select(aka => new AkasUpdateModel
+            {
+                Id = aka.Id,
+                ordering = aka.ordering,
+                title = aka.title,
+                region = aka.region,
+                attribute = aka.attribute,
+                type = aka.type,
+                language = aka.language,
+                isOriginalTitle = aka.isOriginalTitle
+            }).ToList() ?? new List<AkasUpdateModel>()
         };
     }
+
 }
