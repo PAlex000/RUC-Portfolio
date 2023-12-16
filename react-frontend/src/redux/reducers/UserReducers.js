@@ -8,6 +8,9 @@ import {
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAILURE,
+  LOGOUT_USER_FAILURE,
+  LOGOUT_USER_REQUEST,
+  LOGOUT_USER_SUCCESS,
   UPDATE_USER_EMAIL_REQUEST,
   UPDATE_USER_EMAIL_SUCCESS,
   UPDATE_USER_EMAIL_FAILURE,
@@ -64,6 +67,25 @@ const userReducer = (state = initialState, action) => {
     case LOGIN_USER_FAILURE:
     case UPDATE_USER_EMAIL_FAILURE:
     case DELETE_USER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+    case LOGOUT_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case LOGOUT_USER_SUCCESS:
+      console.log("logout success");
+      return {
+        ...state,
+        token: null,
+        loading: false,
+      };
+    case LOGOUT_USER_FAILURE:
       return {
         ...state,
         loading: false,

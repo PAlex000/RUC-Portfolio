@@ -23,13 +23,25 @@ const Login = () => {
     event.preventDefault();
     const errors = validateLogin(inputUsername, inputPassword);
     if (Object.keys(errors).length === 0) {
-      dispatch(loginUser({ username: inputUsername, password: inputPassword }));
+      dispatch(loginUser({ inputUsername, inputPassword }));
     } else {
       setValidationErrors(errors);
       setInputUsername("");
       setInputPassword("");
     }
   };
+
+  /*   const handleSubmit = (event) => {
+    event.preventDefault();
+    const errors = validateLogin(inputUsername, inputPassword);
+    if (Object.keys(errors).length === 0) {
+      dispatch(loginUser({ email: inputUsername, password: inputPassword }));
+    } else {
+      setValidationErrors(errors);
+      setInputUsername("");
+      setInputPassword("");
+    }
+  }; */
 
   useEffect(() => {
     if (token) {

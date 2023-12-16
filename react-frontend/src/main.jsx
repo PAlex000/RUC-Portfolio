@@ -16,6 +16,7 @@ import Login from "./components/views/Login.jsx";
 import RatingHistory from "./components/privateViews/RatingHistory.jsx";
 import Signup from "./components/views/Signup.jsx";
 import PrivateRoute from "./utils/helperFunctions/PrivateRoute.jsx";
+import { loginUserSuccess } from "./redux/actions/UserActions.js";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,14 @@ const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const token = localStorage.getItem("userToken");
+if (token) {
+  store.dispatch(loginUserSuccess(token));
+}
+
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />

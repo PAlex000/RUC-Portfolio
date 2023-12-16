@@ -1,4 +1,7 @@
-export const logout = (navigate) => {
+import { logoutUser } from "../../redux/actions/UserActions";
+
+export const logout = (dispatch, navigate) => {
   localStorage.removeItem("userToken");
-  navigate("/");
+  dispatch(logoutUser());
+  navigate("/login");
 };

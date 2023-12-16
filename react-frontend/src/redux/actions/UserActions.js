@@ -39,68 +39,6 @@ export const registerUserFailure = (error) => ({
   payload: { error },
 });
 
-/* export const registerUser = (userData) => async (dispatch) => {
-  dispatch(registerUserRequest());
-  try {
-    const response = await fetch("/api/user/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        firstName: userData.inputFirstName,
-        lastName: userData.inputLastName,
-        phoneNo: userData.inputPhoneNumber,
-        email: userData.inputUsername,
-        password: userData.inputPassword,
-      }),
-    });
-    const data = await response.json();
-    dispatch(registerUserSuccess(data.Token));
-  } catch (error) {
-    dispatch(registerUserFailure(error.toString()));
-  }
-}; */
-
-/* export const registerUser = (userData) => async (dispatch) => {
-  dispatch(registerUserRequest());
-  try {
-    const response = await fetch("/api/user/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        firstName: userData.inputFirstName,
-        lastName: userData.inputLastName,
-        phoneNo: userData.inputPhoneNumber,
-        email: userData.inputUsername,
-        password: userData.inputPassword,
-      }),
-    });
-
-    if (!response.ok) {
-      let errorMsg = "Registration failed";
-      try {
-        const errorData = await response.json();
-        errorMsg = errorData.message || errorMsg;
-      } catch (jsonError) {
-        errorMsg = await response.text();
-      }
-      dispatch(registerUserFailure(errorMsg));
-      return;
-    }
-
-    const data = await response.json();
-    console.log("Received data:", data); // Log the received data
-
-    if (data && data.Token) {
-      dispatch(registerUserSuccess(data.Token));
-    } else {
-      throw new Error("Token not provided in the response");
-    }
-  } catch (error) {
-    console.log("Error in registerUser:", error);
-    dispatch(registerUserFailure(error.toString()));
-  }
-}; */
-
 export const registerUser = (userData) => async (dispatch) => {
   dispatch(registerUserRequest());
   try {
@@ -141,21 +79,79 @@ export const loginUserFailure = (error) => ({
   payload: { error },
 });
 
-export const loginUser = (loginData) => async (dispatch) => {
+export const loginUser = (userData) => async (dispatch) => {
   dispatch(loginUserRequest());
   try {
     const response = await fetch("/api/user/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(loginData),
+      body: JSON.stringify({
+        email: userData.inputUsername,
+        password: userData.inputPassword,
+      }),
     });
+
+    if (!response.ok) {
+      const errorRes = await response.json();
+      throw new Error(
+        errorRes.errors.email || errorRes.errors.password || "Failed to login"
+      );
+    }
+
+    const data = await response.json();
+    dispatch(loginUserSuccess(data.token));
+  } catch (error) {
+    console.error("Error in loginUser:", error);
+    dispatch(loginUserFailure(error.toString()));
+  }
+};
+
+/* export const loginUser = (loginData) => async (dispatch) => {
+  dispatch(loginUserRequest());
+  try {
+    const response = await fetch("/api/user/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: loginData.inputUsername,
+        password: loginData.inputPassword,
+      }),
+    });
+
     if (!response.ok) {
       throw new Error("Failed to login");
     }
+
     const data = await response.json();
-    dispatch(loginUserSuccess(data.Token));
+    dispatch(loginUserSuccess(data.token));
   } catch (error) {
     dispatch(loginUserFailure(error.toString()));
+  }
+}; */
+
+//--//
+
+// Action Types
+export const LOGOUT_USER_REQUEST = "LOGOUT_USER_REQUEST";
+export const LOGOUT_USER_SUCCESS = "LOGOUT_USER_SUCCESS";
+export const LOGOUT_USER_FAILURE = "LOGOUT_USER_FAILURE";
+
+// Action Creators
+export const logoutUserRequest = () => ({ type: LOGOUT_USER_REQUEST });
+export const logoutUserSuccess = () => ({ type: LOGOUT_USER_SUCCESS });
+export const logoutUserFailure = (error) => ({
+  type: LOGOUT_USER_FAILURE,
+  payload: { error },
+});
+
+// Logout Thunk
+export const logoutUser = () => (dispatch) => {
+  dispatch(logoutUserRequest());
+  try {
+    localStorage.removeItem("userToken");
+    dispatch(logoutUserSuccess());
+  } catch (error) {
+    dispatch(logoutUserFailure(error.toString()));
   }
 };
 

@@ -3,14 +3,21 @@ import { Link } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import { useEffect } from "react";
 import { logout } from "../../utils/helperFunctions/Logout";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import "./NavigationToggle.scss";
 
 const NavigationOpen = ({ isOpen, onChange }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => !!state.userReducer.token);
-  const token = localStorage.getItem("userToken");
+  console.log("isLoggedIn:", isLoggedIn);
+
+  const handleLogout = () => {
+    logout(dispatch, navigate);
+    onChange(false);
+  };
 
   useEffect(() => {
     const body = document.body;
@@ -35,11 +42,6 @@ const NavigationOpen = ({ isOpen, onChange }) => {
     };
   }, [isOpen]);
 
-  const handleLogout = () => {
-    logout(navigate);
-    onChange(false);
-  };
-
   return (
     <div className={`Menu ${isOpen ? "open" : ""}`}>
       <AiOutlineClose className="btn-close" onClick={() => onChange(false)} />
@@ -49,9 +51,10 @@ const NavigationOpen = ({ isOpen, onChange }) => {
             {item.itemText}
           </Link>
         ))}
-        {token && (
+        {isLoggedIn && (
           <div className="logout" onClick={handleLogout}>
             Logout
+            {console.log("Logout should be rendered")}
           </div>
         )}
       </div>

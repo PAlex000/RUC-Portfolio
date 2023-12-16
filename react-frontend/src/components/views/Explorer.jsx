@@ -1,4 +1,4 @@
-import { movies } from "../../types/Types";
+import { movies } from "../../types/Movies";
 import CustomContainer from "../common/CustomContainer";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
