@@ -5,6 +5,7 @@ namespace WebServer.Models
     public class MovieModel
     {
         public string url { get; set; }
+        public string title { get; set; }
         public string type { get; set; }
         public bool isAdult { get; set; }
         public string startYear { get; set; }

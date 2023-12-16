@@ -158,9 +158,13 @@ public class MoviesController : BaseController
     }
     private MovieModel CreateMovieModel(TitleBasics movie)
     {
+
+        var movieTitle = movie.akas.FirstOrDefault()?.title ?? "No title";
+
         return new MovieModel
         {
             url = GetUrl(nameof(GetMovieById), new { movie.Id }),
+            title = movieTitle,
             type = movie.type,
             isAdult = movie.isAdult,
             startYear = movie.startYear,
