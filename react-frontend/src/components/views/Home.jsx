@@ -59,9 +59,9 @@ const Home = () => {
               <CardComp
                 titleId={movie.titleId}
                 title={
-                  movie.akas && movie.akas.length > 0
-                    ? movie.akas[0].title
-                    : "Default Title"
+                  movie.akas.$values[0]
+                    ? movie.akas.$values[0].title
+                    : "Unknown title"
                 }
                 description={movie.description}
                 btnText="Learn More"
