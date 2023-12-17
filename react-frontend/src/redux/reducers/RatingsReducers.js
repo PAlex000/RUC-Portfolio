@@ -15,6 +15,7 @@ import {
 
 const initialState = {
   ratings: [],
+  ratedMovies: [],
   loading: false,
   error: null,
 };
@@ -34,6 +35,7 @@ const ratingsReducer = (state = initialState, action) => {
       return {
         ...state,
         ratings: action.payload.ratings,
+        ratedMovies: action.payload.ratedMovies,
         loading: false,
       };
     case CREATE_RATING_SUCCESS:
