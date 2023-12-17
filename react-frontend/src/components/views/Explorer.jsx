@@ -1,6 +1,5 @@
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Navigation from "../layout/Navigation";
 import Col  from "react-bootstrap/Col";
 import home_alone from "../../assets/home_alone.jpg";
 import scream from "../../assets/scream.jpg";
@@ -239,7 +238,6 @@ const listing = {
 
 const Explorer = () => {
   return <div>
-    <Navigation />
     <Container fluid style={backgroundStyle}>
       <h1 style={titleBackground}>Featured movie</h1>
       <h3 style={titleBackground2}>The Hunger Games - The Ballad Of Songbirds And Snakes</h3>

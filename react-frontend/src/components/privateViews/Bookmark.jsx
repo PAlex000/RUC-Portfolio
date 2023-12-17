@@ -1,0 +1,47 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBookmarks } from "../../redux/actions/BookmarkActions";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import CardComp from "../common/CardComp";
+
+const backgroundContainer = {
+  backgroundColor: "#000",
+};
+
+const Bookmark = () => {
+  const dispatch = useDispatch();
+  const { bookmarks, bookmarkedMovies, loading, error } = useSelector(
+    (state) => {
+      return state.bookmarksReducer;
+    }
+  );
+
+  useEffect(() => {
+    dispatch(fetchBookmarks(1));
+  }, [dispatch]);
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!bookmarks) return <div>No bookmarks available</div>;
+
+  return (
+    <Container className="px-5" fluid style={backgroundContainer}>
+      <Row className="d-flex justify-content-center">
+        <Row className="mr-4"></Row>
+        {bookmarkedMovies.map((data) => (
+          <Col key={data.id} sm={6} md={4} lg={2} className="mb-4 mx-2">
+            <CardComp
+              title={data.akas.$values[0].title}
+              text={data.description}
+              image={data.poster}
+              rating={data.rating}
+            />
+          </Col>
+        ))}
+      </Row>
+    </Container>
+  );
+};
+
+export default Bookmark;

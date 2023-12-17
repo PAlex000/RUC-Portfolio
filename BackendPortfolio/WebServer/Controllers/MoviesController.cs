@@ -167,7 +167,8 @@ public class MoviesController : BaseController
             endYear = movie.endYear,
             poster = movie.poster,
             description = movie.description,
-            rating = movie.rating
+            rating = movie.rating,
+            akas = movie.akas
         };
     }
 }

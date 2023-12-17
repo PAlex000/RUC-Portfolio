@@ -1,34 +1,43 @@
-import Container from "react-bootstrap/Container";
+import { Carousel } from "react-bootstrap";
 
-
-const Header = ({ header }) => {
+const Header = ({ headers, style = {} }) => {
   const headerStyle = {
-    backgroundColor: "#000",
-    backgroundImage: `linear-gradient(0deg, 
-      rgba(0,0,0,1) 15%, rgba(0,0,0,0) 80%), url(${header}`,
-    backgroundSize: "cover",
-    width: "100%",
-    height: "800px",
-    backgroundPosition: "center",
-    position: "relative",
-  }
-  
-  const overlayTextStyle = {
-    position: "absolute",
-    fontSize: "45px",
-    color: "#FFA869",
-    fontWeight: "bold",
-    textAlign: "center",
-    top: 300,
-    width: "100%",
-    padding: "2rem",
-    textShadow: "2px 3px 5px black"
-  }
+    color: "white",
+    width: "80%",
+    height: "75%",
+    paddingTop: "10px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "0 auto",
+    ...style,
+  };
+
+  const imageStyle = {
+    width: "100%", // Full width of the carousel container
+    height: "auto", // Maintain aspect ratio
+  };
 
   return (
-    <Container fluid style={headerStyle}>
-      <div style={overlayTextStyle}>Welcome to Our Movie Collection!</div>
-    </Container>
+    <div style={headerStyle}>
+      <Carousel>
+        {headers.map((header, index) => (
+          <Carousel.Item key={index}>
+            <img
+              src={header.imageUrl}
+              style={imageStyle}
+              alt={`Header Image ${index}`}
+            />
+            {header.overlayText && (
+              <Carousel.Caption>
+                <h3>{header.overlayText.title}</h3>
+                <p>{header.overlayText.description}</p>
+              </Carousel.Caption>
+            )}
+          </Carousel.Item>
+        ))}
+      </Carousel>
+    </div>
   );
 };
 

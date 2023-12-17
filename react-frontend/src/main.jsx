@@ -1,28 +1,35 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
+import store from "./redux/store/store.js";
+import { Provider } from "react-redux";
 import App from "./App.jsx";
+import Home from "./components/views/Home.jsx";
+import Explorer from "./components/views/Explorer.jsx";
+import Details from "./components/views/Details.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProfileSettings from "./components/privateViews/ProfileSettings.jsx";
-import Explorer from "./components/views/Explorer.jsx";
+import Bookmark from "./components/privateViews/Bookmark.jsx";
+import RatingHistory from "./components/privateViews/RatingHistory.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    children: [
+      { path: "/", element: <Home /> },
+      { path: "explorer", element: <Explorer /> },
+      { path: "details", element: <Details /> },
+      { path: "ratinghistory", element: <RatingHistory /> },
+      { path: "bookmark", element: <Bookmark /> },
+      { path: "profile", element: <ProfileSettings />}
+    ],
   },
-  {
-    path: "/profilesettings",
-    element: <ProfileSettings/>
-  },
-  {
-    path: "/explore",
-    element: <Explorer />
-  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );

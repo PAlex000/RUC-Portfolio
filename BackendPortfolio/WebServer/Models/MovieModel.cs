@@ -1,4 +1,6 @@
-﻿namespace WebServer.Models
+﻿using DataLayer.Models;
+
+namespace WebServer.Models
 {
     public class MovieModel
     {
@@ -10,6 +12,6 @@
         public string poster { get; set; }
         public string description { get; set; }
         public int? rating { get; set; }
-        public List<AkasUpdateModel> akas { get; set; }
+        public List<TitleAkas> akas { get; set; }
     }
 }

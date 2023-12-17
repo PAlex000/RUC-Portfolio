@@ -1,119 +1,76 @@
-import Container from "react-bootstrap/Container";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovies } from "../../redux/actions/MovieActions";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CardComp from "../common/CardComp";
 import Dropdowns from "../common/Dropdown";
 import Header from "../layout/Header";
-import shawshank from "../../assets/shawshank.jpg";
-import departed from "../../assets/departed.jpg";
 import header from "../../assets/movieHeader.jpg";
-import CardSearch from "../common/CardSearch";
+// import CardSearch from "../common/CardSearch";
+import CustomContainer from "../common/CustomContainer.jsx";
 
-//Hard coded data as we create the skellet. useEffect with GET calls when we establish connection. Async/Await, fetch.
-const movieData = [
+const headerData = [
   {
-    id: 1,
-    title:
-      "Shawshank Redemption",
-    text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-    btnText: "Learn More",
-    imageUrl: shawshank,
+    imageUrl: header,
+    overlayText: {
+      title: "First Image Title",
+      description: "Description for the first image",
+    },
   },
   {
-    id: 2,
-    title: "Spiderman No Way Home",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: departed,
-  },
-  {
-    id: 3,
-    title: "The Avengers",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: shawshank,
-  },
-  {
-    id: 4,
-    title: "Spiderman Homecoming",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: departed,
-  },
-  {
-    id: 5,
-    title: "Remember the Titans",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: shawshank,
-  },
-  {
-    id: 6,
-    title: "Dangerous Minds",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: departed,
-  },
-  {
-    id: 7,
-    title: "Get Rich Or Die Tryin'",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: shawshank,
-  },
-  {
-    id: 8,
-    title: "American Gangster",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: departed,
+    imageUrl: header,
+    overlayText: {
+      title: "Second Image Title",
+      description: "Description for the second image",
+    },
   },
 ];
 
-const backgroundContainer = {
-  backgroundColor: "#000",
-};
-
 const Home = () => {
-  return (
-    <>
-    <Container className="px-5" fluid style={backgroundContainer}>
-      <Header header={header} />
-      <Row className="d-flex justify-content-center">
-        <Row className="mr-4">
-          <Col className="d-flex justify-content-end">
-            <Dropdowns />
-          </Col>
-        </Row>
-        {movieData.map((movie) => (
-          <Col key={movie.id} sm={6} md={4} lg={2} className="mb-4 mx-2">
-            <CardComp
-              title={movie.title}
-              text={movie.text}
-              btnText={movie.btnText}
-              image={movie.imageUrl}
-            />
-          </Col>
-        ))}
-      </Row>
-      </Container>
+  const dispatch = useDispatch();
+  const { movies, loading, error } = useSelector((state) => {
+    return state.moviesReducer;
+  });
 
-<Container>
-<Row className="p-2 mb-5 justify-content-center">
-          <h1 className="mt-5 px-4">Recently searched</h1>
-        {movieData.map((movie) => (
-          <Col key={movie.id} sm={6} md={4} lg={2} className="mb-4 mx-2">
-            <CardSearch
-              title={movie.title}
-              text={movie.text}
-              btnText={movie.btnText}
-              image={movie.imageUrl}
-            />
-          </Col>
-        ))}
+  useEffect(() => {
+    dispatch(fetchMovies());
+  }, [dispatch]);
+
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!movies) return <div>No movies available</div>;
+
+  return (
+    <CustomContainer fluid>
+      <Header headers={headerData} />
+      <div style={{ maxWidth: "75%", margin: "0 auto" }}>
+        <Row className="justify-content-between align-items-center">
+          <Row xs={12} md={3} lg={2} className="mb-4 d-none d-md-block">
+            <Dropdowns />
+          </Row>
+          {movies.map((movie) => (
+            <Col
+              key={movie.id}
+              xs={6}
+              sm={6}
+              md={5}
+              lg={2}
+              className="d-flex justify-content-center mb-4"
+            >
+              <CardComp
+                title={movie.type}
+                text={movie.description}
+                btnText="Learn More"
+                image={movie.poster}
+                rating={movie.rating}
+              />
+            </Col>
+          ))}
         </Row>
-    </Container>
-    </>
+      </div>
+    </CustomContainer>
   );
 };
 
