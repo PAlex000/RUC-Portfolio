@@ -4,6 +4,7 @@ import { Container, Row, Col, Modal, Button } from "react-bootstrap";
 import {
   StarFill,
   Star,
+  Plus,
   InfoCircleFill,
   PlayFill,
 } from "react-bootstrap-icons";
