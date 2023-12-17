@@ -10,8 +10,9 @@ import {
 } from "react-bootstrap-icons";
 import { useState } from "react";
 import "./CardComp.scss";
+import { addBookmark } from "../privateViews/Bookmark";
 
-const CardComp = ({ title, description, rating, image }) => {
+const CardComp = ({ titleId, title, description, rating, image, dispatch }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleModalShow = () => setShowModal(true);
@@ -58,7 +59,7 @@ const CardComp = ({ title, description, rating, image }) => {
           <Card.Title className="text-white" style={titleStyle}>
             {title}
           </Card.Title>
-          <WatchlistButton>
+          <WatchlistButton onClick={() => addBookmark(titleId, dispatch)}>
             <div className="d-flex justify-content-center align-items-center text-primary">
               <p className="text-primary"></p>
               <Plus style={{ fontSize: "24px" }} /> Watchlist

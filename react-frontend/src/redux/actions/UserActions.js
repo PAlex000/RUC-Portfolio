@@ -55,7 +55,6 @@ export const registerUser = (userData) => async (dispatch) => {
     });
 
     const data = await response.json();
-    console.log("Received data:", data);
     dispatch(registerUserSuccess(data.token));
   } catch (error) {
     console.log("Error in registerUser:", error);
@@ -70,9 +69,9 @@ export const LOGIN_USER_SUCCESS = "LOGIN_USER_SUCCESS";
 export const LOGIN_USER_FAILURE = "LOGIN_USER_FAILURE";
 
 export const loginUserRequest = () => ({ type: LOGIN_USER_REQUEST });
-export const loginUserSuccess = (token) => ({
+export const loginUserSuccess = (token, userId) => ({
   type: LOGIN_USER_SUCCESS,
-  payload: { token },
+  payload: { token, userId },
 });
 export const loginUserFailure = (error) => ({
   type: LOGIN_USER_FAILURE,
@@ -99,7 +98,13 @@ export const loginUser = (userData) => async (dispatch) => {
     }
 
     const data = await response.json();
-    dispatch(loginUserSuccess(data.token));
+
+    const getUserByEmailResponse = await fetch(
+      `/api/user/email/${userData.inputUsername}`
+    );
+    const user = await getUserByEmailResponse.json();
+
+    dispatch(loginUserSuccess(data.token, user.userId));
   } catch (error) {
     console.error("Error in loginUser:", error);
     dispatch(loginUserFailure(error.toString()));
@@ -126,6 +131,7 @@ export const logoutUser = () => (dispatch) => {
   dispatch(logoutUserRequest());
   try {
     localStorage.removeItem("userToken");
+    localStorage.removeItem("userId");
     dispatch(logoutUserSuccess());
   } catch (error) {
     dispatch(logoutUserFailure(error.toString()));

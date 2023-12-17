@@ -29,7 +29,6 @@ const headerData = [
 const Home = () => {
   const dispatch = useDispatch();
   const { movies, loading, error } = useSelector((state) => {
-    console.log(state);
     return state.moviesReducer;
   });
 
@@ -37,12 +36,9 @@ const Home = () => {
     dispatch(fetchMovies());
   }, [dispatch]);
 
-  console.log("Movies:", movies);
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!movies) return <div>No movies available</div>;
-
   return (
     <CustomContainer fluid>
       <Header headers={headerData} />
@@ -61,6 +57,7 @@ const Home = () => {
               className="d-flex justify-content-center mb-4"
             >
               <CardComp
+                titleId={movie.titleId}
                 title={
                   movie.akas && movie.akas.length > 0
                     ? movie.akas[0].title
@@ -70,6 +67,7 @@ const Home = () => {
                 btnText="Learn More"
                 image={movie.poster}
                 rating={movie.rating}
+                dispatch={dispatch}
               />
             </Col>
           ))}

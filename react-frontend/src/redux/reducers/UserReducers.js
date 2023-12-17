@@ -49,6 +49,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload.token,
+        userId: action.payload.userId,
         loading: false,
       };
     case UPDATE_USER_EMAIL_SUCCESS:
@@ -79,10 +80,10 @@ const userReducer = (state = initialState, action) => {
         error: null,
       };
     case LOGOUT_USER_SUCCESS:
-      console.log("logout success");
       return {
         ...state,
         token: null,
+        userId: null,
         loading: false,
       };
     case LOGOUT_USER_FAILURE:

@@ -44,6 +44,16 @@ public class UserController : ControllerBase
         }
         return Ok(user);
     }
+    [HttpGet("email/{email}")]
+    public ActionResult<User> GetUserByEmail(string email)
+    {
+        var user = _userService.GetUserByEmail(email);
+        if (user == null)
+        {
+            return NotFound($"User with ID {email} not found");
+        }
+        return Ok(user);
+    }
 
     [HttpPost("register")]
     public IActionResult Register(CreateUserModel userRequest)
