@@ -18,7 +18,7 @@ public class BookmarksController : ControllerBase
         _dataService = dataService;
         _linkGenerator = linkGenerator;
     }
-    [HttpGet]
+    [HttpGet(Name = nameof(GetBookmark))]
     public IActionResult GetBookmark()
     {
         IEnumerable<BookmarkModel> result = _dataService
@@ -64,7 +64,6 @@ public class BookmarksController : ControllerBase
     {
         return new BookmarkModel
         {
-            //Url = $"http://localhost:5001/api//{bookmark.Id}",
             url = GetUrl(nameof(GetBookmark), new { bookmark.Id }),
             titleId = bookmark.titleId,
             userId = bookmark.userId,

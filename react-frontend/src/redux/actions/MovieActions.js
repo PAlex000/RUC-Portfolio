@@ -31,7 +31,6 @@ export const fetchMovies = (page = 0, pageSize = 12) => {
         var Id = data.items.$values[i].url.split("/");
         data.items.$values[i].titleId = Id[5];
       }
-
       dispatch(fetchMoviesSuccess(data.items.$values, data.total)); // items: {$id, $values[id, url, type, etc.]}
     } catch (error) {
       dispatch(fetchMoviesFailure(error.toString()));
@@ -54,7 +53,7 @@ export const fetchMovieByIdRequest = () => ({
 
 export const fetchMovieByIdSuccess = (movies) => ({
   type: FETCH_MOVIE_BY_ID_SUCCESS,
-  payload: { movies},
+  payload: { movies },
 });
 
 export const fetchMovieByIdFailure = (error) => ({
@@ -63,7 +62,7 @@ export const fetchMovieByIdFailure = (error) => ({
 });
 
 // Thunk Action
-export const fetchMovieById = (movieId = 'tt0112130') => {
+export const fetchMovieById = (movieId = "tt0112130") => {
   return async (dispatch) => {
     dispatch(fetchMovieByIdRequest());
     try {
@@ -75,8 +74,6 @@ export const fetchMovieById = (movieId = 'tt0112130') => {
     }
   };
 };
-
-
 
 // -- //
 

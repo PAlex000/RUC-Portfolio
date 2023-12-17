@@ -27,6 +27,7 @@ export const fetchBookmarks = (userId) => async (dispatch) => {
     for (const titleId of arrayOfTitleIds) {
       const temporaryResponse = await fetch(`/api/movie/${titleId}`);
       const temporaryData = await temporaryResponse.json();
+      temporaryData.titleId = titleId;
       bookmarkedMovies.push(temporaryData);
     }
     dispatch(fetchBookmarksSuccess(data.$values, bookmarkedMovies, data.total));
@@ -89,13 +90,25 @@ export const deleteBookmarkFailure = (error) => ({
   payload: { error },
 });
 
-export const deleteBookmark = (bookmarkId) => async (dispatch) => {
+export const deleteBookmark = (titleId, userId) => async (dispatch) => {
+  var bookmarkId;
+  const response = await fetch(`/api/bookmark/${userId}`);
+  const data = await response.json();
+  if (data.$values) {
+    data.$values.forEach((movie) => {
+      if (movie.titleId == titleId) {
+        bookmarkId = movie.url.split("=")[1];
+      }
+    });
+  }
+
   dispatch(deleteBookmarkRequest(bookmarkId));
   try {
     const response = await fetch(`/api/bookmark/${bookmarkId}`, {
       method: "DELETE",
     });
     if (response.ok) {
+      console.log("Bookmark deleted");
       dispatch(deleteBookmarkSuccess(bookmarkId));
     } else {
       throw new Error("Failed to delete bookmark");
