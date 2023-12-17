@@ -60,10 +60,9 @@ const Details = () => {
           {}
         </Row>
       </div>
-    </CustomContainer>
-  );
+    </div>
+  </section>
+);
 };
-
 export default Details;
-
 
