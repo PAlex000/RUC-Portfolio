@@ -17,7 +17,7 @@ const CardCompBookmark = ({
   description,
   rating,
   image,
-  dispatch,
+  dispatchBookmark,
 }) => {
   const [showModal, setShowModal] = useState(false);
 
@@ -65,7 +65,7 @@ const CardCompBookmark = ({
           <Card.Title className="text-white" style={titleStyle}>
             {title}
           </Card.Title>
-          <WatchlistButton onClick={() => removeBookmark(titleId, dispatch)}>
+          <WatchlistButton onClick={() => removeBookmark(titleId, dispatchBookmark)}>
             <div className="d-flex justify-content-center align-items-center text-primary">
               <p className="text-primary"></p>
               Remove

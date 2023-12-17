@@ -43,7 +43,7 @@ const Bookmark = () => {
               text={data.description}
               image={data.poster}
               rating={data.rating}
-              dispatch={dispatch}
+              dispatchBookmark={dispatch}
             />
           </Col>
         ))}
@@ -52,9 +52,9 @@ const Bookmark = () => {
   );
 };
 
-export const addBookmark = (titleId, dispatch) => {
+export const addBookmark = (titleId, dispatchMovie) => {
   console.log("Successfully added Bookmark");
-  dispatch(
+  dispatchMovie(
     createBookmark({
       userId: localStorage.getItem("userId"),
       titleId: titleId,
@@ -62,9 +62,9 @@ export const addBookmark = (titleId, dispatch) => {
     })
   );
 };
-export const removeBookmark = (titleId, dispatch) => {
+export const removeBookmark = (titleId, dispatchBookmark) => {
   console.log("Successfully removed Bookmark");
-  dispatch(deleteBookmark(titleId, localStorage.getItem("userId")));
+  dispatchBookmark(deleteBookmark(titleId, localStorage.getItem("userId")));
   window.location.reload(true);
 };
 export default Bookmark;

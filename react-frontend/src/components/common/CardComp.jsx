@@ -12,7 +12,7 @@ import { useState } from "react";
 import "./CardComp.scss";
 import { addBookmark } from "../privateViews/Bookmark";
 
-const CardComp = ({ titleId, title, description, rating, image, dispatch }) => {
+const CardComp = ({ titleId, title, description, rating, image, dispatchMovie }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleModalShow = () => setShowModal(true);
@@ -59,7 +59,7 @@ const CardComp = ({ titleId, title, description, rating, image, dispatch }) => {
           <Card.Title className="text-white" style={titleStyle}>
             {title}
           </Card.Title>
-          <WatchlistButton onClick={() => addBookmark(titleId, dispatch)}>
+          <WatchlistButton onClick={() => addBookmark(titleId, dispatchMovie)}>
             <div className="d-flex justify-content-center align-items-center text-primary">
               <p className="text-primary"></p>
               <Plus style={{ fontSize: "24px" }} /> Watchlist
