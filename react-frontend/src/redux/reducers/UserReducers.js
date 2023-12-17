@@ -83,6 +83,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         token: null,
+        userId: null,
         loading: false,
       };
     case LOGOUT_USER_FAILURE:
