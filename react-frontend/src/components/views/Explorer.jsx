@@ -9,18 +9,19 @@ import CardComp from "../common/CardComp";
 import hunger_games_cropped from "../../assets/poster_movie_cropped.jpg";
 import Button from "react-bootstrap/Button";
 
+
 const movieData = [
   {
     id: 1,
     title:
       "Scream",
-    text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
+    text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
     imageUrl: scream,
   },
   {
     id: 2,
-    title: "Spiderman No Way Home",
+    title: "Departed",
     text: "A different set of text for the second card, explaining something else.",
     btnText: "Learn More",
     imageUrl: departed,
@@ -136,7 +137,7 @@ const backgroundStyle = {
 const titleBackground = {
   position: "absolute",
   fontSize: "45px",
-  color: "#FFA869",
+  color: "#DEB522",
   fontWeight: "bold",
   left: 30,
   top: 10,
@@ -189,7 +190,6 @@ const buttonsCol = {
   margin: "18px",
   fontSize: "22px",
   color: "#FFF",
-  // backgroundColor: "#E27F38",
   fontWeight: "bold",
   padding: "0.5rem 1rem",
   border: "none",
@@ -207,7 +207,7 @@ const buttonsColAltern = {
   backgroundColor: "transparent",
   fontWeight: "bold",
   padding: "0.5rem 0.75rem",
-  border: "4px solid #E27F38", 
+  border: "4px solid #DEB522", 
   textShadow: "1px 3px 5px black",
   borderRadius: "10px"
 }
@@ -221,7 +221,8 @@ const titleStyle = {
   fontWeight: "bold",
   fontSize: "35px",
   textAlign: "center",
-  textDecoration: "underline",
+  paddingBottom: "2.5rem",
+  borderBottom: "2px solid #FFF"
 }
 
 const list = {
@@ -232,8 +233,12 @@ const list = {
 
 const listing = {
   display: "inline",
-  padding: "15px",
-  fontSize: "20px"
+  padding: "10px 25px",
+  fontSize: "19px",
+  borderTop: "none",
+  borderBottom: "none",
+  borderLeft: "3px solid #DEB522",
+
 }
 
 const Explorer = () => {
@@ -267,11 +272,11 @@ const Explorer = () => {
           <li style={listing}>Drama</li>
           <li style={listing}>Family</li>
           <li style={listing}>Fantasy</li>
-        </ul>
-        <ul className="d-flex flex-row justify-content-center" style={list}>
           <li style={listing}>Film-Noir</li>
           <li style={listing}>Game-Show</li>
           <li style={listing}>History</li>
+        </ul>
+        <ul className="d-flex flex-row justify-content-center" style={list}>
           <li style={listing}>Horror</li>
           <li style={listing}>Music</li>
           <li style={listing}>Musical</li>
@@ -281,8 +286,6 @@ const Explorer = () => {
           <li style={listing}>Romance</li>
           <li style={listing}>Sci-fi</li>
           <li style={listing}>Short</li>
-        </ul>
-        <ul className="d-flex flex-row justify-content-center" style={list}>
           <li style={listing}>Sport</li>
           <li style={listing}>Thriller</li>
           <li style={listing}>Talk-Show</li>
@@ -305,6 +308,7 @@ const Explorer = () => {
 
       </Row>
     </Container>
+
   </div>;
 };
 

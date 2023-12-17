@@ -10,18 +10,6 @@ import {
 const Footer = () => {
     return (
         <Box>
-            <h1
-
-
-                style={{
-                    color: "yellow",
-                    textAlign: "center",
-                    marginTop: "10px",
-                }}
-            >
-              
-                Sign in for more access!
-            </h1>
             <FooterContainer>
                 <Row>
                     <Column>
