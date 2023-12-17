@@ -19,9 +19,12 @@ export const fetchBookmarks = (userId) => async (dispatch) => {
     const data = await response.json();
     var arrayOfTitleIds = [];
     var bookmarkedMovies = [];
-    data.$values.forEach(movie => {
-      arrayOfTitleIds.push(movie.titleId);
-    });
+    if (data.$values) {
+      data.$values.forEach((movie) => {
+        arrayOfTitleIds.push(movie.titleId);
+      });
+    }
+
     for (const titleId of arrayOfTitleIds) {
       const temporaryResponse = await fetch(`/api/movie/${titleId}`);
       const temporaryData = await temporaryResponse.json();
@@ -32,7 +35,6 @@ export const fetchBookmarks = (userId) => async (dispatch) => {
     dispatch(fetchBookmarksFailure(error.toString()));
   }
 };
-
 
 //--//
 
