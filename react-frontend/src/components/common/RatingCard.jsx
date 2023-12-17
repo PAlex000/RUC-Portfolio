@@ -1,8 +1,18 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { StarFill } from "react-bootstrap-icons";
+import { removeRating } from "../privateViews/RatingHistory";
 
-const RatingCard = ({ title, grade, image, reviewText, movieRating, rateDate }) => {
+const RatingCard = ({
+  title,
+  grade,
+  image,
+  reviewText,
+  movieRating,
+  rateDate,
+  titleId,
+  dispatchRating,
+}) => {
   const cardStyle = {
     backgroundColor: "#313131",
     color: "white",
@@ -53,7 +63,7 @@ const RatingCard = ({ title, grade, image, reviewText, movieRating, rateDate }) 
     position: "absolute",
     top: "40%",
     width: "80%",
-    left: "20%"
+    left: "20%",
   };
   const rateDateStyle = {
     lineHeight: "1rem",
@@ -61,7 +71,7 @@ const RatingCard = ({ title, grade, image, reviewText, movieRating, rateDate }) 
     position: "absolute",
     top: "60%",
     width: "80%",
-    left: "20%"
+    left: "20%",
   };
 
   const cardFooterStyle = {
@@ -90,30 +100,23 @@ const RatingCard = ({ title, grade, image, reviewText, movieRating, rateDate }) 
           <Card.Text className="d-flex align-items-center">
             Movie rating: {movieRating}
             <div style={{ paddingLeft: "0.5rem" }}>
-              <StarFill></StarFill>
-              <StarFill></StarFill>
-              <StarFill></StarFill>
-              <StarFill></StarFill>
-              <StarFill></StarFill>
-              <StarFill></StarFill>
-              <StarFill></StarFill>
-              <StarFill></StarFill>
-              <StarFill></StarFill>
-              <StarFill></StarFill>
+              <StarFill color="yellow"></StarFill>
             </div>
           </Card.Text>
         </div>
         <div>
-        <Card.Text style={rateDateStyle} className="p-2 mt-2">
-          RateDate: {rateDate}
-        </Card.Text>
+          <Card.Text style={rateDateStyle} className="p-2 mt-2">
+            RateDate: {rateDate}
+          </Card.Text>
         </div>
         <div
           style={cardFooterStyle}
           className="d-flex justify-content-center p-2"
         >
           <Button style={{ marginRight: "1em" }}>Edit</Button>
-          <Button>Delete</Button>
+          <Button onClick={() => removeRating(titleId, dispatchRating)}>
+            Delete
+          </Button>
         </div>
       </Card.Body>
     </Card>

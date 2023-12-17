@@ -2,7 +2,10 @@ import { Container, Row } from "react-bootstrap";
 import RatingCard from "../common/RatingCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchRatingHistory } from "../../redux/actions/RatingActions";
+import {
+  deleteRating,
+  fetchRatingHistory,
+} from "../../redux/actions/RatingActions";
 
 const backgroundContainer = {
   backgroundColor: "#000",
@@ -22,19 +25,25 @@ const RatingHistory = () => {
   return (
     <Container className="px-5" fluid style={backgroundContainer}>
       {ratedMovies.map((rating) => (
-        <Row key={rating.titleid}>
+        <Row key={rating.titleId}>
           <RatingCard
-            title={rating.titleid}
+            title={rating.akas.$values[0].title}
             grade={rating.grade}
             reviewText={rating.reviewText}
             movieRating={rating.rating}
             rateDate={rating.rateDate}
             image={rating.poster}
+            dispatchRating={dispatch}
+            titleId={rating.titleId}
           />
         </Row>
       ))}
     </Container>
   );
 };
-
+export const removeRating = (titleId, dispatchRating) => {
+  console.log("Successfully removed Rating");
+  dispatchRating(deleteRating(titleId, localStorage.getItem("userId")));
+  window.location.reload(true);
+};
 export default RatingHistory;

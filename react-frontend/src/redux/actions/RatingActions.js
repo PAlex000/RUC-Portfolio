@@ -33,10 +33,12 @@ export const fetchRatingHistory = (userId) => async (dispatch) => {
       ratings.$values.forEach((rating) => {
         if (rating.titleId == titleId) {
           temporaryData.grade = rating.grade;
-          (temporaryData.rateDate = rating.rateDate),
-            (temporaryData.reviewText = rating.reviewText);
+          temporaryData.rateDate = rating.rateDate;
+          temporaryData.reviewText = rating.reviewText;
         }
       });
+      console.log(ratings);
+      console.log(temporaryData);
       ratedMovies.push(temporaryData);
     }
     console.log(ratedMovies);
@@ -118,13 +120,13 @@ export const DELETE_RATING_REQUEST = "DELETE_RATING_REQUEST";
 export const DELETE_RATING_SUCCESS = "DELETE_RATING_SUCCESS";
 export const DELETE_RATING_FAILURE = "DELETE_RATING_FAILURE";
 
-export const deleteRatingRequest = (ratingId) => ({
+export const deleteRatingRequest = (titleId, userId) => ({
   type: DELETE_RATING_REQUEST,
-  payload: { ratingId },
+  payload: { titleId, userId },
 });
-export const deleteRatingSuccess = (ratingId) => ({
+export const deleteRatingSuccess = (titleId, userId) => ({
   type: DELETE_RATING_SUCCESS,
-  payload: { ratingId },
+  payload: { titleId, userId },
 });
 export const deleteRatingFailure = (error) => ({
   type: DELETE_RATING_FAILURE,
@@ -132,13 +134,13 @@ export const deleteRatingFailure = (error) => ({
 });
 
 export const deleteRating = (titleId, userId) => async (dispatch) => {
-  dispatch(deleteRatingRequest(`${titleId}-${userId}`));
+  dispatch(deleteRatingRequest(titleId, userId));
   try {
     const response = await fetch(`/api/ratings/${titleId}/${userId}`, {
       method: "DELETE",
     });
     if (response.ok) {
-      dispatch(deleteRatingSuccess(`${titleId}-${userId}`));
+      dispatch(deleteRatingSuccess(titleId, userId));
     } else {
       throw new Error("Failed to delete rating");
     }
