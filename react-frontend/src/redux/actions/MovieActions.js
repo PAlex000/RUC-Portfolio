@@ -47,14 +47,14 @@ export const FETCH_MOVIE_BY_ID_SUCCESS = "FETCH_MOVIE_BY_ID_SUCCESS";
 export const FETCH_MOVIE_BY_ID_FAILURE = "FETCH_MOVIE_BY_ID_FAILURE";
 
 //Reg Action
-export const fetchMovieByIdRequest = (movieId) => ({
+//Reg Action
+export const fetchMovieByIdRequest = () => ({
   type: FETCH_MOVIE_BY_ID_REQUEST,
-  payload: { movieId },
 });
 
-export const fetchMovieByIdSuccess = (movie) => ({
+export const fetchMovieByIdSuccess = (movies) => ({
   type: FETCH_MOVIE_BY_ID_SUCCESS,
-  payload: { movie },
+  payload: { movies},
 });
 
 export const fetchMovieByIdFailure = (error) => ({
@@ -63,9 +63,9 @@ export const fetchMovieByIdFailure = (error) => ({
 });
 
 // Thunk Action
-export const fetchMovieById = (movieId) => {
+export const fetchMovieById = (movieId = 'tt0112130') => {
   return async (dispatch) => {
-    dispatch(fetchMovieByIdRequest(movieId));
+    dispatch(fetchMovieByIdRequest());
     try {
       const response = await fetch(`/api/movie/${movieId}`);
       const data = await response.json();
@@ -75,6 +75,8 @@ export const fetchMovieById = (movieId) => {
     }
   };
 };
+
+
 
 // -- //
 
