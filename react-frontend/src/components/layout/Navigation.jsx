@@ -39,18 +39,6 @@ const Navigation = () => {
             />
           </Form>
           <Nav className="ms-auto">
-            <Link to="/explorer" className="nav-link">
-              Explorer
-            </Link>
-            <Link to="/details" className="nav-link">
-              Details
-            </Link>
-            <Link to="/bookmark" className="nav-link">
-              Bookmark
-            </Link>
-            <Link to="/ratinghistory" className="nav-link">
-              RatingHistory
-            </Link>
             <Link to="/login" className="nav-link">
               Sign in
             </Link>

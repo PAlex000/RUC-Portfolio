@@ -168,7 +168,18 @@ public class MoviesController : BaseController
             poster = movie.poster,
             description = movie.description,
             rating = movie.rating,
-            akas = movie.akas
+            akas = movie.akas?.Select(aka => new AkasUpdateModel
+            {
+                Id = aka.Id,
+                ordering = aka.ordering,
+                title = aka.title,
+                region = aka.region,
+                attribute = aka.attribute,
+                type = aka.type,
+                language = aka.language,
+                isOriginalTitle = aka.isOriginalTitle
+            }).ToList() ?? new List<AkasUpdateModel>()
         };
     }
+
 }
