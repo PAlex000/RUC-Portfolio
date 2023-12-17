@@ -24,7 +24,6 @@ export const fetchBookmarks = (userId) => async (dispatch) => {
         arrayOfTitleIds.push(movie.titleId);
       });
     }
-
     for (const titleId of arrayOfTitleIds) {
       const temporaryResponse = await fetch(`/api/movie/${titleId}`);
       const temporaryData = await temporaryResponse.json();
@@ -58,7 +57,11 @@ export const createBookmark = (bookmarkData) => async (dispatch) => {
     const response = await fetch("/api/bookmark", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(bookmarkData),
+      body: JSON.stringify({
+        titleId: bookmarkData.titleId,
+        userId: localStorage.getItem("userId"),
+        status: bookmarkData.status,
+      }),
     });
     const bookmark = await response.json();
     dispatch(createBookmarkSuccess(bookmark));

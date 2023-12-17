@@ -29,6 +29,7 @@ const Explorer = () => {
               className="d-flex justify-content-center mb-4"
             >
               <CardComp
+                titleId={movie.titleId}
                 title={movie.title}
                 text={movie.text}
                 btnText={movie.btnText}
