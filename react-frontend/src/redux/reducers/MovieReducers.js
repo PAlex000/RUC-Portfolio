@@ -66,7 +66,6 @@ const moviesReducer = (state = initialState, action) => {
         movies: action.payload.movies,
         total: action.payload.total,
         loading: false,
-    
       };
     case SEARCH_MOVIES_SUCCESS:
       return {

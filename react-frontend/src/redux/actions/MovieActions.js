@@ -1,4 +1,3 @@
-// Action Types | Fetch Movies
 export const FETCH_MOVIES_REQUEST = "FETCH_MOVIES_REQUEST";
 export const FETCH_MOVIES_SUCCESS = "FETCH_MOVIES_SUCCESS";
 export const FETCH_MOVIES_FAILURE = "FETCH_MOVIES_FAILURE";
@@ -66,7 +65,9 @@ export const fetchMovieById = (movieId = "tt0112130") => {
   return async (dispatch) => {
     dispatch(fetchMovieByIdRequest());
     try {
-      const response = await fetch(`/api/movie/${movieId}`);
+      const response = await fetch(
+        `/api/movie/${movieId}`
+      );
       const data = await response.json();
       dispatch(fetchMovieByIdSuccess(data, data.total));
     } catch (error) {
@@ -80,19 +81,18 @@ export const fetchMovieById = (movieId = "tt0112130") => {
 // -- //
 
 // Action Types
-export const FETCH_SIMILAR_MOVIES_REQUEST = "FETCH_SIMILAR_MOVIES_REQUEST";
+export const FETCH_SIMILAR_MOVIES_REQUEST  = "FETCH_SIMILAR_MOVIES_REQUEST ";
 export const FETCH_SIMILAR_MOVIES_SUCCESS = "FETCH_SIMILAR_MOVIES_SUCCESS";
 export const FETCH_SIMILAR_MOVIES_FAILURE = "FETCH_SIMILAR_MOVIES_FAILURE";
 
 //Reg Action
 export const fetchSimilarMoviesRequest = () => ({
   type: FETCH_SIMILAR_MOVIES_REQUEST,
-  // payload: { movieId },
 });
 
 export const fetchSimilarMoviesSuccess = (movies) => ({
   type: FETCH_SIMILAR_MOVIES_SUCCESS,
-  payload: { movies },
+  payload: { movies},
 });
 
 export const fetchSimilarMoviesFailure = (error) => ({
@@ -100,19 +100,23 @@ export const fetchSimilarMoviesFailure = (error) => ({
   payload: { error },
 });
 
-//Thunk Action
-export const fetchSimilarMovies = (movieId= 'tt0112130') => {
+// Thunk Action
+export const fetchSimilarMovies = (movieId = 'tt0112130') => {
   return async (dispatch) => {
+    dispatch(fetchSimilarMoviesRequest());
     try {
-      dispatch(fetchSimilarMoviesRequest());
-      const response = await fetch(`/api/movie/${movieId}/similar`);
+      const response = await fetch(
+        `/api/movie/${movieId}/similar`
+      );
       const data = await response.json();
-      dispatch(fetchSimilarMoviesSuccess(data));
+      dispatch(fetchSimilarMoviesSuccess(data)); // items: {$id, $values[id, url, type, etc.]}
     } catch (error) {
       dispatch(fetchSimilarMoviesFailure(error.toString()));
     }
   };
 };
+
+
 
 //Types
 
