@@ -4,15 +4,21 @@ import { Container, Row, Col, Modal, Button } from "react-bootstrap";
 import {
   StarFill,
   Star,
-  Plus,
   InfoCircleFill,
   PlayFill,
 } from "react-bootstrap-icons";
 import { useState } from "react";
 import "./CardComp.scss";
-import { addBookmark } from "../privateViews/Bookmark";
+import { removeBookmark } from "../privateViews/Bookmark";
 
-const CardComp = ({ titleId, title, description, rating, image, dispatchMovie }) => {
+const CardCompBookmark = ({
+  titleId,
+  title,
+  description,
+  rating,
+  image,
+  dispatchBookmark,
+}) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleModalShow = () => setShowModal(true);
@@ -59,10 +65,10 @@ const CardComp = ({ titleId, title, description, rating, image, dispatchMovie })
           <Card.Title className="text-white" style={titleStyle}>
             {title}
           </Card.Title>
-          <WatchlistButton onClick={() => addBookmark(titleId, dispatchMovie)}>
+          <WatchlistButton onClick={() => removeBookmark(titleId, dispatchBookmark)}>
             <div className="d-flex justify-content-center align-items-center text-primary">
               <p className="text-primary"></p>
-              <Plus style={{ fontSize: "24px" }} /> Watchlist
+              Remove
             </div>
           </WatchlistButton>
           <Container>
@@ -95,4 +101,4 @@ const CardComp = ({ titleId, title, description, rating, image, dispatchMovie })
   );
 };
 
-export default CardComp;
+export default CardCompBookmark;
