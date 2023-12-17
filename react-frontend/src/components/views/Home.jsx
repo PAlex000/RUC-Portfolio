@@ -29,6 +29,7 @@ const headerData = [
 const Home = () => {
   const dispatch = useDispatch();
   const { movies, loading, error } = useSelector((state) => {
+    console.log(state);
     return state.moviesReducer;
   });
 
@@ -36,6 +37,7 @@ const Home = () => {
     dispatch(fetchMovies());
   }, [dispatch]);
 
+  console.log("Movies:", movies);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -59,8 +61,12 @@ const Home = () => {
               className="d-flex justify-content-center mb-4"
             >
               <CardComp
-                title={movie.type}
-                text={movie.description}
+                title={
+                  movie.akas && movie.akas.length > 0
+                    ? movie.akas[0].title
+                    : "Default Title"
+                }
+                description={movie.description}
                 btnText="Learn More"
                 image={movie.poster}
                 rating={movie.rating}
