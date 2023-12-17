@@ -26,9 +26,11 @@ export const fetchMovies = (page, pageSize) => {
         `/api/movie?page=${page}&pageSize=${pageSize}`
       );
       const data = await response.json();
-      for (var i = 0; i < data.items.$values.length; i++) {
-        var Id = data.items.$values[i].url.split("/");
-        data.items.$values[i].titleId = Id[5];
+      if (data.items && data.items.$values) {
+        for (var i = 0; i < data.items.$values.length; i++) {
+          var Id = data.items.$values[i].url.split("/");
+          data.items.$values[i].titleId = Id[5];
+        }
       }
       dispatch(fetchMoviesSuccess(data.items.$values, data.total)); // items: {$id, $values[id, url, type, etc.]}
     } catch (error) {

@@ -7,6 +7,7 @@ import { Button } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import CardComp from "../common/CardComp";
 import Dropdowns from "../common/Dropdown";
+import "./../common/Button.scss";
 
 const h2Style = {
   marginTop: "1em",
@@ -14,27 +15,25 @@ const h2Style = {
   textAlign: "center",
 };
 
-const buttonContainer = {
-  display: "flex",
+const marginStyle = {
+  marginTop: "14.9px",
 };
 
 const Explorer = () => {
   const [currentPage, setCurrentPage] = useState(0);
-  const pageSize = 10;
+  const pageSize = 16;
   const dispatch = useDispatch();
   const { movies, loading, error } = useSelector((state) => {
     return state.moviesReducer;
   });
 
-  const fetchNextPage = () => {
-    const nextPage = currentPage + 1;
-    dispatch(fetchMovies(nextPage, pageSize));
-    setCurrentPage(nextPage);
+  const handleRefresh = () => {
+    setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
   };
 
   useEffect(() => {
-    dispatch(fetchMovies());
-  }, [dispatch]);
+    dispatch(fetchMovies(currentPage, pageSize));
+  }, [dispatch, currentPage, pageSize]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -56,9 +55,13 @@ const Explorer = () => {
             lg={3}
             className="mb-4 d-none d-md-block"
           >
-            <div style={buttonContainer}>
-              <Dropdowns className="ml-4" />
-              <Button onClick={fetchNextPage}>Refresh</Button>
+            <div className="d-flex align-items-center" style={{ gap: "10px" }}>
+              <Dropdowns />
+              <div style={marginStyle}>
+                <Button onClick={handleRefresh} className="blackBtn mt-2">
+                  Refresh
+                </Button>
+              </div>
             </div>
           </Row>
           {movies.map((movie) => (
