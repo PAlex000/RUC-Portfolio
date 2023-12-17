@@ -25,18 +25,25 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       {
-        path: "explorer",
+        path: "bookmark",
         element: (
           <PrivateRoute>
-            <Explorer />
+            <Bookmark />
           </PrivateRoute>
         ),
       },
       { path: "details", element: <Details /> },
       { path: "login", element: <Login /> },
       { path: "signup", element: <Signup /> },
-      { path: "ratinghistory", element: <RatingHistory /> },
-      { path: "bookmark", element: <Bookmark  /> },
+      {
+        path: "ratinghistory",
+        element: (
+          <PrivateRoute>
+            <RatingHistory />
+          </PrivateRoute>
+        ),
+      },
+      { path: "explorer", element: <Explorer /> },
     ],
   },
 ]);

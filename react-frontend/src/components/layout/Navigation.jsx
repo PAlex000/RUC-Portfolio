@@ -5,12 +5,14 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import NavigationOpen from "./NavigationToggled";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { List } from "react-bootstrap-icons";
 import "./Navigation.scss";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const isLoggedIn = useSelector((state) => !!state.userReducer.token);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -38,11 +40,14 @@ const Navigation = () => {
               aria-label="Search"
             />
           </Form>
-          <Nav className="ms-auto">
-            <Link to="/login" className="nav-link">
-              Sign in
-            </Link>
-          </Nav>
+
+          {!isLoggedIn && (
+            <Nav className="ms-auto">
+              <Link to="/login" className="nav-link">
+                Sign in
+              </Link>
+            </Nav>
+          )}
         </Container>
       </Navbar>
       <NavigationOpen isOpen={isOpen} onChange={setIsOpen} />
