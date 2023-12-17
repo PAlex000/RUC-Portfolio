@@ -5,21 +5,42 @@ export const FETCH_RATING_HISTORY_FAILURE = "FETCH_RATING_HISTORY_FAILURE";
 export const fetchRatingHistoryRequest = () => ({
   type: FETCH_RATING_HISTORY_REQUEST,
 });
-export const fetchRatingHistorySuccess = (ratings) => ({
+export const fetchRatingHistorySuccess = (ratings, ratedMovies) => ({
   type: FETCH_RATING_HISTORY_SUCCESS,
-  payload: { ratings },
+  payload: { ratings, ratedMovies },
 });
 export const fetchRatingHistoryFailure = (error) => ({
   type: FETCH_RATING_HISTORY_FAILURE,
   payload: { error },
 });
 
-export const fetchRatingHistory = () => async (dispatch) => {
+export const fetchRatingHistory = (userId) => async (dispatch) => {
   dispatch(fetchRatingHistoryRequest());
   try {
-    const response = await fetch("/api/ratings");
-    const ratings = await response.json();
-    dispatch(fetchRatingHistorySuccess(ratings));
+    const ratingResponse = await fetch(`/api/ratings/user/${userId}`);
+    const ratings = await ratingResponse.json();
+    var arrayOfTitleIds = [];
+    var ratedMovies = [];
+    if (ratings.$values) {
+      ratings.$values.forEach((movie) => {
+        arrayOfTitleIds.push(movie.titleId);
+      });
+    }
+    for (const titleId of arrayOfTitleIds) {
+      const temporaryResponse = await fetch(`/api/movie/${titleId}`);
+      const temporaryData = await temporaryResponse.json();
+      temporaryData.titleId = titleId;
+      ratings.$values.forEach((rating) => {
+        if (rating.titleId == titleId) {
+          temporaryData.grade = rating.grade;
+          (temporaryData.rateDate = rating.rateDate),
+            (temporaryData.reviewText = rating.reviewText);
+        }
+      });
+      ratedMovies.push(temporaryData);
+    }
+    console.log(ratedMovies);
+    dispatch(fetchRatingHistorySuccess(ratings.$values, ratedMovies));
   } catch (error) {
     dispatch(fetchRatingHistoryFailure(error.toString()));
   }

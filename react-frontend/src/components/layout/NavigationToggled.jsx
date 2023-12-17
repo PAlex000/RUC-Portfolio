@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import "./NavigationToggle.scss";
 import { bookmark } from "../../utils/helperFunctions/Bookmark";
+import { ratinghistory } from "../../utils/helperFunctions/Rating";
 
 const NavigationOpen = ({ isOpen, onChange }) => {
   const navigate = useNavigate();
@@ -22,7 +23,10 @@ const NavigationOpen = ({ isOpen, onChange }) => {
     bookmark(navigate);
     onChange(false);
   };
-
+  const handleRatinghistory = () => {
+    ratinghistory(navigate);
+    onChange(false);
+  };
   useEffect(() => {
     const body = document.body;
     const scrollBarWidth =
@@ -58,6 +62,11 @@ const NavigationOpen = ({ isOpen, onChange }) => {
         {isLoggedIn && (
           <div className="bookmark" onClick={handleBookmark}>
             Bookmark
+          </div>
+        )}
+        {isLoggedIn && (
+          <div className="rating" onClick={handleRatinghistory}>
+            Ratinghistory
           </div>
         )}
         {isLoggedIn && (
