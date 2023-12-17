@@ -7,15 +7,19 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import "./NavigationToggle.scss";
+import { bookmark } from "../../utils/helperFunctions/Bookmark";
 
 const NavigationOpen = ({ isOpen, onChange }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => !!state.userReducer.token);
-  console.log("isLoggedIn:", isLoggedIn);
 
   const handleLogout = () => {
     logout(dispatch, navigate);
+    onChange(false);
+  };
+  const handleBookmark = () => {
+    bookmark(navigate);
     onChange(false);
   };
 
@@ -52,9 +56,13 @@ const NavigationOpen = ({ isOpen, onChange }) => {
           </Link>
         ))}
         {isLoggedIn && (
+          <div className="bookmark" onClick={handleBookmark}>
+            Bookmark
+          </div>
+        )}
+        {isLoggedIn && (
           <div className="logout" onClick={handleLogout}>
             Logout
-            {console.log("Logout should be rendered")}
           </div>
         )}
       </div>

@@ -19,7 +19,9 @@ const Login = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { loading, error, token } = useSelector((state) => state.userReducer);
+  const { loading, error, token, userId } = useSelector(
+    (state) => state.userReducer
+  );
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -36,7 +38,7 @@ const Login = () => {
   useEffect(() => {
     if (token) {
       localStorage.setItem("userToken", token);
-      console.log("Success on login", token);
+      localStorage.setItem("userId", userId);
       navigate("/");
     }
 
@@ -45,7 +47,7 @@ const Login = () => {
       setInputPassword("");
       console.log(error);
     }
-  }, [token, error, navigate]);
+  }, [token, error, userId, navigate]);
 
   return (
     <div className="sign-in__wrapper">

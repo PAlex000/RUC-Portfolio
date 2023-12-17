@@ -19,7 +19,7 @@ const Bookmark = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchBookmarks(1));
+    dispatch(fetchBookmarks(localStorage.getItem("userId")));
   }, [dispatch]);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
