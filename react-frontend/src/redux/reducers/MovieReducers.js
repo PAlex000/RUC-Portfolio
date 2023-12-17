@@ -63,8 +63,10 @@ const moviesReducer = (state = initialState, action) => {
     case FETCH_SIMILAR_MOVIES_SUCCESS:
       return {
         ...state,
-        similarMovies: action.payload.movies,
+        movies: action.payload.movies,
+        total: action.payload.total,
         loading: false,
+    
       };
     case SEARCH_MOVIES_SUCCESS:
       return {

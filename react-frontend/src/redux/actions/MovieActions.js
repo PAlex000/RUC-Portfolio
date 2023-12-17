@@ -85,9 +85,9 @@ export const FETCH_SIMILAR_MOVIES_SUCCESS = "FETCH_SIMILAR_MOVIES_SUCCESS";
 export const FETCH_SIMILAR_MOVIES_FAILURE = "FETCH_SIMILAR_MOVIES_FAILURE";
 
 //Reg Action
-export const fetchSimilarMoviesRequest = (movieId) => ({
+export const fetchSimilarMoviesRequest = () => ({
   type: FETCH_SIMILAR_MOVIES_REQUEST,
-  payload: { movieId },
+  // payload: { movieId },
 });
 
 export const fetchSimilarMoviesSuccess = (movies) => ({
@@ -101,10 +101,10 @@ export const fetchSimilarMoviesFailure = (error) => ({
 });
 
 //Thunk Action
-export const fetchSimilarMovies = (movieId) => {
+export const fetchSimilarMovies = (movieId= 'tt0112130') => {
   return async (dispatch) => {
     try {
-      dispatch(fetchSimilarMoviesRequest(movieId));
+      dispatch(fetchSimilarMoviesRequest());
       const response = await fetch(`/api/movie/${movieId}/similar`);
       const data = await response.json();
       dispatch(fetchSimilarMoviesSuccess(data));
