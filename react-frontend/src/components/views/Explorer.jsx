@@ -1,13 +1,52 @@
-import { movies } from "../../types/Movies";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovies } from "../../redux/actions/MovieActions";
 import CustomContainer from "../common/CustomContainer";
 import Row from "react-bootstrap/Row";
+import { Button } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import CardComp from "../common/CardComp";
 import Dropdowns from "../common/Dropdown";
 
+const h2Style = {
+  marginTop: "1em",
+  color: "white",
+  textAlign: "center",
+};
+
+const buttonContainer = {
+  display: "flex",
+};
+
 const Explorer = () => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const pageSize = 10;
+  const dispatch = useDispatch();
+  const { movies, loading, error } = useSelector((state) => {
+    return state.moviesReducer;
+  });
+
+  const fetchNextPage = () => {
+    const nextPage = currentPage + 1;
+    dispatch(fetchMovies(nextPage, pageSize));
+    setCurrentPage(nextPage);
+  };
+
+  useEffect(() => {
+    dispatch(fetchMovies());
+  }, [dispatch]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!movies) return <div>No movies available</div>;
   return (
     <CustomContainer fluid>
+      <h2 style={h2Style}>
+        Welcome to the Explorer Page! <br /> This is where we'll ensure that you
+        can find everything you'll need! <br /> Scroll and find your movie
+        choice!
+      </h2>
+
       <div style={{ maxWidth: "85%", margin: "0 auto" }}>
         <Row className="justify-content-between align-items-start">
           <Row
@@ -17,7 +56,10 @@ const Explorer = () => {
             lg={3}
             className="mb-4 d-none d-md-block"
           >
-            <Dropdowns className="ml-4" />
+            <div style={buttonContainer}>
+              <Dropdowns className="ml-4" />
+              <Button onClick={fetchNextPage}>Refresh</Button>
+            </div>
           </Row>
           {movies.map((movie) => (
             <Col
@@ -30,10 +72,16 @@ const Explorer = () => {
             >
               <CardComp
                 titleId={movie.titleId}
-                title={movie.title}
-                text={movie.text}
-                btnText={movie.btnText}
-                image={movie.imageUrl}
+                title={
+                  movie.akas.$values[0]
+                    ? movie.akas.$values[0].title
+                    : "Unknown title"
+                }
+                description={movie.description}
+                btnText="Learn More"
+                image={movie.poster}
+                rating={movie.rating}
+                dispatch={dispatch}
               />
             </Col>
           ))}

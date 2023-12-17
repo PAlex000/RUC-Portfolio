@@ -6,7 +6,7 @@ function Dropdowns({ onGenreSelect }) {
   };
 
   return (
-    <Dropdown className="pt-4">
+    <Dropdown className="pt-4 pr-4">
       <Dropdown.Toggle variant="success" id="dropdown-basic">
         Filter
       </Dropdown.Toggle>

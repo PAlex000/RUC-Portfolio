@@ -18,7 +18,7 @@ export const fetchMoviesFailure = (error) => ({
 });
 
 // Thunk Action
-export const fetchMovies = (page = 0, pageSize = 12) => {
+export const fetchMovies = (page, pageSize) => {
   return async (dispatch) => {
     dispatch(fetchMoviesRequest());
     try {
@@ -52,7 +52,7 @@ export const fetchMovieByIdRequest = () => ({
 
 export const fetchMovieByIdSuccess = (movie) => ({
   type: FETCH_MOVIE_BY_ID_SUCCESS,
-  payload: { movie},
+  payload: { movies },
 });
 
 export const fetchMovieByIdFailure = (error) => ({
@@ -75,8 +75,6 @@ export const fetchMovieById = (movieId = "tt0112130") => {
     }
   };
 };
-
-
 
 // -- //
 
