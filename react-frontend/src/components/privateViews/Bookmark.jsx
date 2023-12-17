@@ -44,6 +44,7 @@ const Bookmark = () => {
               image={data.poster}
               rating={data.rating}
               dispatchBookmark={dispatch}
+              description={data.description}
             />
           </Col>
         ))}
