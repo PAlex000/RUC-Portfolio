@@ -2,10 +2,7 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { TiStarFullOutline } from "react-icons/ti";
-import { FaHeart } from "react-icons/fa";
 import Button from "react-bootstrap/Button";
-
-
 
 const CardComp = ({ title, image, text, btnText }) => {
 
@@ -19,13 +16,6 @@ const CardComp = ({ title, image, text, btnText }) => {
     height: "350px",
     backgroundSize: "cover",
     position: "relative",
-  }
-
-  const heart = {
-    position: "absolute",
-    backgroundColor: "#EF5454",
-    padding: "0.4rem 0.9rem"
-
   }
 
   const psColAltern = {
@@ -78,7 +68,6 @@ const CardComp = ({ title, image, text, btnText }) => {
       <Col key={idx}>
     <Card style={cardMovies} className="h-100">
       <Card.Img src={image} style={img}/>
-      <FaHeart size={60} style={heart}/>
       <Card.Body>
       <p style={psColAltern}>Action /</p> 
       <p style={psColAltern}>Adventure /</p>

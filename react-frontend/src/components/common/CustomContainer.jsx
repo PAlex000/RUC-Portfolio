@@ -11,14 +11,12 @@ const CustomContainer = ({
     justifyContent: "center",
     flexDirection: "column",
     backgroundColor: "#000",
-    paddingLeft: "10%",
-    paddingRight: "10%",
     ...style,
   };
 
   return (
     <Container
-      className={`px-5 ${className}`}
+      className={`${className}`}
       fluid={fluid}
       style={customStyle}
     >

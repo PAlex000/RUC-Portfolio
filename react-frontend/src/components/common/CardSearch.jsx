@@ -9,7 +9,7 @@ import Modal from "react-bootstrap/Modal";
 
 
 
-const CardSearch = ({ title, image, text, btnText}) => {
+const CardSearch = ({ title, image, btnText}) => {
 
   const [show, setShow] = useState(false);
 
@@ -50,7 +50,7 @@ const CardSearch = ({ title, image, text, btnText}) => {
 
   const buttonStyle = {
     display: "inline",
-    margin: "0 2.5px",
+    margin: "0 3px",
     fontSize: "15px",
     color: "#FFF",
     fontWeight: "bold",
@@ -72,12 +72,10 @@ const CardSearch = ({ title, image, text, btnText}) => {
       <Card.Body>
         <Card.Title as="h4" className="my-2">{title}</Card.Title>
         <div className="d-flex flex-row">
-        <TiStarFullOutline size={23} className="mt-1"/>  <p style={stars}> 0.00  <span style={review} className="mx-1">(0 reviews)</span></p>
+        <TiStarFullOutline size={23} className="mt-1"/>  <p style={stars}> 0.00  <span style={review} className="mt-1">(0 reviews)</span></p>
         </div>
-        {/* <Button variant="danger" style={buttons}>{btnText}</Button>
-        <Button variant="warning" style={buttons}>Add Bookmark</Button> */}
-        <Button variant="warning" className="my-5" style={buttonStyle} onClick={handleShow}>{btnText}</Button>
-         <Button variant="danger" className="my-5" style={buttonStyle} onClick={handleShow}>Delete search</Button>
+        <Button variant="warning" className="my-3" style={buttonStyle} onClick={handleShow}>{btnText}</Button>
+         <Button variant="danger" className="my-3" style={buttonStyle} onClick={handleShow}>Delete search</Button>
 
          <Modal show={show} onHide={handleClose} backdrop="static"
         keyboard={false} style={{

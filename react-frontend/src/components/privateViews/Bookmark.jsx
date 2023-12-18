@@ -9,12 +9,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CardCompBookmark from "../common/CardCompBookmark";
-import shawshank from "../../assets/shawshank.jpg";
-import departed from "../../assets/departed.jpg";
-import scream from "../../assets/scream.jpg";
-import hunger_games from "../../assets/poster_movie.jpg";
-import home_alone from "../../assets/home_alone.jpg";
-import CardSearch from "../common/CardSearch";
+
 
 
 
@@ -26,9 +21,6 @@ const backgroundStyle_1 = {
   backgroundColor: "#000"
 }
 
-const secondContainer = {
-  backgroundColor: "grey",
-}
 
 
 const titleStyle = {
@@ -43,45 +35,6 @@ const titleStyle = {
 const border = {
   borderBottom: "2px solid #FFF",
 }
-
-const movieData = [
-  {
-    id: 1,
-    title:
-      "Shawshank Redemption",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: shawshank,
-  },
-  {
-    id: 2,
-    title: "Spiderman No Way Home",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: departed,
-  },
-  {
-    id: 3,
-    title: "Scream",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: scream,
-  },
-  {
-    id: 4,
-    title: "Hunger Games",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: hunger_games,
-  },
-  {
-    id: 5,
-    title: "Home Alone",
-    text: "A different set of text for the second card, explaining something else.",
-    btnText: "Learn More",
-    imageUrl: home_alone,
-  },
-]
 
 const Bookmark = () => {
 
@@ -105,22 +58,7 @@ const Bookmark = () => {
     </Row>
         <div style={border}></div>
         </Container>
-        
-        <Container fluid style={secondContainer}>
-        <Row className="p-2 justify-content-center">
-          <h1 className="my-5 px-4 text-center" style={{color: "#000"}}>Recently searched</h1>
-        {movieData.map((movie) => (
-          <Col key={movie.id} sm={6} md={4} lg={2} className="mb-5 mx-2">
-            <CardSearch
-              title={movie.title}
-              text={movie.text}
-              btnText={movie.btnText}
-              image={movie.imageUrl}
-            />
-          </Col>
-        ))}
-        </Row >
-      </Container></div>;
+        </div>;
 
   return (
     <Container className="px-5" fluid style={backgroundContainer}>

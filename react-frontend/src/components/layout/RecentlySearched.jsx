@@ -49,9 +49,9 @@ const movieData = [
   ]
 
 
-const secondContainer = {
-    backgroundColor: "#D9D9D9",
-}
+  const secondContainer = {
+    backgroundColor: "grey",
+  }
 
 
 const RecentlySearched = () => {
@@ -61,11 +61,11 @@ const [show, setShow] = useState(false);
 const handleClose = () => setShow(false); 
 const handleShow = () => setShow(true);
 
+<>
 
-
-<Container fluid style={secondContainer}>
+        <Container fluid style={secondContainer}>
         <Row className="p-2 justify-content-center">
-          <h1 className="mt-4 px-4">Recently searched</h1>
+          <h1 className="my-5 px-4 text-center" style={{color: "#000"}}>Recently searched</h1>
         {movieData.map((movie) => (
           <Col key={movie.id} sm={6} md={4} lg={2} className="mb-5 mx-2">
             <CardSearch
@@ -77,6 +77,7 @@ const handleShow = () => setShow(true);
           </Col>
         ))}
         </Row >
+      </Container>
 
         <Row className="py-3">
           <Col className="my-4 text-center"><Button variant="danger" style={{fontSize:"23px", fontWeight: "bold", padding: "1rem"}} onClick={handleShow}>Delete all search history</Button>
@@ -99,7 +100,7 @@ const handleShow = () => setShow(true);
         </Modal.Footer>
       </Modal></Col>
         </Row>
-      </Container>
+      </>
 }
 
 export default RecentlySearched;

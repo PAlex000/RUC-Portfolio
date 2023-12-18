@@ -1,43 +1,47 @@
-import { Carousel } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 
-const Header = ({ headers, style = {} }) => {
+
+const Header = ({ header }) => {
   const headerStyle = {
-    color: "white",
-    width: "80%",
-    height: "75%",
-    paddingTop: "10px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    margin: "0 auto",
-    ...style,
-  };
+    backgroundColor: "#000",
+    backgroundImage: `linear-gradient(0deg, 
+      rgba(0,0,0,1) 10%, rgba(0,0,0,0) 95%), url(${header}`,
+    backgroundSize: "cover",
+    width: "100%",
+    height: "700px",
+    backgroundPosition: "top",
+    position: "relative",
+    opacity: "0.5",
+  }
+  
+  const overlayTextStyle = {
+    position: "absolute",
+    fontSize: "45px",
+    color: "#FFA869",
+    fontWeight: "bold",
+    textAlign: "center",
+    top: 250,
+    width: "100%",
+    padding: "2rem",
+    textShadow: "3px 5px 7px black",
+  }
 
-  const imageStyle = {
-    width: "100%", // Full width of the carousel container
-    height: "auto", // Maintain aspect ratio
-  };
+  // const logo = {
+  //   backgroundColor: "#FBD654",
+  //   width: "5%",
+  //   height: "3rem",
+  //   textAlign: "center",
+  //   color: "#000",
+  //   fontWeight: "bold",
+  //   fontSize: "30px",
+  //   borderRadius: "10px"
+  // }
 
   return (
-    <div style={headerStyle}>
-      <Carousel>
-        {headers.map((header, index) => (
-          <Carousel.Item key={index}>
-            <img
-              src={header.imageUrl}
-              style={imageStyle}
-              alt={`Header Image ${index}`}
-            />
-            {header.overlayText && (
-              <Carousel.Caption>
-                <h3>{header.overlayText.title}</h3>
-                <p>{header.overlayText.description}</p>
-              </Carousel.Caption>
-            )}
-          </Carousel.Item>
-        ))}
-      </Carousel>
-    </div>
+    <Container fluid style={headerStyle}>
+      {/* <div style={logo}>IMDB</div> */}
+      <div style={overlayTextStyle}>Welcome to Our Movie Collection!</div>
+    </Container>
   );
 };
 
