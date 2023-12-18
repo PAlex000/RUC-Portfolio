@@ -89,7 +89,7 @@ const CardComp = ({ title, image, text, btnText }) => {
         </div>
         <p style={plot}>{text}</p>
         <Button variant="danger" style={buttons}>{btnText}</Button>
-        <Button variant="warning" style={buttons}>Add Watchlist</Button>
+        <Button variant="warning" style={buttons}>Add Bookmark</Button>
 
       </Card.Body>
     </Card>

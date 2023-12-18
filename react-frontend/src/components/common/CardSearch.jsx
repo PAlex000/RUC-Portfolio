@@ -1,95 +1,85 @@
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import { FaRegHeart } from "react-icons/fa";
-import {
-    // StarFill,
-    InfoCircleFill,
-  } from "react-bootstrap-icons";
-import {useState} from "react"
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { TiStarFullOutline } from "react-icons/ti";
+import { FaHeart } from "react-icons/fa";
+import Button from "react-bootstrap/Button";
+import {useState} from "react";
 import Modal from "react-bootstrap/Modal";
 
-const cardStyle = {
-  backgroundColor: "#313131",
-  color: "white",
-  width: "14rem",
-  height: "27rem",
-};
 
-const titleStyle = {
-  display: "-webkit-box",
-  WebkitBoxOrient: "vertical",
-  WebkitLineClamp: 2,
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-  lineHeight: "1.2em",
-  maxHeight: "2.4em",
-};
 
-const imageStyle = {
-  height: "220px",
-  objectFit: "cover",
-};
-
-const cardFooterStyle = {
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  width: "100%",
-  borderTop: "1px solid rgba(0,0,0,.125)",
-  padding: "0.75rem 1.25rem",
-  backgroundColor: "#313131",
-};
-
-const buttonStyle = {
-  fontWeight: "bold"
-}
-
-const cardFooterStyleSecond = {
-  position: "absolute",
-  bottom: -40,
-  left: 0,
-  width: "100%",
-  height: "auto",
-  borderTop: "1px solid rgba(0,0,0,.125)",
-  padding: "0.40rem 0.85rem",
-  backgroundColor: "#676767",
-};
-
-const linkStyle = {
-  color: "#FFFFFF", 
-  fontWeight: "bold", 
-  fontSize: "15px", 
-  textDecoration: "none",
-  paddingBottom: "0.5rem"
-}
-
-const CardSearch = ({ title, image }) => {
+const CardSearch = ({ title, image, text, btnText}) => {
 
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false); // = () => , not just equal, no wonder why it was re-rendering all over again
+  const handleClose = () => setShow(false); 
   const handleShow = () => setShow(true);
+
+  const cardMovies = {
+    backgroundColor: "grey",
+    color: "#000",
+    border: "none"
+  }
+
+  const img = {
+    width: "230px",
+    height: "350px",
+    backgroundSize: "cover",
+    position: "relative",
+  }
+
+  const heart = {
+    position: "absolute",
+    backgroundColor: "#EF5454",
+    padding: "0.4rem 0.9rem"
+
+  }
+
+  const stars = {
+    fontSize: "20px",
+    fontWeight: "bold",
+    margin: "0 0.50rem"
+  }
+
+  const review = {
+    fontSize: "15px",
+    color: "black",
+    fontWeight: "bold",
+  }
+
+  const buttonStyle = {
+    display: "inline",
+    margin: "0 2.5px",
+    fontSize: "15px",
+    color: "#FFF",
+    fontWeight: "bold",
+    padding: "0.5rem 0.75rem",
+    border: "none",
+    borderRadius: "10px", 
+    textShadow: "1px 2px 5px black",
+  }
 
 
   return (
-    <Card style={cardStyle} className="mt-5">
-      <Card.Img variant="top" src={image} style={imageStyle} />
+    <>
+    <Row className="g-5">
+      {Array.from({length: 1}).map((_, idx) => (
+      <Col key={idx}>
+    <Card style={cardMovies} className="h-100">
+      <Card.Img src={image} style={img}/>
+      <FaHeart size={60} style={heart}/>
       <Card.Body>
-        <Card.Title style={titleStyle}>{title}</Card.Title>
-        <ListGroup variant="flush">
-          <ListGroup.Item
-            style={{ backgroundColor: "#313131", border: "none" }}
-          >
-            {/* <StarFill color="yellow" /> {rating} */}
-          </ListGroup.Item>
-        </ListGroup>
-        <div style={cardFooterStyle}>
-          <div className="d-flex justify-content-between flex-column align-items-center mt-2">
-            <Button variant="warning" className="mb-3" style={buttonStyle} >Add as favorite <FaRegHeart style={{fontSize:"18px"}} className="mb-1"/></Button>
-            <Button variant="danger" className="mb-4" style={buttonStyle} onClick={handleShow}>Delete search</Button>
+        <Card.Title as="h4" className="my-2">{title}</Card.Title>
+        <div className="d-flex flex-row">
+        <TiStarFullOutline size={23} className="mt-1"/>  <p style={stars}> 0.00  <span style={review} className="mx-1">(0 reviews)</span></p>
+        </div>
+        {/* <Button variant="danger" style={buttons}>{btnText}</Button>
+        <Button variant="warning" style={buttons}>Add Bookmark</Button> */}
+        <Button variant="warning" className="my-5" style={buttonStyle} onClick={handleShow}>{btnText}</Button>
+         <Button variant="danger" className="my-5" style={buttonStyle} onClick={handleShow}>Delete search</Button>
 
-            <Modal show={show} onHide={handleClose} backdrop="static"
+         <Modal show={show} onHide={handleClose} backdrop="static"
         keyboard={false} style={{
           fontSize: "20px",
           fontWeight: "bold",
@@ -107,18 +97,14 @@ const CardSearch = ({ title, image }) => {
           </Button>
         </Modal.Footer>
       </Modal>
+       
 
-          </div>
-        </div>
-        <div style={cardFooterStyleSecond}>
-            <div className="d-flex justify-content-between align-items-center mt-2">
-            <a href="#details" style={linkStyle}>View movie description</a><InfoCircleFill color="white" size="18px" style={{marginBottom: "0.5rem"}}/>
-        </div>
-        </div>
       </Card.Body>
     </Card>
-
-         
+    </Col>
+    ))};
+    </Row>
+    </>
   );
 };
 
