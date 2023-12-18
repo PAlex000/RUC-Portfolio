@@ -2,7 +2,7 @@ import Navigation from "./components/layout/Navigation.jsx";
 import { Outlet } from "react-router-dom";
 import Footer from "./components/layout/Footer.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
-import RecentlySearched from "./components/common/RecentlySearched.jsx";
+import RecentlySearched from "./components/layout/RecentlySearched.jsx";
 
 const App = () => {
   return (

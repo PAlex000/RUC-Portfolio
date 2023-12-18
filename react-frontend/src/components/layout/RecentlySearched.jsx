@@ -7,7 +7,6 @@ import shawshank from "../../assets/shawshank.jpg";
 import departed from "../../assets/departed.jpg";
 import scream from "../../assets/scream.jpg";
 import hunger_games from "../../assets/poster_movie.jpg";
-
 import home_alone from "../../assets/home_alone.jpg";
 
 const movieData = [

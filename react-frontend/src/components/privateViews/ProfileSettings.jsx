@@ -10,7 +10,7 @@ import {ArrowRight} from "react-bootstrap-icons";
 import { MdOutlineEmail } from "react-icons/md";
 import { MdOutlinePermPhoneMsg } from "react-icons/md";
 import { MdOutlineVerified } from "react-icons/md";
-import RecentlySearched from "../common/RecentlySearched";
+import RecentlySearched from "../layout/RecentlySearched";
 
 
 

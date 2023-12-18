@@ -8,6 +8,7 @@ import departed from "../../assets/departed.jpg";
 import CardComp from "../common/CardComp";
 import hunger_games_cropped from "../../assets/poster_movie_cropped.jpg";
 import Button from "react-bootstrap/Button";
+import { TiStarFullOutline } from "react-icons/ti";
 
 
 const movieData = [
@@ -163,7 +164,7 @@ const plot = {
   fontSize: "25px",
   color: "#FFF",
   left: 30,
-  top: 315,
+  top: 405,
   width: "35%",
   padding: "2rem",
   textShadow: "1px 3px 5px black" // offset-x | offset-y | blur | color
@@ -172,7 +173,7 @@ const plot = {
 const buttons = {
   position: "absolute",
   left: 45,
-  top: 530,
+  top: 610,
   margin: "2rem 0",
 
 }
@@ -180,7 +181,7 @@ const buttons = {
 const buttonGenre = {
   position: "absolute",
   left: 45,
-  top: 215,
+  top: 315,
   margin: "2rem 0",
 
 }
@@ -214,6 +215,28 @@ const buttonsColAltern = {
   textShadow: "1px 3px 5px black",
 }
 
+const stars = {
+  fontSize: "30px",
+  fontWeight: "bold",
+  color: "#FFF",
+  marginLeft: "0.5rem",
+  textShadow: "1px 3px 5px black",
+ 
+}
+
+const review = {
+  fontSize: "25px",
+  color: "#FFF",
+  fontWeight: "bold",
+  textShadow: "1px 3px 5px black",
+}
+
+const positionate = {
+  position: "absolute",
+  left: 60,
+  top: 290,
+}
+
 const backgroundStyle_1 = {
   backgroundColor: "#000"
 }
@@ -243,11 +266,26 @@ const listing = {
 
 }
 
+const type = {
+  position: "absolute",
+  color: "#FFF",
+  fontSize: "23px",
+  fontWeight: "bold",
+  top: 247,
+  left: 65,
+  textShadow: "1px 3px 5px black"
+}
+
+
 const Explorer = () => {
   return <div>
     <Container fluid style={backgroundStyle}>
       <h1 style={titleBackground}>Featured movie</h1>
       <h3 style={titleBackground2}>The Hunger Games - The Ballad Of Songbirds And Snakes</h3>
+      <p style={type}>PG-13 | 2023</p>
+      <div className="d-flex flex-row" style={positionate}>
+        <TiStarFullOutline size={30} className="mt-2" style={{color: "#DEB522"}}/>  <p style={stars}> 0.00  <span style={review} className="mx-1">(0 reviews)</span></p>
+        </div>
       <p style={plot}>The Ballad of Songbirds and Snakes tells the backstory of Professor Snow. Students at the most prestigious school in the Capitol become mentors to the tributes in an effort to make the games more entertaining.</p>
       {/* for now there are three buttons, use .map to retrieve the genres of each movie in future */}
       <Col style={buttonGenre}>

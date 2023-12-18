@@ -1,9 +1,15 @@
 import departed from "../../assets/departed.jpg";
-import {Button, Container, Col, Row, CarouselItem, Card} from "react-bootstrap";
+import {Button, Container, Col, Row, CarouselItem, Card, Modal, Form} from "react-bootstrap";
 import { TiStarFullOutline } from "react-icons/ti";
 import { GoPlay } from "react-icons/go";
 import Carousel from 'react-bootstrap/Carousel';
 import user_picture from "../../assets/user_icon.png";
+import {useState} from "react";
+import CardComp from "../common/CardComp";
+import shawshank from "../../assets/shawshank.jpg";
+import scream from "../../assets/scream.jpg";
+import hunger_games from "../../assets/poster_movie.jpg";
+import home_alone from "../../assets/home_alone.jpg";
 
 const backgroundStyle = {
   backgroundColor: "#000",
@@ -68,7 +74,7 @@ const plot = {
   fontSize: "25px",
   color: "#FFF",
   left: 30,
-  top: 355,
+  top: 375,
   width: "35%",
   padding: "2rem",
   textShadow: "1px 3px 5px black" // offset-x | offset-y | blur | color
@@ -77,7 +83,7 @@ const plot = {
 const buttons = {
   position: "absolute",
   left: 45,
-  top: 490,
+  top: 510,
   margin: "2rem 0",
 
 }
@@ -85,7 +91,7 @@ const buttons = {
 const buttonGenre = {
   position: "absolute",
   left: 45,
-  top: 260,
+  top: 280,
   margin: "2rem 0",
 
 }
@@ -138,7 +144,7 @@ const review = {
 const positionate = {
   position: "absolute",
   left: 65,
-  top: 225,
+  top: 260,
 }
 
 
@@ -169,11 +175,15 @@ const backgroundStyle_1 = {
 const titleStyle = {
   color: "#FFFFFF",
   fontWeight: "bold",
-  fontSize: "35px",
+  fontSize: "40px",
   textAlign: "center",
-  paddingBottom: "2.5rem",
+  paddingBottom: "1.5rem",
   borderBottom: "2px solid #FFF",
   width: "75%"
+}
+
+const border = {
+  borderBottom: "2px solid #FFF",
 }
 
 const synopsis = {
@@ -195,16 +205,84 @@ const castName = {
 }
 
 const role = {
-  color: "#FFF"
+  color: "#FFF",
+  fontSize: "20px"
 }
 
 const carouselOne = {
   gap: "7%",
 }
 
+const buttonStyle = {
+  fontWeight: "bold",
+  width: "10%",
+  height: "3.25rem",
+  fontSize: "23px",
+}
+
+const movieData = [
+  {
+    id: 1,
+    title:
+      "Shawshank Redemption",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: shawshank,
+  },
+  {
+    id: 2,
+    title: "Spiderman No Way Home",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: departed,
+  },
+  {
+    id: 3,
+    title: "Scream",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: scream,
+  },
+  {
+    id: 4,
+    title: "Hunger Games",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: hunger_games,
+  },
+  {
+    id: 5,
+    title: "Home Alone",
+    text: "A different set of text for the second card, explaining something else.",
+    btnText: "Learn More",
+    imageUrl: home_alone,
+  },
+]
+
+
+const secondContainer = {
+  backgroundColor: "#000",
+}
+
+const type = {
+  position: "absolute",
+  color: "#FFF",
+  fontSize: "23px",
+  fontWeight: "bold",
+  top: 215,
+  left: 73,
+  textShadow: "1px 3px 5px black"
+}
+
+
 
 
 const Details = () => {
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false); // = () => , not just equal, no wonder why it was re-rendering all over again
+  const handleShow = () => setShow(true);
 
 return (
   <div>
@@ -224,6 +302,7 @@ return (
     <Button style={buttonsCol} variant="danger">Add To Favorites</Button>
     <Button style={buttonsCol} variant="warning">Add to Watchlist</Button>
     </Col>
+    <p style={type}>R | 2006</p>
     <GoPlay size={150} style={playButton}/>
     <p style={watch}> Watch Trailer</p>
   </Container>
@@ -320,6 +399,66 @@ return (
         </Carousel>
         </Row>
         </Container>
+
+        <Container fluid style={backgroundStyle_1}>
+      <Row className="justify-content-center p-5 mx-2">
+        <h2 style={titleStyle}>Ratings</h2>
+        {/* for now this is the "no ratings" scenario */}
+        <h3 style={{color: "#FFF", textAlign: "center", marginTop: "4rem"}}>Whoops, no ratings yet...be the first one to rate this movie! <TiStarFullOutline size={35} style={{color: "#DEB522"}}/></h3>
+        <Button variant="warning" className="my-5" style={buttonStyle} onClick={handleShow}>Rate movie</Button>
+
+<Modal show={show} onHide={handleClose} backdrop="static"
+keyboard={false} style={{
+fontSize: "20px",
+fontWeight: "bold",
+}}>
+<Modal.Header closeButton>
+<Modal.Title>Rate movie</Modal.Title>
+</Modal.Header>
+<Modal.Body>How would you rate this movie?
+<div className="d-flex flex-row mt-2">
+                <TiStarFullOutline size={30} style={{color: "#DEB522"}} />
+                <TiStarFullOutline size={30} />
+                <TiStarFullOutline size={30} />
+                <TiStarFullOutline size={30} />
+                <TiStarFullOutline size={30} />
+              </div>
+  <Form className="mt-4">
+<Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Comment your thoughts about the movie</Form.Label>
+              <Form.Control as="textarea" rows={5} />
+            </Form.Group>
+          </Form>
+</Modal.Body>
+<Modal.Footer>
+<Button variant="warning" onClick={handleClose} style={{fontWeight: "bold", fontSize: "20px"}}>
+Rate
+</Button>
+</Modal.Footer>
+</Modal>
+        </Row>
+        <div style={border}></div>
+        </Container>
+
+        <Container fluid style={secondContainer}>
+        <Row className="p-2 justify-content-center">
+          <h1 className="px-4" style={{color: "#FFF", textAlign: "center", margin: "5rem 0"}}>See similar movies</h1>
+        {movieData.map((movie) => (
+          <Col key={movie.id} sm={6} md={4} lg={2} className="mb-5 mx-2">
+            <CardComp
+              title={movie.title}
+              text={movie.text}
+              btnText={movie.btnText}
+              image={movie.imageUrl}
+            />
+          </Col>
+        ))}
+        </Row >
+      </Container>
+        
 </div>
 );
 };
