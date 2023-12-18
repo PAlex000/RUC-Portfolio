@@ -56,8 +56,7 @@ const moviesReducer = (state = initialState, action) => {
     case FETCH_MOVIE_BY_ID_SUCCESS:
       return {
         ...state,
-        movies: action.payload.movies,
-        total: action.payload.total,
+        movie: action.payload.movie,
         loading: false,
       };
     case FETCH_SIMILAR_MOVIES_SUCCESS:

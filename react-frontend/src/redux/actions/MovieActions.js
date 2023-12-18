@@ -50,9 +50,9 @@ export const fetchMovieByIdRequest = () => ({
   type: FETCH_MOVIE_BY_ID_REQUEST,
 });
 
-export const fetchMovieByIdSuccess = (movies) => ({
+export const fetchMovieByIdSuccess = (movie) => ({
   type: FETCH_MOVIE_BY_ID_SUCCESS,
-  payload: { movies },
+  payload: { movie},
 });
 
 export const fetchMovieByIdFailure = (error) => ({
