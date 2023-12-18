@@ -27,6 +27,7 @@ const initialState = {
 };
 
 const userReducer = (state = initialState, action) => {
+  console.log(action.payload);
   switch (action.type) {
     case FETCH_USERS_REQUEST:
     case REGISTER_USER_REQUEST:
@@ -65,6 +66,7 @@ const userReducer = (state = initialState, action) => {
         ),
         loading: false,
       };
+
     case FETCH_USERS_FAILURE:
     case REGISTER_USER_FAILURE:
     case LOGIN_USER_FAILURE:

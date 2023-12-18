@@ -2,6 +2,14 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, deleteUser } from "../../redux/actions/UserActions";
 import CustomContainer from "../common/CustomContainer";
+import { Row, Col } from "react-bootstrap";
+import UserCard from "../common/UserCard";
+
+const h1Style = {
+  marginTop: "1em",
+  color: "white",
+  textAlign: "center",
+};
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -20,17 +28,20 @@ const Admin = () => {
 
   return (
     <CustomContainer fluid>
-      <h1>Admin Dashboard</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user.userId}>
-            {user.firstName} {user.lastName}
-            <button onClick={() => handleDeleteUser(user.userId)}>
-              Delete User
-            </button>
-          </li>
-        ))}
-      </ul>
+      <h1 style={h1Style}>Admin Dashboard</h1>
+      <Col style={{ maxWidth: "85%", margin: "0 auto" }}>
+        <Row className="d-flex justify-content-center">
+          {users.map((user) => (
+            <Col key={user.userId} xs={6} md={4} lg={6} className="mb-4">
+              <UserCard
+                firstName={user.firstName}
+                lastName={user.lastName}
+                onDelete={() => handleDeleteUser(user.userId)}
+              />
+            </Col>
+          ))}
+        </Row>
+      </Col>
     </CustomContainer>
   );
 };

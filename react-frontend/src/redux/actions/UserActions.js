@@ -181,7 +181,10 @@ export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
 
 export const deleteUserRequest = () => ({ type: DELETE_USER_REQUEST });
-export const deleteUserSuccess = () => ({ type: DELETE_USER_SUCCESS });
+export const deleteUserSuccess = (userId) => ({
+  type: DELETE_USER_SUCCESS,
+  payload: { userId },
+});
 export const deleteUserFailure = (error) => ({
   type: DELETE_USER_FAILURE,
   payload: { error },
@@ -192,11 +195,13 @@ export const deleteUser = (userId) => async (dispatch) => {
   try {
     const response = await fetch(`/api/user/${userId}`, { method: "DELETE" });
     if (response.ok) {
-      dispatch(deleteUserSuccess());
+      console.log(userId);
+      dispatch(deleteUserSuccess(userId));
     } else {
       throw new Error("Failed to delete user");
     }
   } catch (error) {
+    console.log(userId);
     dispatch(deleteUserFailure(error.toString()));
   }
 };
