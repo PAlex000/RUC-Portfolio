@@ -1,12 +1,6 @@
-import { WatchlistButton } from "./Buttons";
 import Card from "react-bootstrap/Card";
-import { Container, Row, Col, Modal, Button } from "react-bootstrap";
-import {
-  StarFill,
-  Star,
-  InfoCircleFill,
-  PlayFill,
-} from "react-bootstrap-icons";
+import { Row, Col, Modal, Button } from "react-bootstrap";
+import { TiStarFullOutline } from "react-icons/ti";
 import { useState } from "react";
 import "./CardComp.scss";
 import { removeBookmark } from "../privateViews/Bookmark";
@@ -15,8 +9,8 @@ const CardCompBookmark = ({
   titleId,
   title,
   description,
-  rating,
   image,
+  btnText,
   dispatchBookmark,
 }) => {
   const [showModal, setShowModal] = useState(false);
@@ -24,79 +18,90 @@ const CardCompBookmark = ({
   const handleModalShow = () => setShowModal(true);
   const handleModalClose = () => setShowModal(false);
 
-  const cardStyles = {
-    width: "15rem",
-    height: "35.5rem",
-    backgroundColor: "#0c0b00",
-  };
+  const cardMovies = {
+    backgroundColor: "#000",
+    color: "#FFF",
+  }
 
-  const cardImageStyle = {
-    width: "100%",
-    minHeight: "60%",
-    objectFit: "cover",
-  };
+  const img = {
+    width: "230px",
+    height: "350px",
+    backgroundSize: "cover",
+    position: "relative",
+  }
 
-  const titleStyle = {
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    WebkitLineClamp: 2,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    lineHeight: "1.2em",
-    maxHeight: "2.4em",
-    minHeight: "2.4em",
-  };
+  const psColAltern = {
+    display: "inline",
+    margin: "0.05rem",
+    fontSize: "17px",
+    color: "grey",
+    border: "none",
+    backgroundColor: "transparent",
+    fontWeight: "bold",
+    padding: "0.20rem 0",
+    
+  }
 
-  const infoStyle = {
-    cursor: "pointer",
-  };
+  const buttons = {
+  display: "inline",
+  margin: "2px 3px",
+  fontSize: "15px",
+  color: "#FFF",
+  fontWeight: "bold",
+  padding: "0.5rem 0.75rem",
+  border: "none",
+  borderRadius: "10px", 
+  textShadow: "1px 2px 5px black",
+
+  }
+
+  const stars = {
+    fontSize: "20px",
+    fontWeight: "bold",
+    margin: "0 0.50rem"
+  }
+
+  const review = {
+    fontSize: "15px",
+    color: "grey",
+    fontWeight: "bold",
+    marginBottom: "1rem",
+  }
 
   return (
     <>
-      <Card style={cardStyles}>
-        <Card.Img src={image} style={cardImageStyle}></Card.Img>
-        <Card.Body>
-          <div className="d-flex align-items-center">
-            <StarFill color="yellow" className="mb-2" />
-            <p className="text-white mb-2 ms-2">{rating}</p>
-            <Star className="text-primary mb-2 ms-4" />{" "}
-            {/* OnCLick prop in star to add to favorites*/}
-          </div>
-          <Card.Title className="text-white" style={titleStyle}>
-            {title}
-          </Card.Title>
-          <WatchlistButton onClick={() => removeBookmark(titleId, dispatchBookmark)}>
-            <div className="d-flex justify-content-center align-items-center text-primary">
-              <p className="text-primary"></p>
-              Remove
-            </div>
-          </WatchlistButton>
-          <Container>
-            <Row style={{ color: "#fff", marginTop: "1rem" }}>
-              <Col>
-                <p>Trailer</p>
-              </Col>
-              <Col className="ml-4">
-                <PlayFill />
-              </Col>
-              <Col>
-                <InfoCircleFill style={infoStyle} onClick={handleModalShow} />
-              </Col>
-            </Row>
-          </Container>
-        </Card.Body>
+    <Row className="g-5">
+      {Array.from({length: 1}).map((_, idx) => (
+      <Col key={idx}>
+    <Card style={cardMovies} className="h-100">
+      <Card.Img src={image} style={img}/>
+      <Card.Body>
+      <p style={psColAltern}>Action /</p> 
+      <p style={psColAltern}>Adventure /</p>
+      <p style={psColAltern}>Drama</p>
+        <Card.Title as="h4" className="my-3">{title}</Card.Title>
+        <div className="d-flex flex-row mb-3">
+        <TiStarFullOutline size={23} className="mt-1"/>  <p style={stars}> 0.00  <span style={review} className="mx-1">(0 reviews)</span></p>
+        </div>
+        <Button variant="danger" style={buttons}>{btnText}</Button>
+        <Button variant="warning" style={buttons} onClick={handleModalShow}>Remove</Button>
         <Modal show={showModal} onHide={handleModalClose}>
           <Modal.Header closeButton>
             <Modal.Title>{title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>{description}</Modal.Body>
           <Modal.Footer>
+            <Button variant="danger" onClick={() => removeBookmark(titleId, dispatchBookmark)}>Yes</Button>
             <Button variant="secondary" onClick={handleModalClose}>
-              Close
+              No, take me back
             </Button>
           </Modal.Footer>
         </Modal>
+      </Card.Body>
       </Card>
+      </Col>
+    ))};
+    </Row>
     </>
   );
 };

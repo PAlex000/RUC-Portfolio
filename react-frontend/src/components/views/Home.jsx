@@ -35,14 +35,14 @@ const Home = () => {
     <CustomContainer fluid>
       <Header header={header}/>
       <Container style={{ maxWidth: "75%", margin: "0 auto", backgroundColor: "#000" }}>
-        <Row className="justify-content-between align-items-center"><h2 style={title}>Top 5 this week</h2>
+        <Row className="justify-content-between align-items-center"><h2 style={title}>For starters</h2>
           {movies.map((movie) => (
             <Col
               key={movie.id}
               xs={6}
               sm={6}
               md={5}
-              lg={2}
+              lg={3}
               className="d-flex justify-content-center mb-4"
             >
               <CardComp
@@ -68,7 +68,7 @@ const Home = () => {
               xs={6}
               sm={6}
               md={5}
-              lg={2}
+              lg={3}
               className="d-flex justify-content-center mb-4"
             >
               <CardComp
@@ -95,7 +95,7 @@ const Home = () => {
               xs={6}
               sm={6}
               md={5}
-              lg={2}
+              lg={3}
               className="d-flex justify-content-center mb-4"
             >
               <CardCompBookmark
