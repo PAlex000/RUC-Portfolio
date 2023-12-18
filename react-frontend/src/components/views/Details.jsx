@@ -148,7 +148,9 @@ const synopsis = {
 };
 const Details = () => {
   const dispatch = useDispatch();
-  const { movie, loading, error } = useSelector((state) => state.moviesReducer);
+  const { movie, loading, error } = useSelector(
+    (state) => state.moviesReducer
+  );
   const [similarMoviesVisible, setSimilarMoviesVisible] = useState(false);
 
   useEffect(() => {
@@ -165,7 +167,9 @@ const Details = () => {
   return (
     <div>
       <Container fluid style={backgroundStyle}>
-        <h3 style={titleBackground2}>{movie.akas.$values[0].title}</h3>
+        <h3 style={titleBackground2}>
+          {movie.akas ? movie.akas.$values[0].title : "Unknown title"}
+        </h3>
         <div className="d-flex flex-row" style={positionate}>
           <TiStarFullOutline
             size={30}

@@ -37,8 +37,6 @@ export const fetchRatingHistory = (userId) => async (dispatch) => {
           temporaryData.reviewText = rating.reviewText;
         }
       });
-      console.log(ratings);
-      console.log(temporaryData);
       ratedMovies.push(temporaryData);
     }
     console.log(ratedMovies);

@@ -54,7 +54,7 @@ export const fetchMovieByIdRequest = () => ({
 
 export const fetchMovieByIdSuccess = (movie) => ({
   type: FETCH_MOVIE_BY_ID_SUCCESS,
-  payload: { movies },
+  payload: { movie },
 });
 
 export const fetchMovieByIdFailure = (error) => ({
@@ -71,7 +71,7 @@ export const fetchMovieById = (movieId = "tt0112130") => {
         `/api/movie/${movieId}`
       );
       const data = await response.json();
-      dispatch(fetchMovieByIdSuccess(data, data.total));
+      dispatch(fetchMovieByIdSuccess(data));
     } catch (error) {
       dispatch(fetchMovieByIdFailure(error.toString()));
     }
