@@ -66,12 +66,12 @@ const NavigationOpen = ({ isOpen, onChange }) => {
         )}
         {isLoggedIn && (
           <div className="rating" onClick={handleRatinghistory}>
-            Ratinghistory
+            Rating History
           </div>
         )}
         {isLoggedIn && (
           <div className="logout" onClick={handleLogout}>
-            Logout
+            Log out
           </div>
         )}
       </div>
