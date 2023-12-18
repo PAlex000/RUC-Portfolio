@@ -36,6 +36,7 @@ const Admin = () => {
               <UserCard
                 firstName={user.firstName}
                 lastName={user.lastName}
+                userId={user.userId}
                 onDelete={() => handleDeleteUser(user.userId)}
               />
             </Col>

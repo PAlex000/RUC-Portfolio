@@ -13,13 +13,14 @@ const cardStyles = {
   alignItems: "center",
 };
 
-const UserCard = ({ firstName, lastName, onDelete }) => {
+const UserCard = ({ firstName, lastName, userId, onDelete }) => {
   return (
     <Card style={cardStyles}>
       <Card.Body className="d-flex flex-column justify-content-between mt-4">
         <div className="text-center">
           <h2 className="text-white mb-2">{firstName}</h2>
           <h2 className="text-white mb-2">{lastName}</h2>
+          <h2 className="text-white mb-2">{userId}</h2>
         </div>
         <Button variant="danger" onClick={onDelete}>
           Delete
