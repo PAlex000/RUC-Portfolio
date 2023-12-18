@@ -4,7 +4,7 @@ import {
   fetchMovieById,
   fetchSimilarMovies,
 } from "../../redux/actions/MovieActions";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import { TiStarFullOutline } from "react-icons/ti";
 import { GoPlay } from "react-icons/go";
 import Carousel from "react-bootstrap/Carousel";
@@ -147,10 +147,16 @@ const synopsis = {
   lineHeight: "2.85rem",
 };
 const Details = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleModalShow = () => setShowModal(true);
+  const handleModalClose = (reviewText, rating) => {
+    console.log(reviewText);
+    console.log(rating);
+    setShowModal(false);
+  };
   const dispatch = useDispatch();
-  const { movie, loading, error } = useSelector(
-    (state) => state.moviesReducer
-  );
+  const { movie, loading, error } = useSelector((state) => state.moviesReducer);
   const [similarMoviesVisible, setSimilarMoviesVisible] = useState(false);
 
   useEffect(() => {
@@ -198,7 +204,11 @@ const Details = () => {
           <Button style={buttonsCol} variant="warning">
             Similar Movies
           </Button>
-          <Button style={buttonsCol} variant="warning">
+          <Button
+            style={buttonsCol}
+            variant="warning"
+            onClick={handleModalShow}
+          >
             Rate
           </Button>
         </Col>
@@ -217,6 +227,50 @@ const Details = () => {
             <Carousel.Item></Carousel.Item>
           </Carousel>
         </Row>
+        <form>
+          <Modal show={showModal} onHide={handleModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>{movie.title}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <label htmlFor="reviewText">
+                Please write a reviewText for the movie:
+              </label>
+              <input type="text" name="reviewText" id="reviewText" />
+            </Modal.Body>
+            <Modal.Body>
+              <label htmlFor="rating">Rate </label>
+              <select name="rating" id="rating">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+              </select>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="primary"
+                onClick={() =>
+                  handleModalClose(
+                    document.getElementById("reviewText").value,
+                    document.getElementById("rating").value
+                  )
+                }
+              >
+                Rate
+              </Button>
+              <Button variant="secondary" onClick={handleModalClose}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </form>
       </Container>
     </div>
   );

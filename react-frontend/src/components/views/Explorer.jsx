@@ -84,7 +84,7 @@ const Explorer = () => {
                 btnText="Learn More"
                 image={movie.poster}
                 rating={movie.rating}
-                dispatch={dispatch}
+                dispatchMovie={dispatch}
               />
             </Col>
           ))}
