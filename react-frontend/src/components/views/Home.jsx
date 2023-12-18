@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies } from "../../redux/actions/MovieActions";
 import Row from "react-bootstrap/Row";
+import { Button } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import CardComp from "../common/CardComp";
-import Dropdowns from "../common/Dropdown";
 import Header from "../layout/Header";
 import header from "../../assets/movieHeader.jpg";
 import CustomContainer from "../common/CustomContainer";
@@ -26,15 +26,25 @@ const headerData = [
   },
 ];
 
+const marginStyle = {
+  marginTop: "14.9px",
+};
+
 const Home = () => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const pageSize = 12;
   const dispatch = useDispatch();
   const { movies, loading, error } = useSelector((state) => {
     return state.moviesReducer;
   });
 
+  const handleRefresh = () => {
+    setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
+  };
+
   useEffect(() => {
-    dispatch(fetchMovies());
-  }, [dispatch]);
+    dispatch(fetchMovies(currentPage, pageSize));
+  }, [dispatch, pageSize, currentPage]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -45,7 +55,13 @@ const Home = () => {
       <div style={{ maxWidth: "75%", margin: "0 auto" }}>
         <Row className="justify-content-between align-items-center">
           <Row xs={12} md={3} lg={2} className="mb-4 d-none d-md-block">
-            <Dropdowns />
+            <div className="d-flex align-items-center">
+              <div style={marginStyle}>
+                <Button onClick={handleRefresh} className="blackBtn mt-2">
+                  Refresh
+                </Button>
+              </div>
+            </div>
           </Row>
           {movies.map((movie) => (
             <Col
@@ -59,9 +75,9 @@ const Home = () => {
               <CardComp
                 titleId={movie.titleId}
                 title={
-                  movie.akas && movie.akas.length > 0
-                    ? movie.akas[0].title
-                    : "Default Title"
+                  movie.akas.$values[0]
+                    ? movie.akas.$values[0].title
+                    : "Unknown title"
                 }
                 description={movie.description}
                 btnText="Learn More"

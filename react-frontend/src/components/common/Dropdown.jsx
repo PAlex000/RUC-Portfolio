@@ -1,4 +1,5 @@
 import Dropdown from "react-bootstrap/Dropdown";
+import "./Button.scss";
 
 function Dropdowns({ onGenreSelect }) {
   const handleSelect = (genre) => {
@@ -6,8 +7,12 @@ function Dropdowns({ onGenreSelect }) {
   };
 
   return (
-    <Dropdown className="pt-4">
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
+    <Dropdown className="pt-4 pr-4">
+      <Dropdown.Toggle
+        className="custom-dropdown-toggle"
+        variant="success"
+        id="dropdown-basic"
+      >
         Filter
       </Dropdown.Toggle>
 
