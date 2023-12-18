@@ -361,7 +361,6 @@ return (
             </Col>
           </Carousel.Item>
           <CarouselItem>
-          <div>A circle</div>
             <Col className="d-flex flex-row justify-content-center my-5" style={carouselOne}>
             <Card style={cardCast}>
             <Card.Img src={user_picture} style={imgPicture} />

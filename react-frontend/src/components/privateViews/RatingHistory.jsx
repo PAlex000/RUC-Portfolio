@@ -12,6 +12,8 @@ const ratingData = [
     rateDate: "2023-12-05",
     movieRating: 3.2,
     imageUrl: departed,
+    titleRating: "Great movie",
+    description: "ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum "
   },
   {
     titleid: "Test2",
@@ -20,6 +22,8 @@ const ratingData = [
     rateDate: "2023-12-05",
     movieRating: 7.3,
     imageUrl: shawshank,
+    titleRating: "Great movie",
+    description: "ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum "
   },
   {
     titleid: "Test3",
@@ -28,6 +32,8 @@ const ratingData = [
     rateDate: "2023-12-05",
     movieRating: 0.3,
     imageUrl: departed,
+    titleRating: "Great movie",
+    description: "ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum "
   },
   {
     titleid: "Test4",
@@ -36,6 +42,8 @@ const ratingData = [
     rateDate: "2023-12-03",
     movieRating: 10.3,
     imageUrl: shawshank,
+    titleRating: "Great movie",
+    description: "ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum "
   },
   {
     titleid: "Test5 ",
@@ -44,6 +52,8 @@ const ratingData = [
     rateDate: "2023-12-01",
     movieRating: -3.2,
     imageUrl: departed,
+    titleRating: "Great movie",
+    description: "ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum "
   },
 ];
 const backgroundContainer = {
@@ -51,9 +61,10 @@ const backgroundContainer = {
 };
 const RatingHistory = () => {
   return (
-    <Container className="px-5" fluid style={backgroundContainer}>
+    <Container className="px-5 d-flex flex-column" fluid style={backgroundContainer}>
+      <h1 style={{textAlign: "center", color: "#FFF", margin: "2.5rem 0"}}>Your ratings</h1>
       {ratingData.map((rating) => (
-        <Row key={rating.titleid}>
+        <Row key={rating.titleid} className="justify-content-center">
           <RatingCard
             title={rating.titleid}
             grade={rating.grade}
