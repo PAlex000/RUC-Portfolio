@@ -202,14 +202,16 @@ const buttonsCol = {
 const buttonsColAltern = {
   display: "inline",
   margin: "18px",
-  fontSize: "18px",
+  fontSize: "20px",
   color: "#FFF",
   backgroundColor: "transparent",
   fontWeight: "bold",
   padding: "0.5rem 0.75rem",
-  border: "4px solid #DEB522", 
+  borderTop: "none",
+  borderRight: "none",
+  borderBottom: "none",
+  borderLeft: "5px solid #DEB522", 
   textShadow: "1px 3px 5px black",
-  borderRadius: "10px"
 }
 
 const backgroundStyle_1 = {

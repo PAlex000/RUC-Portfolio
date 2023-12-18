@@ -1,9 +1,9 @@
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { TiStarFullOutline } from "react-icons/ti";
 import { FaHeart } from "react-icons/fa";
+import Button from "react-bootstrap/Button";
 
 
 
@@ -30,7 +30,7 @@ const CardComp = ({ title, image, text, btnText }) => {
 
   const psColAltern = {
     display: "inline",
-    margin: "0.20rem",
+    margin: "0.05rem",
     fontSize: "17px",
     color: "grey",
     border: "none",
@@ -80,8 +80,8 @@ const CardComp = ({ title, image, text, btnText }) => {
       <Card.Img src={image} style={img}/>
       <FaHeart size={60} style={heart}/>
       <Card.Body>
-      <p style={psColAltern}>Action,</p> 
-      <p style={psColAltern}>Adventure,</p>
+      <p style={psColAltern}>Action /</p> 
+      <p style={psColAltern}>Adventure /</p>
       <p style={psColAltern}>Drama</p>
         <Card.Title as="h4" className="my-3">{title}</Card.Title>
         <div className="d-flex flex-row">

@@ -10,6 +10,7 @@ import {
 const Footer = () => {
     return (
         <Box>
+         
             <FooterContainer>
                 <Row>
                     <Column>

@@ -45,11 +45,19 @@ export const registerUser = (userData) => async (dispatch) => {
     const response = await fetch("/api/user/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userData),
+      body: JSON.stringify({
+        firstName: userData.inputFirstName,
+        lastName: userData.inputLastName,
+        phoneNo: userData.inputPhoneNumber,
+        email: userData.inputUsername,
+        password: userData.inputPassword,
+      }),
     });
+
     const data = await response.json();
-    dispatch(registerUserSuccess(data.Token));
+    dispatch(registerUserSuccess(data.token));
   } catch (error) {
+    console.log("Error in registerUser:", error);
     dispatch(registerUserFailure(error.toString()));
   }
 };
@@ -61,27 +69,72 @@ export const LOGIN_USER_SUCCESS = "LOGIN_USER_SUCCESS";
 export const LOGIN_USER_FAILURE = "LOGIN_USER_FAILURE";
 
 export const loginUserRequest = () => ({ type: LOGIN_USER_REQUEST });
-export const loginUserSuccess = (token) => ({
+export const loginUserSuccess = (token, userId) => ({
   type: LOGIN_USER_SUCCESS,
-  payload: { token },
+  payload: { token, userId },
 });
 export const loginUserFailure = (error) => ({
   type: LOGIN_USER_FAILURE,
   payload: { error },
 });
 
-export const loginUser = (loginData) => async (dispatch) => {
+export const loginUser = (userData) => async (dispatch) => {
   dispatch(loginUserRequest());
   try {
     const response = await fetch("/api/user/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(loginData),
+      body: JSON.stringify({
+        email: userData.inputUsername,
+        password: userData.inputPassword,
+      }),
     });
+
+    if (!response.ok) {
+      const errorRes = await response.json();
+      throw new Error(
+        errorRes.errors.email || errorRes.errors.password || "Failed to login"
+      );
+    }
+
     const data = await response.json();
-    dispatch(loginUserSuccess(data.Token));
+
+    const getUserByEmailResponse = await fetch(
+      `/api/user/email/${userData.inputUsername}`
+    );
+    const user = await getUserByEmailResponse.json();
+
+    dispatch(loginUserSuccess(data.token, user.userId));
   } catch (error) {
+    console.error("Error in loginUser:", error);
     dispatch(loginUserFailure(error.toString()));
+  }
+};
+
+//--//
+
+// Action Types
+export const LOGOUT_USER_REQUEST = "LOGOUT_USER_REQUEST";
+export const LOGOUT_USER_SUCCESS = "LOGOUT_USER_SUCCESS";
+export const LOGOUT_USER_FAILURE = "LOGOUT_USER_FAILURE";
+
+// Action Creators
+export const logoutUserRequest = () => ({ type: LOGOUT_USER_REQUEST });
+export const logoutUserSuccess = () => ({ type: LOGOUT_USER_SUCCESS });
+export const logoutUserFailure = (error) => ({
+  type: LOGOUT_USER_FAILURE,
+  payload: { error },
+});
+
+// Logout Thunk
+export const logoutUser = () => (dispatch) => {
+  dispatch(logoutUserRequest());
+  try {
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("userId");
+    dispatch(logoutUserSuccess());
+  } catch (error) {
+    dispatch(logoutUserFailure(error.toString()));
   }
 };
 

@@ -8,6 +8,9 @@ import {
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAILURE,
+  LOGOUT_USER_FAILURE,
+  LOGOUT_USER_REQUEST,
+  LOGOUT_USER_SUCCESS,
   UPDATE_USER_EMAIL_REQUEST,
   UPDATE_USER_EMAIL_SUCCESS,
   UPDATE_USER_EMAIL_FAILURE,
@@ -46,16 +49,15 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload.token,
+        userId: action.payload.userId,
         loading: false,
       };
     case UPDATE_USER_EMAIL_SUCCESS:
-      // might be an issue here
       return {
         ...state,
         loading: false,
       };
     case DELETE_USER_SUCCESS:
-      //if id is available
       return {
         ...state,
         users: state.users.filter((user) => user.id !== action.payload.userId),
@@ -66,6 +68,25 @@ const userReducer = (state = initialState, action) => {
     case LOGIN_USER_FAILURE:
     case UPDATE_USER_EMAIL_FAILURE:
     case DELETE_USER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+    case LOGOUT_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case LOGOUT_USER_SUCCESS:
+      return {
+        ...state,
+        token: null,
+        userId: null,
+        loading: false,
+      };
+    case LOGOUT_USER_FAILURE:
       return {
         ...state,
         loading: false,

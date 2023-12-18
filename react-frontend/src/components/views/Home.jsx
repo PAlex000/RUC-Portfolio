@@ -7,8 +7,7 @@ import CardComp from "../common/CardComp";
 import Dropdowns from "../common/Dropdown";
 import Header from "../layout/Header";
 import header from "../../assets/movieHeader.jpg";
-// import CardSearch from "../common/CardSearch";
-import CustomContainer from "../common/CustomContainer.jsx";
+import CustomContainer from "../common/CustomContainer";
 
 const headerData = [
   {
@@ -37,11 +36,9 @@ const Home = () => {
     dispatch(fetchMovies());
   }, [dispatch]);
 
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!movies) return <div>No movies available</div>;
-
   return (
     <CustomContainer fluid>
       <Header headers={headerData} />
@@ -60,11 +57,17 @@ const Home = () => {
               className="d-flex justify-content-center mb-4"
             >
               <CardComp
-                title={movie.type}
-                text={movie.description}
+                titleId={movie.titleId}
+                title={
+                  movie.akas && movie.akas.length > 0
+                    ? movie.akas[0].title
+                    : "Default Title"
+                }
+                description={movie.description}
                 btnText="Learn More"
                 image={movie.poster}
                 rating={movie.rating}
+                dispatchMovie={dispatch}
               />
             </Col>
           ))}

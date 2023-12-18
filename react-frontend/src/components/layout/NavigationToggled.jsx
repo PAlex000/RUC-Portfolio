@@ -2,9 +2,27 @@ import { items } from "../../types/nav/NavItems";
 import { Link } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import { useEffect } from "react";
+import { logout } from "../../utils/helperFunctions/Logout";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import "./NavigationToggle.scss";
+import { bookmark } from "../../utils/helperFunctions/Bookmark";
 
 const NavigationOpen = ({ isOpen, onChange }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => !!state.userReducer.token);
+
+  const handleLogout = () => {
+    logout(dispatch, navigate);
+    onChange(false);
+  };
+  const handleBookmark = () => {
+    bookmark(navigate);
+    onChange(false);
+  };
+
   useEffect(() => {
     const body = document.body;
     const scrollBarWidth =
@@ -16,7 +34,7 @@ const NavigationOpen = ({ isOpen, onChange }) => {
 
     if (isOpen) {
       body.style.overflow = "hidden";
-      body.style.paddingRight = `${bodyPaddingRight + scrollBarWidth}px`; // Prevent width reflow
+      body.style.paddingRight = `${bodyPaddingRight + scrollBarWidth}px`;
     } else {
       body.style.overflow = "";
       body.style.paddingRight = "";
@@ -37,6 +55,16 @@ const NavigationOpen = ({ isOpen, onChange }) => {
             {item.itemText}
           </Link>
         ))}
+        {isLoggedIn && (
+          <div className="bookmark" onClick={handleBookmark}>
+            Bookmark
+          </div>
+        )}
+        {isLoggedIn && (
+          <div className="logout" onClick={handleLogout}>
+            Logout
+          </div>
+        )}
       </div>
     </div>
   );
