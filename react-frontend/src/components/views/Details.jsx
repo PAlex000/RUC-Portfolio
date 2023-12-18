@@ -1,46 +1,220 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchMovieById,
+  fetchSimilarMovies,
+} from "../../redux/actions/MovieActions";
+import { Button, Col, Container, Row } from "react-bootstrap";
+import { TiStarFullOutline } from "react-icons/ti";
+import { GoPlay } from "react-icons/go";
+import Carousel from "react-bootstrap/Carousel";
 import departed from "../../assets/departed.jpg";
 
+const backgroundStyle = {
+  backgroundColor: "#000",
+  backgroundImage: `linear-gradient(0deg, 
+    rgba(0,0,0,1) 10%, rgba(0,0,0,0) 95%), url(${departed}`,
+  backgroundSize: "cover",
+  width: "100%",
+  height: "900px",
+  backgroundPosition: "top",
+  position: "relative",
+};
+
+const titleBackground2 = {
+  position: "absolute",
+  fontSize: "55px",
+  color: "#FFF",
+  fontWeight: "bold",
+  left: 30,
+  top: 120,
+  width: "60%",
+  padding: "2rem",
+  textShadow: "1px 4px 5px black",
+};
+
+const plot = {
+  position: "absolute",
+  fontSize: "25px",
+  color: "#FFF",
+  left: 30,
+  top: 355,
+  width: "35%",
+  padding: "2rem",
+  textShadow: "1px 3px 5px black", // offset-x | offset-y | blur | color
+};
+
+const buttons = {
+  position: "absolute",
+  left: 45,
+  top: 490,
+  margin: "2rem 0",
+};
+
+const buttonGenre = {
+  position: "absolute",
+  left: 45,
+  top: 260,
+  margin: "2rem 0",
+};
+
+const buttonsCol = {
+  display: "inline",
+  margin: "18px",
+  fontSize: "22px",
+  color: "#FFF",
+  fontWeight: "bold",
+  padding: "0.5rem 1rem",
+  border: "none",
+  borderRadius: "10px",
+  textShadow: "1px 2px 5px black",
+};
+
+const buttonsColAltern = {
+  display: "inline",
+  margin: "18px",
+  fontSize: "20px",
+  color: "#FFF",
+  backgroundColor: "transparent",
+  fontWeight: "bold",
+  padding: "0.5rem 0.75rem",
+  borderTop: "none",
+  borderRight: "none",
+  borderBottom: "none",
+  borderLeft: "5px solid #DEB522",
+  textShadow: "1px 3px 5px black",
+};
+
+const stars = {
+  fontSize: "30px",
+  fontWeight: "bold",
+  color: "#FFF",
+  marginLeft: "0.5rem",
+  textShadow: "1px 3px 5px black",
+};
+
+const review = {
+  fontSize: "25px",
+  color: "#FFF",
+  fontWeight: "bold",
+  textShadow: "1px 3px 5px black",
+};
+
+const positionate = {
+  position: "absolute",
+  left: 65,
+  top: 225,
+};
+
+const playButton = {
+  color: "#EF5454",
+  position: "absolute",
+  filter: "drop-shadow(1px 3px 5px black)",
+  right: 300,
+  top: 325,
+};
+
+const watch = {
+  color: "#FFF",
+  fontWeight: "bold",
+  fontSize: "35px",
+  position: "absolute",
+  top: 490,
+  right: 265,
+  textShadow: "1px 3px 5px black",
+};
+
+const backgroundStyle_1 = {
+  backgroundColor: "#000",
+};
+
+const titleStyle = {
+  color: "#FFFFFF",
+  fontWeight: "bold",
+  fontSize: "35px",
+  textAlign: "center",
+  paddingBottom: "2.5rem",
+  borderBottom: "2px solid #FFF",
+  width: "75%",
+};
+
+const synopsis = {
+  fontSize: "23px",
+  textAlign: "start",
+  width: "72%",
+  color: "#FFF",
+  marginTop: "1rem",
+  lineHeight: "2.85rem",
+};
 const Details = () => {
+  const dispatch = useDispatch();
+  const { movie, loading, error } = useSelector((state) => state.moviesReducer);
+  const [similarMoviesVisible, setSimilarMoviesVisible] = useState(false);
 
-return (
-  <section className="bg-white dark:bg-gray-900 m-6 p-4">
-    <div className="container flex flex-col items-center px-4 py-12 mx-auto xl:flex-row">
-      <div className="flex justify-center xl:w-1/2">
-        <img
-          className="h-80 w-80 sm:w-[28rem] sm:h-[28rem] flex-shrink-0 object-cover rounded-md"
-          src={departed}
-          // alt={type}
-        />
-      </div>
+  useEffect(() => {
+    dispatch(fetchMovieById());
+  }, [dispatch]);
 
-      <div className="flex flex-col items-center mt-6 xl:items-start xl:w-1/2 xl:mt-0">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-800 xl:text-4xl dark:text-white">
-          {"Type"}
-        </h2>
+  const handleSeeSimilarMovies = () => {
+    dispatch(fetchSimilarMovies(movie.id)); // Assuming movies.id is the unique identifier
+    setSimilarMoviesVisible(true);
+  };
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!movie) return <div>No movie available</div>;
+  return (
+    <div>
+      <Container fluid style={backgroundStyle}>
+        <h3 style={titleBackground2}>{movie.akas.$values[0].title}</h3>
+        <div className="d-flex flex-row" style={positionate}>
+          <TiStarFullOutline
+            size={30}
+            className="mt-2"
+            style={{ color: "#DEB522" }}
+          />{" "}
+          <p style={stars}>
+            {" "}
+            {movie.rating ? movie.rating : 0}{" "}
+            <span style={review} className="mx-1">
+              ({movie.rating ? movie.rating : 0} total reviews)
+            </span>
+          </p>
+        </div>
+        <p style={plot}>{movie.description}</p>
+        {/* for now there are three buttons, use .map to retrieve the genres of each movie in future */}
+        <Col style={buttonGenre}>
+          <Button style={buttonsColAltern}>Crime</Button>
+          <Button style={buttonsColAltern}>Drama</Button>
+          <Button style={buttonsColAltern}>Thriller</Button>
+        </Col>
+        <Col style={buttons}>
+          <Button style={buttonsCol} variant="warning">
+            Add to Watchlist
+          </Button>
+          <Button style={buttonsCol} variant="warning">
+            Similar Movies
+          </Button>
+          <Button style={buttonsCol} variant="warning">
+            Rate
+          </Button>
+        </Col>
+        <GoPlay size={150} style={playButton} />
+        <p style={watch}> Watch Trailer</p>
+      </Container>
 
-        <p className="block max-w-2xl mt-4 text-xl text-gray-500 dark:text-gray-300">
-          Start/End year: {2015} - {2020}
-        </p>
-
-        <p className="block max-w-2xl mt-4 text-xl text-gray-500 dark:text-gray-300">
-        Type: {"Type"}
-        </p>
-
-        <p className="block max-w-2xl mt-4 text-xl text-gray-500 dark:text-gray-300">
-        Rating: {1}
-        </p>
-        <span className="m-2 p-2 bg-slate-300 text-slate-800 rounded-md">
-          {"description"}
-        </span>
-
-        <button>See similar Movies</button>
-
-        <button>Bookmark</button>
-      <button>Rate</button>
-      </div>
+      <Container fluid style={backgroundStyle_1}>
+        <Row className="justify-content-center p-5 mx-2">
+          <h2 style={titleStyle}>Synopsis</h2>
+          <p style={synopsis}>{movie.description}</p>
+        </Row>
+        <Row className="justify-content-center p-5 mx-2 mt-5">
+          <h2 style={titleStyle}>Cast</h2>
+          <Carousel>
+            <Carousel.Item></Carousel.Item>
+          </Carousel>
+        </Row>
+      </Container>
     </div>
-  </section>
-);
+  );
 };
 export default Details;
-
