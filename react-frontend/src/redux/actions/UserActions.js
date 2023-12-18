@@ -26,6 +26,35 @@ export const fetchUsers = () => async (dispatch) => {
 
 //--//
 
+export const FETCH_USER_DETAILS_REQUEST = "FETCH_USER_DETAILS_REQUEST";
+export const FETCH_USER_DETAILS_SUCCESS = "FETCH_USER_DETAILS_SUCCESS";
+export const FETCH_USER_DETAILS_FAILURE = "FETCH_USER_DETAILS_FAILURE";
+
+export const fetchUserDetailsRequest = () => ({
+  type: FETCH_USER_DETAILS_REQUEST,
+});
+export const fetchUserDetailsSuccess = (userDetails) => ({
+  type: FETCH_USER_DETAILS_SUCCESS,
+  payload: { userDetails },
+});
+export const fetchUserDetailsFailure = (error) => ({
+  type: FETCH_USER_DETAILS_FAILURE,
+  payload: { error },
+});
+
+export const fetchUserDetails = (userId) => async (dispatch) => {
+  dispatch(fetchUserDetailsRequest());
+  try {
+    const response = await fetch(`/api/user/${userId}`);
+    const userDetails = await response.json();
+    dispatch(fetchUserDetailsSuccess(userDetails));
+  } catch (error) {
+    dispatch(fetchUserDetailsFailure(error.toString()));
+  }
+};
+
+//--//
+
 export const REGISTER_USER_REQUEST = "REGISTER_USER_REQUEST";
 export const REGISTER_USER_SUCCESS = "REGISTER_USER_SUCCESS";
 export const REGISTER_USER_FAILURE = "REGISTER_USER_FAILURE";

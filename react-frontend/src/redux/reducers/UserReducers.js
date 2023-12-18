@@ -2,6 +2,9 @@ import {
   FETCH_USERS_REQUEST,
   FETCH_USERS_SUCCESS,
   FETCH_USERS_FAILURE,
+  FETCH_USER_DETAILS_REQUEST,
+  FETCH_USER_DETAILS_SUCCESS,
+  FETCH_USER_DETAILS_FAILURE,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAILURE,
@@ -45,6 +48,27 @@ const userReducer = (state = initialState, action) => {
         users: action.payload.users,
         loading: false,
       };
+    // ... existing cases
+    case FETCH_USER_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case FETCH_USER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        userDetails: action.payload.userDetails, // You may want to store the user details separately
+        loading: false,
+      };
+    case FETCH_USER_DETAILS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+    // ... other cases
+
     case REGISTER_USER_SUCCESS:
     case LOGIN_USER_SUCCESS:
       return {

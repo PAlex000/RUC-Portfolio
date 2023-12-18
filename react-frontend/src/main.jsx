@@ -21,6 +21,7 @@ import {
 } from "./utils/helperFunctions/PrivateRoute.jsx";
 import { loginUserSuccess } from "./redux/actions/UserActions.js";
 import Admin from "./components/privateViews/Admin.jsx";
+import ProfileSettings from "./components/privateViews/ProfileSettings.jsx";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <RatingHistory />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "settings",
+        element: (
+          <PrivateRoute>
+            <ProfileSettings />
           </PrivateRoute>
         ),
       },
