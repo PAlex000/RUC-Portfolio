@@ -72,6 +72,35 @@ public class MovieService : IMovieService
         return db.TitleBasics.Any(m => m.Id == movieId);
     }
 
+        public (IList<TitleBasics> movies, int count) GetMoviesByRating(int page, int pageSize, int? minRating, int? maxRating)
+    {
+        var moviesQuery = db.TitleBasics.AsQueryable();
+
+        if (minRating.HasValue)
+        {
+            moviesQuery = moviesQuery.Where(movie => movie.rating >= minRating);
+        }
+
+            if (maxRating.HasValue)
+        {
+            moviesQuery = moviesQuery.Where(movie => movie.rating <= maxRating);
+        }
+
+        var moviesWithRatings = moviesQuery
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        var count = moviesQuery.Count();
+
+        foreach (var movie in moviesWithRatings)
+        {
+            movie.akas = db.TitleAkas.Where(x => x.Id == movie.Id).ToList();
+        }
+
+        return (moviesWithRatings, count);
+    }
+
     public bool CreateMovie(TitleBasics newMovie, TitleAkas newTitleAkas)
     {
         var existingMovie = db.TitleBasics.Find(newMovie.Id);

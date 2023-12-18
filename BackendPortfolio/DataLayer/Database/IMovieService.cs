@@ -9,6 +9,7 @@ public interface IMovieService
     public TitleBasics GetMovieById(string movieId);
     public List<TitleBasics> SearchMovies(string searchString);
     public List<TitleBasics> GetSimilarMovies(string movieId);
+    (IList<TitleBasics> movies, int count) GetMoviesByRating(int page, int pageSize, int? minRating, int? maxRating);
     public bool CreateMovie(TitleBasics newMovie, TitleAkas newTitleAkas);
     bool DoesMovieExist(string movieId);
     public bool DeleteMovie(string movieId);

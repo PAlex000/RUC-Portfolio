@@ -26,6 +26,7 @@ export const fetchMovies = (page, pageSize) => {
         `/api/movie?page=${page}&pageSize=${pageSize}`
       );
       const data = await response.json();
+      console.log("fetchMovies Response:", data);
       if (data.items && data.items.$values) {
         for (var i = 0; i < data.items.$values.length; i++) {
           var Id = data.items.$values[i].url.split("/");
@@ -34,6 +35,7 @@ export const fetchMovies = (page, pageSize) => {
       }
       dispatch(fetchMoviesSuccess(data.items.$values, data.total)); // items: {$id, $values[id, url, type, etc.]}
     } catch (error) {
+      console.error("fetchMovies Error:", error);
       dispatch(fetchMoviesFailure(error.toString()));
     }
   };
@@ -77,6 +79,47 @@ export const fetchMovieById = (titleId) => {
 };
 
 // -- //
+
+//Action Type
+
+export const FETCH_MOVIES_BY_RATING_REQUEST = "FETCH_MOVIES_BY_RATING_REQUEST";
+export const FETCH_MOVIES_BY_RATING_SUCCESS = "FETCH_MOVIES_BY_RATING_SUCCESS";
+export const FETCH_MOVIES_BY_RATING_FAILURE = "FETCH_MOVIES_BY_RATING_FAILURE";
+
+// Regular Actions
+export const fetchMoviesByRatingRequest = () => ({
+  type: FETCH_MOVIES_BY_RATING_REQUEST,
+});
+
+export const fetchMoviesByRatingSuccess = (data) => ({
+  type: FETCH_MOVIES_BY_RATING_SUCCESS,
+  payload: data,
+});
+
+export const fetchMoviesByRatingFailure = (error) => ({
+  type: FETCH_MOVIES_BY_RATING_FAILURE,
+  payload: { error },
+});
+
+// Thunk Action
+export const fetchMoviesByRating = (page, pageSize, minRating, maxRating) => {
+  return async (dispatch) => {
+    dispatch(fetchMoviesByRatingRequest());
+    try {
+      const response = await fetch(
+        `/api/movie/byrating?page=${page}&pageSize=${pageSize}&minRating=${minRating}&maxRating=${maxRating}`
+      );
+      const data = await response.json();
+      console.log("fetchMoviesByRating Response:", data);
+      dispatch(fetchMoviesByRatingSuccess(data));
+    } catch (error) {
+      console.error("fetchMoviesByRating Error:", error);
+      dispatch(fetchMoviesByRatingFailure(error.toString()));
+    }
+  };
+};
+
+//--//
 
 // Action Types
 export const FETCH_SIMILAR_MOVIES_REQUEST = "FETCH_SIMILAR_MOVIES_REQUEST ";
