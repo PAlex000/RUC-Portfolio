@@ -5,7 +5,6 @@ import Form from "react-bootstrap/Form";
 import { TiStarFullOutline } from "react-icons/ti";
 import {useState} from "react";
 
-
 const RatingCard = ({ title, image, rateDate }) => {
   const cardStyle = {
     backgroundColor: "#151515",
@@ -53,19 +52,6 @@ const RatingCard = ({ title, image, rateDate }) => {
     top: 120
   }
 
-  const buttons = {
-    
-    display: "inline",
-    margin: "0 8px",
-    fontSize: "18px",
-    color: "#FFF",
-    fontWeight: "bold",
-    padding: "0.5rem 0.75rem",
-    border: "none",
-    borderRadius: "10px", 
-    textShadow: "1px 2px 5px black",
-  }
-
   const buttonContainer = {
     position: "absolute",
     top: 300,
@@ -82,10 +68,55 @@ const RatingCard = ({ title, image, rateDate }) => {
 const [show, setShow] = useState(false);
 const [rating, setRating] = useState(false);
 
+const [isHover, setIsHover] = useState(false);
+
+const [isHoverOne, setIsHoverOne] = useState(false);
+
+   const handleMouseEnter = () => {
+      setIsHover(true);
+   };
+   const handleMouseLeave = () => {
+      setIsHover(false);
+   };
+
 const handleClose = () => setShow(false); 
 const handleShow = () => setShow(true);
 const closeRating = () => setRating(false); 
 const showRating = () => setRating(true);
+
+const handleMouseEnterAgain = () => {
+  setIsHoverOne(true);
+}
+
+const handleMouseLeaveAgain = () => {
+  setIsHoverOne(false);
+}
+
+const buttonStyle = {
+    
+  display: "inline",
+  margin: "0 8px",
+  fontSize: "18px",
+  color: isHover ? "#000" : "#FFF",
+  fontWeight: "bold",
+  padding: "0.5rem 0.75rem",
+  border: "none",
+  borderRadius: "10px", 
+  textShadow: "1px 2px 5px black",
+}
+
+const buttonStyle1 = {
+    
+  display: "inline",
+  margin: "0 8px",
+  fontSize: "18px",
+  color: isHoverOne ? "#000" : "#FFF",
+  fontWeight: "bold",
+  padding: "0.5rem 0.75rem",
+  border: "none",
+  borderRadius: "10px", 
+  textShadow: "1px 2px 5px black",
+}
 
   return <>
       <Card style={cardStyle}>
@@ -109,7 +140,7 @@ const showRating = () => setRating(true);
           </footer> */}
         </blockquote>
         <div style={buttonContainer}>
-          <Button variant="warning" style={buttons} onClick={showRating}>Edit Rating</Button>
+          <Button variant={isHover ? "light" : "warning"} style={buttonStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={showRating}>Edit Rating</Button>
           <Modal show={rating} onHide={closeRating} backdrop="static"
           keyboard={false} style={{
           fontSize: "20px",
@@ -137,12 +168,12 @@ fontWeight: "bold",
           </Form>
 </Modal.Body>
 <Modal.Footer>
-<Button variant="warning" onClick={handleClose} style={{fontWeight: "bold", fontSize: "20px"}}>
+<Button variant={isHover ? "light" : "warning"} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleClose} style={{fontWeight: "bold", fontSize: "20px", color: isHover ? "#000" : "#FFF"}}>
 Rate
 </Button>
 </Modal.Footer>
 </Modal>
-          <Button variant="danger" style={buttons} onClick={handleShow}>Delete Rating</Button>
+          <Button variant={isHoverOne ? "light" : "danger"} style={buttonStyle1} onMouseEnter={handleMouseEnterAgain} onMouseLeave={handleMouseLeaveAgain} onClick={handleShow}>Delete Rating</Button>
           <Modal show={show} onHide={handleClose} backdrop="static"
         keyboard={false} style={{
           fontSize: "20px",
@@ -153,10 +184,10 @@ Rate
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete this rating? You cannot undo this action.</Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={handleClose} style={{fontWeight: "bold", fontSize: "20px"}}>
+          <Button variant={isHover ? "light" : "danger"} onClick={handleClose} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{fontWeight: "bold", fontSize: "20px", color: isHover ? "#000" : "#FFF"}}>
             Yes
           </Button>
-          <Button variant="warning" onClick={handleClose} style={{fontWeight: "bold", fontSize: "20px"}}>
+          <Button variant={isHover ? "light" : "warning"} onClick={handleClose} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{fontWeight: "bold", fontSize: "20px", color: isHover ? "#000" : "#FFF"}}>
             No, take me back!
           </Button>
           </Modal.Footer>
