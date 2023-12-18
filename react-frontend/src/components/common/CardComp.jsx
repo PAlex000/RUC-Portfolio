@@ -3,6 +3,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { TiStarFullOutline } from "react-icons/ti";
 import Button from "react-bootstrap/Button";
+import {useState} from "react";
 
 const CardComp = ({ title, image, text, btnText }) => {
 
@@ -35,18 +36,6 @@ const CardComp = ({ title, image, text, btnText }) => {
     fontSize: "18px",
   }
 
-  const buttons = {
-  display: "inline",
-  margin: "0 2.5px",
-  fontSize: "15px",
-  color: "#FFF",
-  fontWeight: "bold",
-  padding: "0.5rem 0.75rem",
-  border: "none",
-  borderRadius: "10px", 
-  textShadow: "1px 2px 5px black",
-
-  }
 
   const stars = {
     fontSize: "20px",
@@ -58,6 +47,51 @@ const CardComp = ({ title, image, text, btnText }) => {
     fontSize: "15px",
     color: "grey",
     fontWeight: "bold",
+  }
+
+  const [isHover, setIsHover] = useState(false);
+
+const [isHoverOne, setIsHoverOne] = useState(false);
+
+
+   const handleMouseEnter = () => {
+      setIsHover(true);
+   };
+   const handleMouseLeave = () => {
+      setIsHover(false);
+   };
+
+   const handleMouseEnterAgain = () => {
+    setIsHoverOne(true);
+  }
+  
+  const handleMouseLeaveAgain = () => {
+    setIsHoverOne(false);
+  }
+
+
+  const buttonStyle = {
+    display: "inline",
+    margin: "0 3px",
+    fontSize: "15px",
+    color: isHover ? "#000" : "#FFF",
+    fontWeight: "bold",
+    padding: "0.5rem 0.75rem",
+    border: "none",
+    borderRadius: "10px", 
+    textShadow: "1px 2px 5px black",
+  }
+
+  const buttonStyle1 = {
+    display: "inline",
+    margin: "0 3px",
+    fontSize: "15px",
+    color: isHoverOne ? "#000" : "#FFF",
+    fontWeight: "bold",
+    padding: "0.5rem 0.75rem",
+    border: "none",
+    borderRadius: "10px", 
+    textShadow: "1px 2px 5px black",
   }
 
 
@@ -77,8 +111,8 @@ const CardComp = ({ title, image, text, btnText }) => {
         <TiStarFullOutline size={23} className="mt-1"/>  <p style={stars}> 0.00  <span style={review} className="mx-1">(0 reviews)</span></p>
         </div>
         <p style={plot}>{text}</p>
-        <Button variant="danger" style={buttons}>{btnText}</Button>
-        <Button variant="warning" style={buttons}>Add Bookmark</Button>
+        <Button variant={isHover ? "light" : "danger"} style={buttonStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>{btnText}</Button>
+        <Button variant={isHoverOne ? "light" : "warning"} style={buttonStyle1} onMouseEnter={handleMouseEnterAgain} onMouseLeave={handleMouseLeaveAgain}>Add Bookmark</Button>
 
       </Card.Body>
     </Card>

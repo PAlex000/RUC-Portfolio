@@ -48,11 +48,52 @@ const CardSearch = ({ title, image, btnText}) => {
     fontWeight: "bold",
   }
 
+const [isHover, setIsHover] = useState(false);
+
+const [isHoverOne, setIsHoverOne] = useState(false);
+
+const [isHoverTwo, setIsHoverTwo] = useState(false);
+
+   const handleMouseEnter = () => {
+      setIsHover(true);
+   };
+   const handleMouseLeave = () => {
+      setIsHover(false);
+   };
+
+   const handleMouseEnterAgain = () => {
+    setIsHoverOne(true);
+  }
+  
+  const handleMouseLeaveAgain = () => {
+    setIsHoverOne(false);
+  }
+
+  const handleMouseEnterTwo = () => {
+    setIsHoverTwo(true);
+  }
+  
+  const handleMouseLeaveTwo = () => {
+    setIsHoverTwo(false);
+  }
+
   const buttonStyle = {
     display: "inline",
     margin: "0 3px",
     fontSize: "15px",
-    color: "#FFF",
+    color: isHover ? "#000" : "#FFF",
+    fontWeight: "bold",
+    padding: "0.5rem 0.75rem",
+    border: "none",
+    borderRadius: "10px", 
+    textShadow: "1px 2px 5px black",
+  }
+
+  const buttonStyle1 = {
+    display: "inline",
+    margin: "0 3px",
+    fontSize: "15px",
+    color: isHoverOne ? "#000" : "#FFF",
     fontWeight: "bold",
     padding: "0.5rem 0.75rem",
     border: "none",
@@ -74,8 +115,8 @@ const CardSearch = ({ title, image, btnText}) => {
         <div className="d-flex flex-row">
         <TiStarFullOutline size={23} className="mt-1"/>  <p style={stars}> 0.00  <span style={review} className="mt-1">(0 reviews)</span></p>
         </div>
-        <Button variant="warning" className="my-3" style={buttonStyle} onClick={handleShow}>{btnText}</Button>
-         <Button variant="danger" className="my-3" style={buttonStyle} onClick={handleShow}>Delete search</Button>
+        <Button variant={isHover ? "light" : "warning"} className="my-3" style={buttonStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleShow}>{btnText}</Button>
+         <Button variant={isHoverOne ? "light" : "danger"} className="my-3" style={buttonStyle1} onMouseEnter={handleMouseEnterAgain} onMouseLeave={handleMouseLeaveAgain} onClick={handleShow}>Delete search</Button>
 
          <Modal show={show} onHide={handleClose} backdrop="static"
         keyboard={false} style={{
@@ -87,10 +128,10 @@ const CardSearch = ({ title, image, btnText}) => {
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete this record? You cannot undo this action.</Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={handleClose} style={{fontWeight: "bold", fontSize: "20px"}}>
+          <Button variant={isHoverTwo ? "light" : "warning"} onClick={handleClose} onMouseEnter={handleMouseEnterTwo} onMouseLeave={handleMouseLeaveTwo}  style={{fontWeight: "bold", fontSize: "20px", color: isHoverTwo ? "#000" : "#FFF"}}>
             Yes
           </Button>
-          <Button variant="warning" onClick={handleClose} style={{fontWeight: "bold", fontSize: "20px"}}>
+          <Button variant={isHoverTwo ? "light" : "danger"} onClick={handleClose} onMouseEnter={handleMouseEnterTwo} onMouseLeave={handleMouseLeaveTwo}  style={{fontWeight: "bold", fontSize: "20px", color: isHoverTwo ? "#000" : "#FFF"}}>
             No, take me back!
           </Button>
         </Modal.Footer>

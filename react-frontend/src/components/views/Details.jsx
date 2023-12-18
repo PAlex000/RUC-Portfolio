@@ -96,19 +96,6 @@ const buttonGenre = {
 
 }
 
-const buttonsCol = {
-  display: "inline",
-  margin: "18px",
-  fontSize: "22px",
-  color: "#FFF",
-  fontWeight: "bold",
-  padding: "0.5rem 1rem",
-  border: "none",
-  borderRadius: "10px", 
-  textShadow: "1px 2px 5px black",
-
-}
-
 
 const buttonsColAltern = {
   display: "inline",
@@ -275,11 +262,56 @@ const type = {
 }
 
 
-
-
 const Details = () => {
 
   const [show, setShow] = useState(false);
+
+  const [isHover, setIsHover] = useState(false);
+
+const [isHoverOne, setIsHoverOne] = useState(false);
+
+
+   const handleMouseEnter = () => {
+      setIsHover(true);
+   };
+   const handleMouseLeave = () => {
+      setIsHover(false);
+   };
+
+   const handleMouseEnterAgain = () => {
+    setIsHoverOne(true);
+  }
+  
+  const handleMouseLeaveAgain = () => {
+    setIsHoverOne(false);
+  }
+
+  const buttonsCol = {
+    display: "inline",
+    margin: "18px",
+    fontSize: "22px",
+    color: isHover ? "#000" : "#FFF",
+    fontWeight: "bold",
+    padding: "0.5rem 1rem",
+    border: "none",
+    borderRadius: "10px", 
+    textShadow: "1px 2px 5px black",
+  
+  }
+  
+  const buttonsCol1 = {
+    display: "inline",
+    margin: "18px",
+    fontSize: "22px",
+    color: isHoverOne ? "#000" : "#FFF",
+    fontWeight: "bold",
+    padding: "0.5rem 1rem",
+    border: "none",
+    borderRadius: "10px", 
+    textShadow: "1px 2px 5px black",
+  
+  }
+
 
   const handleClose = () => setShow(false); // = () => , not just equal, no wonder why it was re-rendering all over again
   const handleShow = () => setShow(true);
@@ -299,8 +331,8 @@ return (
     <Button style={buttonsColAltern}>Thriller</Button>
     </Col>
     <Col style={buttons}>
-    <Button style={buttonsCol} variant="danger">Add To Favorites</Button>
-    <Button style={buttonsCol} variant="warning">Add to Watchlist</Button>
+    <Button style={buttonsCol} variant={isHover ? "light" : "danger" } onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Add To Favorites</Button>
+    <Button style={buttonsCol1} variant={isHoverOne ? "light" : "warning"} onMouseEnter={handleMouseEnterAgain} onMouseLeave={handleMouseLeaveAgain}>Add to Watchlist</Button>
     </Col>
     <p style={type}>R | 2006</p>
     <GoPlay size={150} style={playButton}/>

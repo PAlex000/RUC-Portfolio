@@ -79,18 +79,20 @@ const [isHoverOne, setIsHoverOne] = useState(false);
       setIsHover(false);
    };
 
+   const handleMouseEnterAgain = () => {
+    setIsHoverOne(true);
+  }
+  
+  const handleMouseLeaveAgain = () => {
+    setIsHoverOne(false);
+  }
+
 const handleClose = () => setShow(false); 
 const handleShow = () => setShow(true);
 const closeRating = () => setRating(false); 
 const showRating = () => setRating(true);
 
-const handleMouseEnterAgain = () => {
-  setIsHoverOne(true);
-}
 
-const handleMouseLeaveAgain = () => {
-  setIsHoverOne(false);
-}
 
 const buttonStyle = {
     
