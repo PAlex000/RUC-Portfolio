@@ -16,7 +16,8 @@ export const fetchUsers = () => async (dispatch) => {
   dispatch(fetchUsersRequest());
   try {
     const response = await fetch("/api/user");
-    const users = await response.json();
+    const data = await response.json();
+    const users = data.$values;
     dispatch(fetchUsersSuccess(users));
   } catch (error) {
     dispatch(fetchUsersFailure(error.toString()));

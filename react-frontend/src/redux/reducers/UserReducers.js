@@ -60,7 +60,9 @@ const userReducer = (state = initialState, action) => {
     case DELETE_USER_SUCCESS:
       return {
         ...state,
-        users: state.users.filter((user) => user.id !== action.payload.userId),
+        users: state.users.filter(
+          (user) => user.userId !== action.payload.userId
+        ),
         loading: false,
       };
     case FETCH_USERS_FAILURE:

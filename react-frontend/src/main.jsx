@@ -15,8 +15,10 @@ import Home from "./components/views/Home.jsx";
 import Login from "./components/views/Login.jsx";
 import RatingHistory from "./components/privateViews/RatingHistory.jsx";
 import Signup from "./components/views/Signup.jsx";
-import PrivateRoute from "./utils/helperFunctions/PrivateRoute.jsx";
-import { PrivateRouteAdmin } from "./utils/helperFunctions/PrivateRoute.jsx";
+import {
+  PrivateRoute,
+  PrivateRouteAdmin,
+} from "./utils/helperFunctions/PrivateRoute.jsx";
 import { loginUserSuccess } from "./redux/actions/UserActions.js";
 import Admin from "./components/privateViews/Admin.jsx";
 

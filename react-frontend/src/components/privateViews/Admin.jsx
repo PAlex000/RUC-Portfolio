@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers, deleteUser } from "../redux/actions/UserActions";
+import { fetchUsers, deleteUser } from "../../redux/actions/UserActions";
+import CustomContainer from "../common/CustomContainer";
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Admin = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
+    <CustomContainer fluid>
       <h1>Admin Dashboard</h1>
       <ul>
         {users.map((user) => (
@@ -30,7 +31,7 @@ const Admin = () => {
           </li>
         ))}
       </ul>
-    </div>
+    </CustomContainer>
   );
 };
 

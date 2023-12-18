@@ -8,7 +8,7 @@ export const PrivateRoute = ({ children }) => {
 
 export const PrivateRouteAdmin = ({ children }) => {
   const { token, userId } = useSelector((state) => state.userReducer);
-  const isAdmin = token && userId === "9999";
+  const isAdmin = token && userId === 9999;
 
   if (!isAdmin) {
     return <Navigate to="/" />;
