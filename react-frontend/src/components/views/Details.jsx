@@ -1,9 +1,9 @@
 import departed from "../../assets/departed.jpg";
-import {Button, Container, Col, Row, CarouselItem} from "react-bootstrap";
+import {Button, Container, Col, Row, CarouselItem, Card} from "react-bootstrap";
 import { TiStarFullOutline } from "react-icons/ti";
 import { GoPlay } from "react-icons/go";
 import Carousel from 'react-bootstrap/Carousel';
-
+import user_picture from "../../assets/user_icon.png";
 
 const backgroundStyle = {
   backgroundColor: "#000",
@@ -14,6 +14,40 @@ const backgroundStyle = {
   height: "900px",
   backgroundPosition: "top",
   position: "relative",
+}
+
+const imgPicture = {
+  width: 171,
+  height: 171,
+  borderRadius: "50%",
+  backgroundColor: "#FFFFFF",
+  marginLeft: "1rem"
+}
+
+const imgPictureResize = {
+  width: 171,
+  height: 171,
+  borderRadius: "50%",
+  backgroundColor: "#FFFFFF",
+  marginLeft: "1.5rem"
+}
+
+const imgPictureAnd = {
+  width: 171,
+  height: 171,
+  borderRadius: "50%",
+  backgroundColor: "#FFFFFF",
+  marginLeft: "3rem"
+}
+
+
+
+const imgPictureLeo = {
+  width: 171,
+  height: 171,
+  borderRadius: "50%",
+  backgroundColor: "#FFFFFF",
+  marginLeft: "3rem"
 }
 
 
@@ -151,6 +185,23 @@ const synopsis = {
   lineHeight: "2.85rem"
 }
 
+const cardCast = {
+  backgroundColor: "#000",
+  textAlign: "center"
+}
+
+const castName = {
+  color: "#FFF",
+}
+
+const role = {
+  color: "#FFF"
+}
+
+const carouselOne = {
+  gap: "7%",
+}
+
 
 
 const Details = () => {
@@ -196,8 +247,76 @@ return (
         <h2 style={titleStyle}>Cast</h2>
         <Carousel>
           <Carousel.Item>
+            <Col className="d-flex flex-row justify-content-center my-5" style={carouselOne}>
+            <Card style={cardCast}>
+            <Card.Img src={user_picture} style={imgPictureLeo} />
+              <Card.Body>
+                <h3 style={castName}>Leonardo DiCaprio</h3>
+                <p style={role}>Billy Costigan</p>
+              </Card.Body>
+            </Card>
+
+                       <Card style={cardCast}>
+            <Card.Img src={user_picture} style={imgPicture} />
+              <Card.Body>
+                <h3 style={castName}>Jack Nicholson</h3>
+                <p style={role}>Costello</p>
+              </Card.Body>
+            </Card>
+
+                        <Card style={cardCast}>
+            <Card.Img src={user_picture} style={imgPicture} />
+              <Card.Body>
+              <h3 style={castName}>Martin Sheen</h3>
+                <p style={role}>Queenan</p>
+              </Card.Body>
+            </Card>
             
+            <Card style={cardCast}>
+            <Card.Img src={user_picture} style={imgPicture} />
+              <Card.Body>
+              <h3 style={castName}>Matt Damon</h3>
+                <p style={role}>Colin</p>
+              </Card.Body>
+            </Card>
+            </Col>
           </Carousel.Item>
+          <CarouselItem>
+          <div>A circle</div>
+            <Col className="d-flex flex-row justify-content-center my-5" style={carouselOne}>
+            <Card style={cardCast}>
+            <Card.Img src={user_picture} style={imgPicture} />
+              <Card.Body>
+                <h3 style={castName}>Ray Winstone</h3>
+                <p style={role}>Mr. French</p>
+              </Card.Body>
+            </Card>
+
+                       <Card style={cardCast}>
+            <Card.Img src={user_picture} style={imgPictureResize} />
+              <Card.Body>
+                <h3 style={castName}>Mark Wahlberg</h3>
+                <p style={role}>Dignam</p>
+              </Card.Body>
+            </Card>
+
+                        <Card style={cardCast}>
+            <Card.Img src={user_picture} style={imgPictureAnd} />
+              <Card.Body>
+              <h3 style={castName}>Anthony Anderson</h3>
+                <p style={role}>Brown</p>
+              </Card.Body>
+            </Card>
+            
+            <Card style={cardCast}>
+            <Card.Img src={user_picture} style={imgPictureResize} />
+              <Card.Body>
+              <h3 style={castName}>Kevin Corrigan</h3>
+                <p style={role}>Cousin Sean</p>
+              </Card.Body>
+            </Card>
+            </Col>
+          </CarouselItem>
         </Carousel>
         </Row>
         </Container>
