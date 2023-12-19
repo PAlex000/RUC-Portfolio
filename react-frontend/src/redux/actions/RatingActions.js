@@ -39,7 +39,6 @@ export const fetchRatingHistory = (userId) => async (dispatch) => {
       });
       ratedMovies.push(temporaryData);
     }
-    console.log(ratedMovies);
     dispatch(fetchRatingHistorySuccess(ratings.$values, ratedMovies));
   } catch (error) {
     dispatch(fetchRatingHistoryFailure(error.toString()));

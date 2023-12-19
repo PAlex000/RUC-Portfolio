@@ -79,24 +79,6 @@ const DetailCard = ({
     backgroundColor: "#313131",
   };
 
-  const movieGridStyle = {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-    gridGap: "20px",
-  };
-
-  const movieItemStyle = {
-    border: "1px solid #ddd",
-    borderRadius: "8px",
-    padding: "10px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-  };
-  const moviePosterStyle = {
-    width: "100%",
-    height: "auto",
-    borderRadius: "4px",
-  };
-
   return (
     <Card style={cardStyle} className="mt-3">
       <Card.Img src={image} style={imageStyle} />

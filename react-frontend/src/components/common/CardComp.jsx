@@ -11,8 +11,18 @@ import {
 import { useState } from "react";
 import "./CardComp.scss";
 import { addBookmark } from "../privateViews/Bookmark";
+import { details } from "../../utils/helperFunctions/Details";
+import { useNavigate } from "react-router-dom";
 
-const CardComp = ({ titleId, title, description, rating, image, dispatchMovie }) => {
+const CardComp = ({
+  titleId,
+  title,
+  description,
+  rating,
+  image,
+  dispatchMovie,
+}) => {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
   const handleModalShow = () => setShowModal(true);
@@ -48,7 +58,14 @@ const CardComp = ({ titleId, title, description, rating, image, dispatchMovie })
   return (
     <>
       <Card style={cardStyles}>
-        <Card.Img src={image} style={cardImageStyle}></Card.Img>
+        <Card.Img
+          src={image}
+          style={cardImageStyle}
+          onClick={() => {
+            handleDetails(navigate, titleId);
+          }}
+        ></Card.Img>
+
         <Card.Body>
           <div className="d-flex align-items-center">
             <StarFill color="yellow" className="mb-2" />
@@ -94,5 +111,8 @@ const CardComp = ({ titleId, title, description, rating, image, dispatchMovie })
     </>
   );
 };
-
+const handleDetails = (navigate, titleId) => {
+  details(navigate);
+  localStorage.setItem("titleId", titleId);
+};
 export default CardComp;

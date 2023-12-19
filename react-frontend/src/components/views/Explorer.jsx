@@ -41,8 +41,8 @@ const Explorer = () => {
   return (
     <CustomContainer fluid>
       <h2 style={h2Style}>
-        Welcome to the Explorer Page! <br /> This is where we'll ensure that you
-        can find everything you'll need! <br /> Scroll and find your movie
+        Welcome to the Explorer Page! <br /> This is where we will ensure that
+        you can find everything you will need! <br /> Scroll and find your movie
         choice!
       </h2>
 
