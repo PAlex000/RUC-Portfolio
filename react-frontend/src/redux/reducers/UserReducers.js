@@ -30,7 +30,6 @@ const initialState = {
 };
 
 const userReducer = (state = initialState, action) => {
-  console.log(action.type, action.payload);
   switch (action.type) {
     case FETCH_USERS_REQUEST:
     case REGISTER_USER_REQUEST:

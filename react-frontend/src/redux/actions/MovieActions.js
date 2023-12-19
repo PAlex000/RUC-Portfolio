@@ -26,7 +26,6 @@ export const fetchMovies = (page, pageSize) => {
         `/api/movie?page=${page}&pageSize=${pageSize}`
       );
       const data = await response.json();
-      console.log("fetchMovies Response:", data);
       if (data.items && data.items.$values) {
         for (var i = 0; i < data.items.$values.length; i++) {
           var Id = data.items.$values[i].url.split("/");
@@ -110,7 +109,6 @@ export const fetchMoviesByRating = (page, pageSize, minRating, maxRating) => {
         `/api/movie/byrating?page=${page}&pageSize=${pageSize}&minRating=${minRating}&maxRating=${maxRating}`
       );
       const data = await response.json();
-      console.log("fetchMoviesByRating Response:", data);
       dispatch(fetchMoviesByRatingSuccess(data));
     } catch (error) {
       console.error("fetchMoviesByRating Error:", error);

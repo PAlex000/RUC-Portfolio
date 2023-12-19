@@ -58,7 +58,6 @@ const ProfileSettings = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("Effect run");
     if (userId) {
       dispatch(fetchUserDetails(userId));
     }
@@ -73,7 +72,6 @@ const ProfileSettings = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log("Form submitted");
     handleCloseModal();
   };
 

@@ -36,7 +36,6 @@ const initialState = {
 };
 
 const moviesReducer = (state = initialState, action) => {
-  console.log("Action Type:", action.type, "Action Payload:", action.payload);
   switch (action.type) {
     case FETCH_MOVIES_REQUEST:
     case FETCH_MOVIE_BY_ID_REQUEST:

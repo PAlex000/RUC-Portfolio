@@ -34,7 +34,7 @@ export const fetchUserDetailsRequest = () => ({
   type: FETCH_USER_DETAILS_REQUEST,
 });
 export const fetchUserDetailsSuccess = (userDetails) => {
-  console.log("User Details Payload:", userDetails);
+
   return {
     type: FETCH_USER_DETAILS_SUCCESS,
     payload: { userDetails },
@@ -47,7 +47,6 @@ export const fetchUserDetailsFailure = (error) => ({
 });
 
 export const fetchUserDetails = (userId) => async (dispatch) => {
-  console.log(userId, "running");
   dispatch(fetchUserDetailsRequest());
   try {
     const response = await fetch(`/api/user/${userId}`);
@@ -229,13 +228,11 @@ export const deleteUser = (userId) => async (dispatch) => {
   try {
     const response = await fetch(`/api/user/${userId}`, { method: "DELETE" });
     if (response.ok) {
-      console.log(userId);
       dispatch(deleteUserSuccess(userId));
     } else {
       throw new Error("Failed to delete user");
     }
   } catch (error) {
-    console.log(userId);
     dispatch(deleteUserFailure(error.toString()));
   }
 };
