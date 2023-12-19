@@ -5,7 +5,18 @@ import Row from "react-bootstrap/Row";
 import { Button } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import CardComp from "../common/CardComp";
+import Header from "../layout/Header";
+import header from "../../assets/movieHeader.jpg";
 import CustomContainer from "../common/CustomContainer";
+
+const headerData = [
+  {
+    imageUrl: header,
+  },
+  {
+    imageUrl: header,
+  },
+];
 
 const marginStyle = {
   marginTop: "14.9px",
@@ -32,6 +43,7 @@ const Home = () => {
   if (!movies) return <div>No movies available</div>;
   return (
     <CustomContainer fluid>
+      <Header headers={headerData} />
       <div style={{ maxWidth: "75%", margin: "0 auto" }}>
         <Row className="justify-content-between align-items-center">
           <Row xs={12} md={3} lg={2} className="mb-4 d-none d-md-block">
