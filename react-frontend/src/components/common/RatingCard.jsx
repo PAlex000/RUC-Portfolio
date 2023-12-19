@@ -113,7 +113,6 @@ const RatingCard = ({
           style={cardFooterStyle}
           className="d-flex justify-content-center p-2"
         >
-          <Button style={{ marginRight: "1em" }}>Edit</Button>
           <Button onClick={() => removeRating(titleId, dispatchRating)}>
             Delete
           </Button>

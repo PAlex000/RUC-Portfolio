@@ -63,13 +63,11 @@ export const fetchMovieByIdFailure = (error) => ({
 });
 
 // Thunk Action
-export const fetchMovieById = (movieId = "tt0112130") => {
+export const fetchMovieById = (titleId) => {
   return async (dispatch) => {
     dispatch(fetchMovieByIdRequest());
     try {
-      const response = await fetch(
-        `/api/movie/${movieId}`
-      );
+      const response = await fetch(`/api/movie/${titleId}`);
       const data = await response.json();
       dispatch(fetchMovieByIdSuccess(data));
     } catch (error) {
@@ -81,7 +79,7 @@ export const fetchMovieById = (movieId = "tt0112130") => {
 // -- //
 
 // Action Types
-export const FETCH_SIMILAR_MOVIES_REQUEST  = "FETCH_SIMILAR_MOVIES_REQUEST ";
+export const FETCH_SIMILAR_MOVIES_REQUEST = "FETCH_SIMILAR_MOVIES_REQUEST ";
 export const FETCH_SIMILAR_MOVIES_SUCCESS = "FETCH_SIMILAR_MOVIES_SUCCESS";
 export const FETCH_SIMILAR_MOVIES_FAILURE = "FETCH_SIMILAR_MOVIES_FAILURE";
 
@@ -92,7 +90,7 @@ export const fetchSimilarMoviesRequest = () => ({
 
 export const fetchSimilarMoviesSuccess = (movies) => ({
   type: FETCH_SIMILAR_MOVIES_SUCCESS,
-  payload: { movies},
+  payload: { movies },
 });
 
 export const fetchSimilarMoviesFailure = (error) => ({
@@ -101,13 +99,11 @@ export const fetchSimilarMoviesFailure = (error) => ({
 });
 
 // Thunk Action
-export const fetchSimilarMovies = (movieId = 'tt0112130') => {
+export const fetchSimilarMovies = (movieId = "tt0112130") => {
   return async (dispatch) => {
     dispatch(fetchSimilarMoviesRequest());
     try {
-      const response = await fetch(
-        `/api/movie/${movieId}/similar`
-      );
+      const response = await fetch(`/api/movie/${movieId}/similar`);
       const data = await response.json();
       dispatch(fetchSimilarMoviesSuccess(data)); // items: {$id, $values[id, url, type, etc.]}
     } catch (error) {
@@ -115,8 +111,6 @@ export const fetchSimilarMovies = (movieId = 'tt0112130') => {
     }
   };
 };
-
-
 
 //Types
 

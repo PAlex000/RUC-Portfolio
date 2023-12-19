@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchMovieById,
-  fetchSimilarMovies,
-} from "../../redux/actions/MovieActions";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { fetchMovieById } from "../../redux/actions/MovieActions";
+import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import { TiStarFullOutline } from "react-icons/ti";
 import { GoPlay } from "react-icons/go";
 import Carousel from "react-bootstrap/Carousel";
 import departed from "../../assets/departed.jpg";
+import { createRating } from "../../redux/actions/RatingActions";
+import { addBookmark } from "../privateViews/Bookmark";
 
 const backgroundStyle = {
   backgroundColor: "#000",
@@ -33,28 +32,10 @@ const titleBackground2 = {
   textShadow: "1px 4px 5px black",
 };
 
-const plot = {
-  position: "absolute",
-  fontSize: "25px",
-  color: "#FFF",
-  left: 30,
-  top: 355,
-  width: "35%",
-  padding: "2rem",
-  textShadow: "1px 3px 5px black", // offset-x | offset-y | blur | color
-};
-
 const buttons = {
   position: "absolute",
   left: 45,
   top: 490,
-  margin: "2rem 0",
-};
-
-const buttonGenre = {
-  position: "absolute",
-  left: 45,
-  top: 260,
   margin: "2rem 0",
 };
 
@@ -70,33 +51,11 @@ const buttonsCol = {
   textShadow: "1px 2px 5px black",
 };
 
-const buttonsColAltern = {
-  display: "inline",
-  margin: "18px",
-  fontSize: "20px",
-  color: "#FFF",
-  backgroundColor: "transparent",
-  fontWeight: "bold",
-  padding: "0.5rem 0.75rem",
-  borderTop: "none",
-  borderRight: "none",
-  borderBottom: "none",
-  borderLeft: "5px solid #DEB522",
-  textShadow: "1px 3px 5px black",
-};
-
 const stars = {
   fontSize: "30px",
   fontWeight: "bold",
   color: "#FFF",
   marginLeft: "0.5rem",
-  textShadow: "1px 3px 5px black",
-};
-
-const review = {
-  fontSize: "25px",
-  color: "#FFF",
-  fontWeight: "bold",
   textShadow: "1px 3px 5px black",
 };
 
@@ -148,22 +107,19 @@ const synopsis = {
 };
 const Details = () => {
   const dispatch = useDispatch();
-  const { movie, loading, error } = useSelector(
-    (state) => state.moviesReducer
-  );
-  const [similarMoviesVisible, setSimilarMoviesVisible] = useState(false);
-
+  const { movie, loading, error } = useSelector((state) => state.moviesReducer);
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
-    dispatch(fetchMovieById());
+    dispatch(fetchMovieById(localStorage.getItem("titleId")));
   }, [dispatch]);
-
-  const handleSeeSimilarMovies = () => {
-    dispatch(fetchSimilarMovies(movie.id)); // Assuming movies.id is the unique identifier
-    setSimilarMoviesVisible(true);
+  const handleModalShow = () => setShowModal(true);
+  const handleModalClose = () => {
+    setShowModal(false);
   };
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!movie) return <div>No movie available</div>;
+  const titleId = movie.url.split("/")[5];
   return (
     <div>
       <Container fluid style={backgroundStyle}>
@@ -176,29 +132,21 @@ const Details = () => {
             className="mt-2"
             style={{ color: "#DEB522" }}
           />{" "}
-          <p style={stars}>
-            {" "}
-            {movie.rating ? movie.rating : 0}{" "}
-            <span style={review} className="mx-1">
-              ({movie.rating ? movie.rating : 0} total reviews)
-            </span>
-          </p>
+          <p style={stars}> {movie.rating ? movie.rating : 0} </p>
         </div>
-        <p style={plot}>{movie.description}</p>
-        {/* for now there are three buttons, use .map to retrieve the genres of each movie in future */}
-        <Col style={buttonGenre}>
-          <Button style={buttonsColAltern}>Crime</Button>
-          <Button style={buttonsColAltern}>Drama</Button>
-          <Button style={buttonsColAltern}>Thriller</Button>
-        </Col>
         <Col style={buttons}>
-          <Button style={buttonsCol} variant="warning">
+          <Button
+            style={buttonsCol}
+            variant="warning"
+            onClick={() => addBookmark(titleId, dispatch)}
+          >
             Add to Watchlist
           </Button>
-          <Button style={buttonsCol} variant="warning">
-            Similar Movies
-          </Button>
-          <Button style={buttonsCol} variant="warning">
+          <Button
+            style={buttonsCol}
+            variant="warning"
+            onClick={handleModalShow}
+          >
             Rate
           </Button>
         </Col>
@@ -217,8 +165,74 @@ const Details = () => {
             <Carousel.Item></Carousel.Item>
           </Carousel>
         </Row>
+        <form>
+          <Modal show={showModal} onHide={handleModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>{"TesztTitle"}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <label htmlFor="reviewText">
+                Please write a reviewText for the movie:
+              </label>
+              <input type="text" name="reviewText" id="reviewText" />
+            </Modal.Body>
+            <Modal.Body>
+              <label htmlFor="rating">Rate </label>
+              <select name="rating" id="rating">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+              </select>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  addRating(
+                    titleId,
+                    document.getElementById("reviewText").value,
+                    document.getElementById("rating").value,
+                    dispatch,
+                    setShowModal
+                  );
+                }}
+              >
+                Rate
+              </Button>
+              <Button variant="secondary" onClick={handleModalClose}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </form>
       </Container>
     </div>
   );
 };
 export default Details;
+
+export const addRating = (
+  titleId,
+  reviewText,
+  grade,
+  dispatchRating,
+  setShowModal
+) => {
+  console.log("Successfully added rating");
+  setShowModal(false);
+  dispatchRating(
+    createRating({
+      titleId: titleId,
+      userId: localStorage.getItem("userId"),
+      grade: grade,
+      reviewText: reviewText,
+    })
+  );
+};
