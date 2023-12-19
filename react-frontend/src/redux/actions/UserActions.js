@@ -33,16 +33,21 @@ export const FETCH_USER_DETAILS_FAILURE = "FETCH_USER_DETAILS_FAILURE";
 export const fetchUserDetailsRequest = () => ({
   type: FETCH_USER_DETAILS_REQUEST,
 });
-export const fetchUserDetailsSuccess = (userDetails) => ({
-  type: FETCH_USER_DETAILS_SUCCESS,
-  payload: { userDetails },
-});
+export const fetchUserDetailsSuccess = (userDetails) => {
+  console.log("User Details Payload:", userDetails);
+  return {
+    type: FETCH_USER_DETAILS_SUCCESS,
+    payload: { userDetails },
+  };
+};
+
 export const fetchUserDetailsFailure = (error) => ({
   type: FETCH_USER_DETAILS_FAILURE,
   payload: { error },
 });
 
 export const fetchUserDetails = (userId) => async (dispatch) => {
+  console.log(userId, "running");
   dispatch(fetchUserDetailsRequest());
   try {
     const response = await fetch(`/api/user/${userId}`);

@@ -47,11 +47,18 @@ const ProfileSettings = () => {
   const [editedEmail, setEditedEmail] = useState("");
   const [editedPassword, setEditedPassword] = useState("");
 
-  const userId = useSelector((state) => state.userId);
-  const userDetails = useSelector((state) => state.userDetails);
+  const userId = useSelector((state) => state.userReducer.userId);
+  const userDetails = useSelector((state) => state.userReducer.userDetails) || {
+    userId: "",
+    email: "jd@mail.dk",
+    firstName: "John ",
+    lastName: "Doe",
+    phoneNumber: "88888888",
+  };
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log("Effect run");
     if (userId) {
       dispatch(fetchUserDetails(userId));
     }
@@ -86,7 +93,9 @@ const ProfileSettings = () => {
                 marginBottom: "2rem",
               }}
             >
-              FILOFTEA-BIANCA GRECU
+              {userDetails.firstName && userDetails.lastName
+                ? `${userDetails.firstName} ${userDetails.lastName}`
+                : "Loading..."}
             </h1>
           </Col>
         </Row>
@@ -98,14 +107,18 @@ const ProfileSettings = () => {
                 About You
               </Card.Header>
               <Card.Body style={cardBody}>
-                <Card.Text style={cardText} className="mt-4">
-                  <MdOutlineEmail className="mx-3" style={icon} />
-                  biancagrecu121@gmail.com
-                </Card.Text>
-                <Card.Text style={cardText}>
-                  <MdOutlinePermPhoneMsg className="mx-3" style={icon} />
-                  (+45) 53 33 73 77
-                </Card.Text>
+                {userDetails.email && (
+                  <Card.Text style={cardText} className="mt-4">
+                    <MdOutlineEmail className="mx-3" style={icon} />
+                    {userDetails.email}
+                  </Card.Text>
+                )}
+                {userDetails.phoneNumber && (
+                  <Card.Text style={cardText}>
+                    <MdOutlinePermPhoneMsg className="mx-3" style={icon} />
+                    {userDetails.phoneNumber}
+                  </Card.Text>
+                )}
                 <Button
                   className="mt-4 mb-2 mx-3"
                   variant="warning"
@@ -170,12 +183,22 @@ const ProfileSettings = () => {
           <Form onSubmit={handleFormSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={editedEmail}
+                onChange={(e) => setEditedEmail(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                value={editedPassword}
+                onChange={(e) => setEditedPassword(e.target.value)}
+              />
             </Form.Group>
 
             <Button variant="primary" type="submit">

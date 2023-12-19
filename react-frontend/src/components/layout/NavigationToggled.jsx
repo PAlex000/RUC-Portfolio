@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import "./NavigationToggle.scss";
 import { bookmark } from "../../utils/helperFunctions/Bookmark";
-import ProfileSettings from "../privateViews/ProfileSettings";
+import { settings } from "../../utils/helperFunctions/Settings";
 import { ratinghistory } from "../../utils/helperFunctions/Rating";
 
 const NavigationOpen = ({ isOpen, onChange }) => {
@@ -22,7 +22,7 @@ const NavigationOpen = ({ isOpen, onChange }) => {
   };
 
   const handleProfileSettings = () => {
-    ProfileSettings(navigate);
+    settings(navigate);
     onChange(false);
   };
 

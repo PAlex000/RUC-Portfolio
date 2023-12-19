@@ -30,7 +30,7 @@ const initialState = {
 };
 
 const userReducer = (state = initialState, action) => {
-  console.log(action.payload);
+  console.log(action.type, action.payload);
   switch (action.type) {
     case FETCH_USERS_REQUEST:
     case REGISTER_USER_REQUEST:
@@ -58,7 +58,7 @@ const userReducer = (state = initialState, action) => {
     case FETCH_USER_DETAILS_SUCCESS:
       return {
         ...state,
-        userDetails: action.payload.userDetails, // You may want to store the user details separately
+        userDetails: action.payload.userDetails,
         loading: false,
       };
     case FETCH_USER_DETAILS_FAILURE:
