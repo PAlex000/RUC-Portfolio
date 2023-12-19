@@ -57,6 +57,29 @@ public class MoviesController : BaseController
         return Ok(similarMovies);
     }
 
+    // Get movies by rating
+    [HttpGet("byrating")]
+    public IActionResult GetMoviesByRating([FromQuery] int page = 0, [FromQuery] int pageSize = 10, [FromQuery] int? minRating = null, int? maxRating = null)
+    {
+        try
+        {
+            var (movies, count) = _movieService.GetMoviesByRating(page, pageSize, minRating, maxRating);
+
+            if (movies == null || !movies.Any())
+            {
+                return NotFound("No movies found matching the rating criteria.");
+            }
+
+            var result = Paging(movies.Select(CreateMovieModel), count, page, pageSize, nameof(GetMoviesByRating));
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return StatusCode(500, "An error occurred while processing your request.");
+        }
+    }
+
     // Create movie
 
     [HttpPost]

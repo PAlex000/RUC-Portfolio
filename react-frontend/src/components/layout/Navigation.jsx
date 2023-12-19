@@ -13,10 +13,13 @@ import "./Navigation.scss";
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isLoggedIn = useSelector((state) => !!state.userReducer.token);
+  const user = useSelector((state) => state.userReducer);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const isAdmin = user.token && user.userId === 9999;
 
   return (
     <>
@@ -45,6 +48,13 @@ const Navigation = () => {
             <Nav className="ms-auto">
               <Link to="/login" className="nav-link">
                 Sign in
+              </Link>
+            </Nav>
+          )}
+          {isAdmin && (
+            <Nav className="ms-auto">
+              <Link to="/admin" className="nav-link">
+                Admin
               </Link>
             </Nav>
           )}

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import "./NavigationToggle.scss";
 import { bookmark } from "../../utils/helperFunctions/Bookmark";
+import { settings } from "../../utils/helperFunctions/Settings";
 import { ratinghistory } from "../../utils/helperFunctions/Rating";
 
 const NavigationOpen = ({ isOpen, onChange }) => {
@@ -19,6 +20,12 @@ const NavigationOpen = ({ isOpen, onChange }) => {
     logout(dispatch, navigate);
     onChange(false);
   };
+
+  const handleProfileSettings = () => {
+    settings(navigate);
+    onChange(false);
+  };
+
   const handleBookmark = () => {
     bookmark(navigate);
     onChange(false);
@@ -66,12 +73,17 @@ const NavigationOpen = ({ isOpen, onChange }) => {
         )}
         {isLoggedIn && (
           <div className="rating" onClick={handleRatinghistory}>
-            Ratinghistory
+            Rating History
+          </div>
+        )}
+        {isLoggedIn && (
+          <div className="profileSettings" onClick={handleProfileSettings}>
+            Profile Settings
           </div>
         )}
         {isLoggedIn && (
           <div className="logout" onClick={handleLogout}>
-            Logout
+            Log out
           </div>
         )}
       </div>

@@ -1,9 +1,13 @@
 import Dropdown from "react-bootstrap/Dropdown";
+import { useState } from "react";
 import "./Button.scss";
 
-function Dropdowns({ onGenreSelect }) {
-  const handleSelect = (genre) => {
-    onGenreSelect(genre);
+function Dropdowns({ onRatingSelect }) {
+  const [selectedRating, setSelectedRating] = useState("Filter by Rating");
+
+  const handleSelect = (ratingCategory) => {
+    setSelectedRating(ratingCategory === "high" ? "High Rated" : "Low Rated");
+    onRatingSelect(ratingCategory);
   };
 
   return (
@@ -13,19 +17,15 @@ function Dropdowns({ onGenreSelect }) {
         variant="success"
         id="dropdown-basic"
       >
-        Filter
+        {selectedRating}
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={() => handleSelect("all")}>All</Dropdown.Item>
-        <Dropdown.Item onClick={() => handleSelect("action")}>
-          Action
+        <Dropdown.Item onClick={() => handleSelect("high")}>
+          High Rated
         </Dropdown.Item>
-        <Dropdown.Item onClick={() => handleSelect("drama")}>
-          Drama
-        </Dropdown.Item>
-        <Dropdown.Item onClick={() => handleSelect("crime")}>
-          Crime
+        <Dropdown.Item onClick={() => handleSelect("low")}>
+          Low Rated
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

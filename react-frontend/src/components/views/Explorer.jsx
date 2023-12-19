@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMovies } from "../../redux/actions/MovieActions";
+import {
+  fetchMovies,
+  fetchMoviesByRating,
+} from "../../redux/actions/MovieActions";
 import CustomContainer from "../common/CustomContainer";
 import Row from "react-bootstrap/Row";
 import { Button } from "react-bootstrap";
@@ -31,6 +34,20 @@ const Explorer = () => {
     setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
   };
 
+  const handleRatingSelect = (ratingCategory) => {
+    let minRating;
+    let maxRating;
+    if (ratingCategory === "high") {
+      minRating = 7;
+      maxRating = 10;
+    } else if (ratingCategory === "low") {
+      minRating = 1;
+      maxRating = 3;
+    }
+    setCurrentPage(0);
+    dispatch(fetchMoviesByRating(0, pageSize, minRating, maxRating));
+  };
+
   useEffect(() => {
     dispatch(fetchMovies(currentPage, pageSize));
   }, [dispatch, currentPage, pageSize]);
@@ -56,7 +73,7 @@ const Explorer = () => {
             className="mb-4 d-none d-md-block"
           >
             <div className="d-flex align-items-center" style={{ gap: "10px" }}>
-              <Dropdowns />
+              <Dropdowns onRatingSelect={handleRatingSelect} />
               <div style={marginStyle}>
                 <Button onClick={handleRefresh} className="blackBtn mt-2">
                   Refresh
@@ -64,30 +81,34 @@ const Explorer = () => {
               </div>
             </div>
           </Row>
-          {movies.map((movie) => (
-            <Col
-              key={movie.id}
-              xs={12}
-              sm={6}
-              md={3}
-              lg={3}
-              className="d-flex justify-content-center mb-4"
-            >
-              <CardComp
-                titleId={movie.titleId}
-                title={
-                  movie.akas.$values[0]
-                    ? movie.akas.$values[0].title
-                    : "Unknown title"
-                }
-                description={movie.description}
-                btnText="Learn More"
-                image={movie.poster}
-                rating={movie.rating}
-                dispatchMovie={dispatch}
-              />
-            </Col>
-          ))}
+          {Array.isArray(movies) ? (
+            movies.map((movie) => (
+              <Col
+                key={movie.id}
+                xs={12}
+                sm={6}
+                md={3}
+                lg={3}
+                className="d-flex justify-content-center mb-4"
+              >
+                <CardComp
+                  titleId={movie.titleId}
+                  title={
+                    movie.akas.$values[0]
+                      ? movie.akas.$values[0].title
+                      : "Unknown title"
+                  }
+                  description={movie.description}
+                  btnText="Learn More"
+                  image={movie.poster}
+                  rating={movie.rating}
+                  dispatch={dispatch}
+                />
+              </Col>
+            ))
+          ) : (
+            <div>No movies to display</div>
+          )}
         </Row>
       </div>
     </CustomContainer>

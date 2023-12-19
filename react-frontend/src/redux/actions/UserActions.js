@@ -16,10 +16,45 @@ export const fetchUsers = () => async (dispatch) => {
   dispatch(fetchUsersRequest());
   try {
     const response = await fetch("/api/user");
-    const users = await response.json();
+    const data = await response.json();
+    const users = data.$values;
     dispatch(fetchUsersSuccess(users));
   } catch (error) {
     dispatch(fetchUsersFailure(error.toString()));
+  }
+};
+
+//--//
+
+export const FETCH_USER_DETAILS_REQUEST = "FETCH_USER_DETAILS_REQUEST";
+export const FETCH_USER_DETAILS_SUCCESS = "FETCH_USER_DETAILS_SUCCESS";
+export const FETCH_USER_DETAILS_FAILURE = "FETCH_USER_DETAILS_FAILURE";
+
+export const fetchUserDetailsRequest = () => ({
+  type: FETCH_USER_DETAILS_REQUEST,
+});
+export const fetchUserDetailsSuccess = (userDetails) => {
+  console.log("User Details Payload:", userDetails);
+  return {
+    type: FETCH_USER_DETAILS_SUCCESS,
+    payload: { userDetails },
+  };
+};
+
+export const fetchUserDetailsFailure = (error) => ({
+  type: FETCH_USER_DETAILS_FAILURE,
+  payload: { error },
+});
+
+export const fetchUserDetails = (userId) => async (dispatch) => {
+  console.log(userId, "running");
+  dispatch(fetchUserDetailsRequest());
+  try {
+    const response = await fetch(`/api/user/${userId}`);
+    const userDetails = await response.json();
+    dispatch(fetchUserDetailsSuccess(userDetails));
+  } catch (error) {
+    dispatch(fetchUserDetailsFailure(error.toString()));
   }
 };
 
@@ -180,7 +215,10 @@ export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
 
 export const deleteUserRequest = () => ({ type: DELETE_USER_REQUEST });
-export const deleteUserSuccess = () => ({ type: DELETE_USER_SUCCESS });
+export const deleteUserSuccess = (userId) => ({
+  type: DELETE_USER_SUCCESS,
+  payload: { userId },
+});
 export const deleteUserFailure = (error) => ({
   type: DELETE_USER_FAILURE,
   payload: { error },
@@ -191,11 +229,13 @@ export const deleteUser = (userId) => async (dispatch) => {
   try {
     const response = await fetch(`/api/user/${userId}`, { method: "DELETE" });
     if (response.ok) {
-      dispatch(deleteUserSuccess());
+      console.log(userId);
+      dispatch(deleteUserSuccess(userId));
     } else {
       throw new Error("Failed to delete user");
     }
   } catch (error) {
+    console.log(userId);
     dispatch(deleteUserFailure(error.toString()));
   }
 };

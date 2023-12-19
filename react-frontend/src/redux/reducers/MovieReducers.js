@@ -8,6 +8,9 @@ import {
   FETCH_SIMILAR_MOVIES_REQUEST,
   FETCH_SIMILAR_MOVIES_SUCCESS,
   FETCH_SIMILAR_MOVIES_FAILURE,
+  /* FETCH_MOVIES_BY_RATING_REQUEST, */
+  FETCH_MOVIES_BY_RATING_SUCCESS,
+  /* FETCH_MOVIES_BY_RATING_FAILURE, */
   SEARCH_MOVIES_REQUEST,
   SEARCH_MOVIES_SUCCESS,
   SEARCH_MOVIES_FAILURE,
@@ -33,6 +36,7 @@ const initialState = {
 };
 
 const moviesReducer = (state = initialState, action) => {
+  console.log("Action Type:", action.type, "Action Payload:", action.payload);
   switch (action.type) {
     case FETCH_MOVIES_REQUEST:
     case FETCH_MOVIE_BY_ID_REQUEST:
@@ -50,6 +54,13 @@ const moviesReducer = (state = initialState, action) => {
       return {
         ...state,
         movies: action.payload.movies,
+        total: action.payload.total,
+        loading: false,
+      };
+    case FETCH_MOVIES_BY_RATING_SUCCESS:
+      return {
+        ...state,
+        movies: action.payload.items.$values,
         total: action.payload.total,
         loading: false,
       };

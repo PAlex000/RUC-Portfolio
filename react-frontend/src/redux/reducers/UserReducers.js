@@ -2,6 +2,9 @@ import {
   FETCH_USERS_REQUEST,
   FETCH_USERS_SUCCESS,
   FETCH_USERS_FAILURE,
+  FETCH_USER_DETAILS_REQUEST,
+  FETCH_USER_DETAILS_SUCCESS,
+  FETCH_USER_DETAILS_FAILURE,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAILURE,
@@ -27,6 +30,7 @@ const initialState = {
 };
 
 const userReducer = (state = initialState, action) => {
+  console.log(action.type, action.payload);
   switch (action.type) {
     case FETCH_USERS_REQUEST:
     case REGISTER_USER_REQUEST:
@@ -44,6 +48,27 @@ const userReducer = (state = initialState, action) => {
         users: action.payload.users,
         loading: false,
       };
+    // ... existing cases
+    case FETCH_USER_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case FETCH_USER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        userDetails: action.payload.userDetails,
+        loading: false,
+      };
+    case FETCH_USER_DETAILS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+    // ... other cases
+
     case REGISTER_USER_SUCCESS:
     case LOGIN_USER_SUCCESS:
       return {
@@ -60,9 +85,12 @@ const userReducer = (state = initialState, action) => {
     case DELETE_USER_SUCCESS:
       return {
         ...state,
-        users: state.users.filter((user) => user.id !== action.payload.userId),
+        users: state.users.filter(
+          (user) => user.userId !== action.payload.userId
+        ),
         loading: false,
       };
+
     case FETCH_USERS_FAILURE:
     case REGISTER_USER_FAILURE:
     case LOGIN_USER_FAILURE:
