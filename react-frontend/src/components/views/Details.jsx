@@ -10,6 +10,7 @@ import shawshank from "../../assets/shawshank.jpg";
 import scream from "../../assets/scream.jpg";
 import hunger_games from "../../assets/poster_movie.jpg";
 import home_alone from "../../assets/home_alone.jpg";
+import RateCard from "../common/RateCard";
 
 const backgroundStyle = {
   backgroundColor: "#000",
@@ -436,7 +437,7 @@ return (
         <h2 style={titleStyle}>Ratings</h2>
         {/* for now this is the "no ratings" scenario */}
         <h3 style={{color: "#FFF", textAlign: "center", marginTop: "4rem"}}>Whoops, no ratings yet...be the first one to rate this movie! <TiStarFullOutline size={35} style={{color: "#DEB522"}}/></h3>
-        <Button variant="warning" className="my-5" style={buttonStyle} onClick={handleShow}>Rate movie</Button>
+        <Button variant="warning" className="mt-5 mb-1" style={buttonStyle} onClick={handleShow}>Rate movie</Button>
 
 <Modal show={show} onHide={handleClose} backdrop="static"
 keyboard={false} style={{
@@ -470,6 +471,11 @@ Rate
 </Button>
 </Modal.Footer>
 </Modal>
+
+{/* the scenario where there's a rating */}
+        </Row>
+        <Row className="d-flex justify-content-center mb-5">
+        <RateCard />
         </Row>
         <div style={border}></div>
         </Container>

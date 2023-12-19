@@ -4,8 +4,10 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { TiStarFullOutline } from "react-icons/ti";
 import {useState} from "react";
+import { Row } from "react-bootstrap";
+import { FaCircle } from "react-icons/fa";
 
-const RatingCard = ({ title, image, rateDate }) => {
+const RateHistory = ({ title, image, rateDate}) => {
   const cardStyle = {
     backgroundColor: "#151515",
     color: "#FFF",
@@ -15,7 +17,7 @@ const RatingCard = ({ title, image, rateDate }) => {
     textAlign: "center",
     position: "relative",
     marginBottom: "1rem",
-    marginTop: "3rem"
+    marginTop: "3rem",
   }
 
   const imageStyle = {
@@ -35,13 +37,13 @@ const RatingCard = ({ title, image, rateDate }) => {
 
   const border = {
     borderBottom: "2px solid #FFF",
-    marginTop: "5rem"
+    marginTop: "7rem"
   }
 
   const paragraph = {
     position: "absolute",
     left: 315,
-    top: 170,
+    top: 210,
     textAlign: "start",
     width: "45%"
   }
@@ -49,7 +51,7 @@ const RatingCard = ({ title, image, rateDate }) => {
   const ratingTitle = {
     position: "absolute",
     left: 315,
-    top: 120
+    top: 160
   }
 
   const buttonContainer = {
@@ -120,27 +122,63 @@ const buttonStyle1 = {
   textShadow: "1px 2px 5px black",
 }
 
+const psColAltern = {
+  display: "inline",
+  margin: "0.05rem",
+  fontSize: "17px",
+  color: "grey",
+  border: "none",
+  backgroundColor: "transparent",
+  fontWeight: "bold",
+  padding: "0.20rem 0",
+}
+
+const stars = {
+  fontSize: "25px",
+  fontWeight: "bold",
+  margin: "0 0.50rem"
+}
+
+const starRating = {
+  fontWeight: "bold",
+  fontSize: "23px",
+  color: "#FFF",
+  position: "absolute",
+  top: 175,
+  right: 87
+}
+
+const rateContainer = {
+  position: "absolute",
+  top: 210,
+  right: 100,
+}
+
   return <>
       <Card style={cardStyle}>
         <Card.Img style={imageStyle} src={image}/>
-      <h1 style={titleStyle}>{title}</h1>
+      <h1 style={titleStyle}>{title} <span><FaCircle style={{color: "#FFF"}} size={10}/></span> <span style={{color: "grey", fontSize: "18px"}}>R | 2006</span></h1>
+      <Row style={{position: "absolute", top: 80,
+  left: 325}}>
+      <p style={psColAltern}>Action / Adventure / Drama</p> 
+
+      </Row>
       
       <Card.Body>
       <div style={border}></div>
         <blockquote className="blockquote mb-0">
           <h3 style={ratingTitle}>Great movie highly recommend</h3>
           <p style={dateRating}>{rateDate}</p>
-          {/* <h3>{titleRating}</h3> */}
           <p style={paragraph}> 
             {' '}
             ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum 
-           {/* {description} */}
            {' '}
           </p>
-          {/* <footer className="blockquote-footer">
-            Someone famous in <cite title="Source Title">Source Title</cite>
-          </footer> */}
         </blockquote>
+        <p style={starRating}>Star Rating</p>
+        <div className="d-flex flex-row" style={rateContainer}>
+        <TiStarFullOutline size={28} className="mt-1"/>  <p style={stars}> 0.00/10 </p>
+        </div>
         <div style={buttonContainer}>
           <Button variant={isHover ? "light" : "warning"} style={buttonStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={showRating}>Edit Rating</Button>
           <Modal show={rating} onHide={closeRating} backdrop="static"
@@ -199,4 +237,4 @@ Rate
     </Card>
   </>
 }
-export default RatingCard;
+export default RateHistory;

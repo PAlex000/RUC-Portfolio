@@ -1,13 +1,15 @@
 import { Container, Row } from "react-bootstrap";
-import RatingCard from "../common/RatingCard";
+import RateHistory from "../common/RateHistory";
 import shawshank from "../../assets/shawshank.jpg";
 import departed from "../../assets/departed.jpg";
 
 //Hard coded data as we create the skellet. useEffect with GET calls when we establish connection. Async/Await, fetch.
 const ratingData = [
   {
-    titleid: "Test1",
+    titleid: "The Departed",
     grade: 5,
+    type: "R",
+    year: "2006",
     reviewText: "Test review 1",
     rateDate: "2023-12-05",
     movieRating: 3.2,
@@ -16,8 +18,10 @@ const ratingData = [
     description: "ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum "
   },
   {
-    titleid: "Test2",
+    titleid: "Shawshank Redemption",
     grade: 7,
+    type: "R",
+    year: "1994",
     reviewText: "",
     rateDate: "2023-12-05",
     movieRating: 7.3,
@@ -26,8 +30,10 @@ const ratingData = [
     description: "ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum "
   },
   {
-    titleid: "Test3",
+    titleid: "The Departed",
     grade: 10,
+    type: "R",
+    year: "2006",
     reviewText: "Test review 10",
     rateDate: "2023-12-05",
     movieRating: 0.3,
@@ -36,8 +42,10 @@ const ratingData = [
     description: "ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum "
   },
   {
-    titleid: "Test4",
+    titleid: "Shawsank Redemption",
     grade: 1,
+    type: "R",
+    year: "1994",
     reviewText: "Test review 1",
     rateDate: "2023-12-03",
     movieRating: 10.3,
@@ -46,8 +54,10 @@ const ratingData = [
     description: "ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum "
   },
   {
-    titleid: "Test5 ",
+    titleid: "The Departed",
     grade: 6,
+    type: "R",
+    year: "2006",
     reviewText: "Test review 6",
     rateDate: "2023-12-01",
     movieRating: -3.2,
@@ -65,7 +75,7 @@ const RatingHistory = () => {
       <h1 style={{textAlign: "center", color: "#FFF", margin: "2.5rem 0"}}>Your ratings</h1>
       {ratingData.map((rating) => (
         <Row key={rating.titleid} className="justify-content-center">
-          <RatingCard
+          <RateHistory
             title={rating.titleid}
             grade={rating.grade}
             reviewText={rating.reviewText}
